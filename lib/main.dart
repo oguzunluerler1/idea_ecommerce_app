@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'screens/my_home_page.dart';
+import 'screens/user/my_home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,6 +15,11 @@ class MyApp extends StatelessWidget {
       title: 'IDEA Ecommerce App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(primary: Colors.white,onSurface: Colors.black,onPrimary: Colors.black,textStyle: TextStyle(color: Colors.black))),
+        textTheme: TextTheme(
+          headline6: TextStyle(fontWeight: FontWeight.bold),
+        ),
         inputDecorationTheme:
             InputDecorationTheme(border: OutlineInputBorder()),
         appBarTheme: AppBarTheme(color: Colors.white, elevation: 3),
@@ -24,7 +29,6 @@ class MyApp extends StatelessWidget {
             unselectedItemColor: Colors.black.withOpacity(0.6)),
         primarySwatch: Colors.deepPurple,
         primaryColor: Colors.deepPurple,
-        
       ),
       home: MyHomePage(),
     );
