@@ -1,9 +1,38 @@
+//*Firebase kullanmak için en başta yüklemek zorunda olduğumuz, firebase'i initilize edebilmemize yarayan paket.
+import 'package:firebase_core/firebase_core.dart';
+
+//*Flutter'ın en çok kullandığı standar material kütüphanesi. Flutterla otomatik yüklü geliyor. Sadece import ediyoruz.
 import 'package:flutter/material.dart';
+import 'package:idea_ecommerce_app/screens/sign_in.dart';
+import './screens/musteri/anaSayfa_view_model.dart';
+import 'package:idea_ecommerce_app/services/database.dart';
+import 'package:provider/provider.dart';
 
-import 'screens/user/my_home_page.dart';
+//*Firebase'i initialize ederken options kısmındaki komutu kullanmamızı sağlayan dosya. Firebase CLI sayesinde kuruyoruz. İşlem biraz uzun FlutterFire sitesinde ayrıntılı dökümanı var. Bu şekilde her platform için Firebase ayarlarını otomatik yapıyor.
+import 'firebase_options.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'screens/musteri/my_home_page.dart';
+
+//*Firebase'in initialize edilmesi asenkron bir işlem olduğu için main fonksiyonunu async yapıyoruz. İnitialize yaparken de await ifadesi ile sistemi bekletiyoruz.
+void main() async {
+//*Buradaki komut daha program kurulmadan bir işlem yapılacaksa bunu bildirmek için yazılıyor. Eğer bu komutu yazmazsak program hata veriyor.
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+//*Widget ağacının en başına multiprovider ekledim bunun üzerinden istediğimiz şekilde state management ayarlamalarını yapabileceğiz.
+  runApp(MultiProvider(
+    providers: [
+      Provider<Database>(
+        create: (context) => Database(),
+      ),
+      ChangeNotifierProvider<AnasayfaViewModel>(
+          create: ((context) => AnasayfaViewModel()))
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +45,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(primary: Colors.white,onSurface: Colors.black,onPrimary: Colors.black,textStyle: TextStyle(color: Colors.black))),
+            style: ElevatedButton.styleFrom(
+                primary: Colors.white,
+                onSurface: Colors.black,
+                onPrimary: Colors.black,
+                textStyle: TextStyle(color: Colors.black))),
         textTheme: TextTheme(
           headline6: TextStyle(fontWeight: FontWeight.bold),
         ),
