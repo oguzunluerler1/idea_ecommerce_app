@@ -47,7 +47,7 @@ class AnaSayfa extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              FutureBuilder<List<Product>>(
+              FutureBuilder<List<Urun>>(
                   future: Provider.of<AnasayfaViewModel>(context).veriOkuma(),
                   builder: (centext, snapshot) {
                     if (snapshot.hasData) {

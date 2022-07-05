@@ -10,12 +10,11 @@ class AnasayfaViewModel extends ChangeNotifier {
     _database.veriEklemeAdd();
   }
 
-  Future<List<Product>> veriOkuma() async {
+  Future<List<Urun>> veriOkuma() async {
     QuerySnapshot<Map<String, dynamic>> data =
         await _database.urunVerisiOkuma('Product');
 
-    List<Product> docSnap =
-        data.docs.map((e) => Product.fromMap(e.data())).toList();
+    List<Urun> docSnap = data.docs.map((e) => Urun.fromMap(e.data())).toList();
 
     return docSnap;
   }
