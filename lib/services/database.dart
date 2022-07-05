@@ -15,11 +15,6 @@ class Database {
 
   Future<QuerySnapshot<Map<String, dynamic>>> urunVerisiOkuma(String path) async {
     var data = await _firestore.collection(path).get();
-
-   /*  for (var product in data.docs) {
-      print(product.data()["isim"]);
-    } */
-
     return data;
   }
 

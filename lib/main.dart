@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 
 //*Flutter'ın en çok kullandığı standar material kütüphanesi. Flutterla otomatik yüklü geliyor. Sadece import ediyoruz.
 import 'package:flutter/material.dart';
-import 'package:idea_ecommerce_app/screens/sign_in.dart';
 import './screens/musteri/anaSayfa_view_model.dart';
 import 'package:idea_ecommerce_app/services/database.dart';
 import 'package:provider/provider.dart';
