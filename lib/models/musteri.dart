@@ -1,20 +1,22 @@
+import '../services/calculator.dart';
 import 'adres.dart';
 import 'urun.dart';
 
-class Customer {
+class Musteri {
   final String adSoyad;
   final String cinsiyet;
-  //final TimeStamp dogumTarihi;  //!Bunu ayarlayıp constructor'a ekliycem.
-  final List<Product> favoriler;
+  final DateTime dogumTarihi;
+  final List<Urun> favoriler;
   final String mail;
-  final List<Product> sepettekiUrunler;
+  final List<Urun> sepettekiUrunler;
   final Map<String, String> telefon;
-  final List<Product> tiklananUrunler;
+  final List<Urun> tiklananUrunler;
   final List<Adres> adres;
 
-  Customer(
+  Musteri(
       {required this.adSoyad,
       required this.cinsiyet,
+      required this.dogumTarihi,
       required this.favoriler,
       required this.mail,
       required this.sepettekiUrunler,
@@ -25,6 +27,7 @@ class Customer {
   Map<String, dynamic> toMap() => {
         'adSoyad': adSoyad,
         'cinsiyet': cinsiyet,
+        'dogumTarihi': Calculator.datetimeToTimestamp(dogumTarihi),
         'favoriler': favoriler,
         'mail': mail,
         'sepettekiUrunler': sepettekiUrunler,
@@ -33,9 +36,10 @@ class Customer {
         'adres': adres
       };
 
-  factory Customer.fromMap(Map map) => Customer(
+  factory Musteri.fromMap(Map map) => Musteri(
       adSoyad: map['adSoyad'],
       cinsiyet: map['cinsiyet'],
+      dogumTarihi: Calculator.datetimeFromTimestamp(map['dogumTarihi']),
       favoriler: map['favoriler'],
       mail: map['mail'],
       sepettekiUrunler: map['sepettekiUrunler'],

@@ -1,15 +1,14 @@
-
-class Product {
+class Urun {
   final String isim;
   final List<dynamic> kategori;
   final String marka;
   final int stokMiktari;
-  final String satici;//!normalce seller tipinde sonra bakıcam
+  final String satici; //todo normalce seller tipinde sonra bakıcam
   final int fiyat;
 
-  //! Resim olayını eklemem lazım nasıl yapıcam bakıcam.
+  //todo Resim olayını eklemem lazım nasıl yapıcam bakıcam.
 
-  Product(
+  Urun(
       {required this.isim,
       required this.kategori,
       required this.marka,
@@ -17,7 +16,7 @@ class Product {
       required this.satici,
       required this.fiyat});
 
-  factory Product.fromMap(Map map) => Product(
+  factory Urun.fromMap(Map map) => Urun(
       isim: map['isim'],
       kategori: map['kategori'],
       marka: map['marka'],
