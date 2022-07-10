@@ -49,6 +49,18 @@ dependencies:
 #*Firebase authentication özelliğini kullanmak için ekledik.
   firebase_auth: ^3.3.20
 
+#*Firebase storage özelliğini kullanmak için ekledik.
+  firebase_storage: ^10.3.1
+
+#*Kamera ile veya galeriden resim alma paketi.
+  image_picker: ^0.8.5+3
+
+#*Yorumlardaki yıldızlar için yükledim.
+  flutter_rating_bar: ^4.0.1
+
+#*emailin düzgün girilip girilmediğini kontrol eden paket.
+  email_validator: ^2.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -72,8 +84,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

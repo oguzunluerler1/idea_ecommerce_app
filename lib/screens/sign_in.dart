@@ -8,44 +8,122 @@ class SignIn extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                  onPressed: () {
-//*Auth servisindeki fonksiyonu provider vasıtası ile çağırıp firebase authentication'ı yapıyoruz.
-                    /* Provider.of<Auth>(context, listen: false)
-                        .signInAnonymously(); */
-
-                   /*  Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => HomePage())); */
-                  },
-                  child: Text('Sign in Anonymously')),
-
-//*paket kullanarak istediğim buttonları tanımladım çok da pratik oldu.
-              SignInButton(
-                Buttons.Google,
-                onPressed: () {},
+//*Klavye ekranı yukarı ittiriyordu. Onun için koydum.
+        resizeToAvoidBottomInset: false,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: Container(
+                child: Image(
+                  fit: BoxFit.fill,
+                  image: AssetImage('assets/images/signintop.png'),
+                ),
               ),
-              SignInButton(
-                Buttons.Email,
-                onPressed: () {/* 
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => EmailAuth(),
-                  )); */
-                },
+            ),
+            Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.2),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    TextField(
+                      keyboardType: TextInputType.emailAddress,
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.mail,
+                          color: Colors.purple,
+                        ),
+                        hintText: 'Emailinizi giriniz',
+                        hintStyle: TextStyle(color: Colors.purple.shade200),
+                        border: OutlineInputBorder(),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.purple.shade200)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.lock,
+                            color: Colors.purple,
+                          ),
+                          hintStyle: TextStyle(color: Colors.purple.shade200),
+                          hintText: 'Şifrenizi giriniz.',
+                          enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.purple.shade200)),
+                          disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.purple.shade200, width: 4))),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Şifremi unuttum.',
+                          style: TextStyle(
+                              color: Colors.purple,
+                              decoration: TextDecoration.underline),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.purple,
+                          minimumSize: Size(
+                              MediaQuery.of(context).size.width * 0.4, 40)),
+                      onPressed: () {},
+                      child: Text(
+                        'Giriş',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    SizedBox(height: 25),
+                    //*paket kullanarak istediğim buttonları tanımladım çok da pratik oldu.
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      child: SignInButton(
+                        shape: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.purple.shade200)),
+                        Buttons.Google,
+                        onPressed: () {},
+                      ),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    OutlinedButton(
+                        onPressed: () {},
+                        child: Text('Yeni Kullanıcı? Hesap Oluştur'))
+                  ],
+                ),
               ),
-              SignInButton(
-                Buttons.Facebook,
-                onPressed: () {},
+            ),
+            Expanded(
+              child: Container(
+                child: Image(
+                    fit: BoxFit.fill,
+                    image: AssetImage('assets/images/signinbottom.png')),
               ),
-              
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
