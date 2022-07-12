@@ -10,6 +10,10 @@ class kayitliKartView extends StatefulWidget {
 }
 
 class _kayitliKartViewState extends State<kayitliKartView> {
+  int kayitlikartsayisi = 3;
+  bool kart1bool = true;
+  bool kart2bool = true;
+  bool kart3bool = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +35,7 @@ class _kayitliKartViewState extends State<kayitliKartView> {
       child: Column(
         children: [          Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text("Kayıtlı Kartlarım (3)", style: TextStyle(color: Colors.red, fontSize: 30),),
+            child: Text("Kayıtlı Kartlarım ($kayitlikartsayisi)", style: TextStyle(color: Colors.red, fontSize: 30),),
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -49,56 +53,68 @@ class _kayitliKartViewState extends State<kayitliKartView> {
   }
 
   Widget kart2() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(width: 1),
-                borderRadius: BorderRadius.all(Radius.circular(20))
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: kartIciYazilar2(),
-              ),
-              height: 140,
-              width: 200,
-            ),
-    );
-  }
-
-  Widget kart3() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(width: 1),
-                borderRadius: BorderRadius.all(Radius.circular(20))
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: kartIciYazilar3(),
-              ),
-              height: 140,
-              width: 200,
-            ),
-    );
-  }
-
-  Widget kart1() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
+    kayitlikartsayisi++;
+    return Visibility(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(width: 1),
                   borderRadius: BorderRadius.all(Radius.circular(20))
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: kartIciYazilar1(),
+                  child: kartIciYazilar2(),
                 ),
                 height: 140,
                 width: 200,
               ),
+      ),
+      visible: kart2bool == true ? true : false,
+    );
+  }
+
+  Widget kart3() {
+    kayitlikartsayisi++;
+    return Visibility(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1),
+                  borderRadius: BorderRadius.all(Radius.circular(20))
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: kartIciYazilar3(),
+                ),
+                height: 140,
+                width: 200,
+              ),
+      ),
+      visible: kart3bool == true ? true : false
+    );
+  }
+
+  Widget kart1() {
+    kayitlikartsayisi++;
+    return Visibility(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1),
+                    borderRadius: BorderRadius.all(Radius.circular(20))
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: kartIciYazilar1(),
+                  ),
+                  height: 140,
+                  width: 200,
+                ),
+      ),
+      visible: kart1bool == true ? true : false,
     );
   }
 
@@ -106,10 +122,19 @@ class _kayitliKartViewState extends State<kayitliKartView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          child: Image.asset("assets/kartlogolar/akbank.png",fit: BoxFit.contain,),
-          height: 20,
-          width: 70,
+        Row(
+          children: [
+            Container(
+              child: Image.asset("assets/kartlogolar/akbank.png",fit: BoxFit.contain,),
+              height: 20,
+              width: 70,
+            ),
+            Spacer(),
+            GestureDetector(onTap: (){setState(() {
+              kart1bool = false;
+              kayitlikartsayisi--;
+            });},child: Icon(Icons.delete))
+          ],
         ),
         Row(
           children: [
@@ -145,10 +170,18 @@ class _kayitliKartViewState extends State<kayitliKartView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          child: Image.asset("assets/kartlogolar/iş.png",fit: BoxFit.contain,),
-          height: 20,
-          width: 70,
+        Row(
+          children: [
+            Container(
+              child: Image.asset("assets/kartlogolar/iş.png",fit: BoxFit.contain,),
+              height: 20,
+              width: 70,
+            ),
+            Spacer(),
+            GestureDetector(onTap: (){setState(() {
+              kart2bool = false;
+            });},child: Icon(Icons.delete))
+          ],
         ),
         Row(
           children: [
@@ -186,10 +219,19 @@ class _kayitliKartViewState extends State<kayitliKartView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          child: Image.asset("assets/kartlogolar/ziraat.png",fit: BoxFit.contain,),
-          height: 20,
-          width: 70,
+        Row(
+          children: [
+            Container(
+              child: Image.asset("assets/kartlogolar/ziraat.png",fit: BoxFit.contain,),
+              height: 20,
+              width: 70,
+            ),
+            Spacer(),
+            GestureDetector(onTap: (){setState(() {
+              kart3bool = false;
+              kayitlikartsayisi--;
+            });},child: Icon(Icons.delete))
+          ],
         ),
         Row(
           children: [
