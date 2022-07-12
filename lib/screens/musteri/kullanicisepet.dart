@@ -135,25 +135,32 @@ class _sepetimState extends State<sepetim> {
                   controlAffinity: ListTileControlAffinity.leading,
                   secondary: Column(
                     children: [
-                      GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _urunSayiDegiskeni = (_urunSayiDegiskeni! + 1);
-                            });
-                          },
-                          child: Icon(
-                            Icons.add,
-                            size: 18,
-                          )),
+                      Expanded(
+                        child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _urunSayiDegiskeni = (_urunSayiDegiskeni! + 1);
+                              });
+                            },
+                            child: Icon(
+                              Icons.add,
+                              size: 18,
+                            )),
+                      ),
                       Text("$_urunSayiDegiskeni",
                           style: TextStyle(fontSize: 12)),
-                      GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _urunSayiDegiskeni = _urunSayiDegiskeni! - 1;
-                            });
-                          },
-                          child: Icon(Icons.remove))
+                      Expanded(
+                        child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _urunSayiDegiskeni = _urunSayiDegiskeni! - 1;
+                              });
+                            },
+                            child: Icon(
+                              Icons.remove,
+                              size: 18,
+                            )),
+                      )
                     ],
                   ),
                   value: _checked,
