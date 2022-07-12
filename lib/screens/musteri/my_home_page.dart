@@ -28,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 : index == 2
                     ? Sepet()
                     : index == 3
-                        ? Kategoriler()
+                        ? Kategori()
                         : Hesap(),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: index,

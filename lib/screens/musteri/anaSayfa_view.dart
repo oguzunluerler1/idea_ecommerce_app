@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:idea_ecommerce_app/models/urun.dart';
+import 'package:idea_ecommerce_app/screens/sign_in.dart';
+import 'package:idea_ecommerce_app/services/auth.dart';
 import 'anaSayfa_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -15,9 +17,16 @@ class AnaSayfa extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Provider.of<Auth>(context, listen: false).signOut();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SignIn(),
+                  ));
+            },
             icon: Icon(
-              Icons.settings_outlined,
+              Icons.logout,
               color: Colors.black.withOpacity(0.6),
             ),
           ),

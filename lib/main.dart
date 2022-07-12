@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:idea_ecommerce_app/screens/musteri/arama_view.dart';
 import 'package:idea_ecommerce_app/screens/musteri/favoriler_view.dart';
 import 'package:idea_ecommerce_app/screens/musteri/kategoriler_view.dart';
+import 'package:idea_ecommerce_app/screens/musteri/musteri_hesap_olusturma_view.dart';
 import 'package:idea_ecommerce_app/screens/musteri/satinAlma_view.dart';
 import 'package:idea_ecommerce_app/screens/musteri/yorum_yapma_view.dart';
 import 'package:idea_ecommerce_app/screens/musteri/yorumlar_view.dart';
@@ -83,7 +84,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
         primaryColor: Colors.deepPurple,
       ),
-      home: Arama(),
+      home: OnBoardWidget(),
     );
   }
 }

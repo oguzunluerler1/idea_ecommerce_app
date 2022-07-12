@@ -1,11 +1,29 @@
+import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:idea_ecommerce_app/screens/musteri/anaSayfa_view.dart';
+import 'package:idea_ecommerce_app/screens/musteri/musteri_hesap_olusturma_view.dart';
+import 'package:idea_ecommerce_app/screens/musteri/musteri_hesap_resetleme_view.dart';
+import 'package:provider/provider.dart';
 
-class SignIn extends StatelessWidget {
+import '../services/auth.dart';
+
+class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
 
   @override
+  State<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+  @override
   Widget build(BuildContext context) {
+    //*Alttaki Form içindeki girilen değerlerin kontrolü için bir tane key tanımlıyoruz.
+    final _signInFormKey = GlobalKey<FormState>();
+    TextEditingController _emailController = TextEditingController();
+    TextEditingController _passwordController = TextEditingController();
+
     return SafeArea(
       child: Scaffold(
 //*Klavye ekranı yukarı ittiriyordu. Onun için koydum.
@@ -22,97 +40,157 @@ class SignIn extends StatelessWidget {
                 ),
               ),
             ),
-            Center(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.2),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    TextField(
-                      keyboardType: TextInputType.emailAddress,
-                      autofocus: false,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.mail,
-                          color: Colors.purple,
-                        ),
-                        hintText: 'Emailinizi giriniz',
-                        hintStyle: TextStyle(color: Colors.purple.shade200),
-                        border: OutlineInputBorder(),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.purple.shade200)),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
+            Form(
+//*Yukarıda tanımladığımız anahtarı Form widgetının key propertisine atıyoruz.
+              key: _signInFormKey,
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.2),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      TextFormField(
+                        controller: _emailController,
+                        validator: (value) {
+//*Burada emailvalidator paketi ile kontrol yapıyoruz. Girilen değer null değilse ve email formatına uyuyorsa okey veriyor yoksa hata döndürüyor.
+                          if (value != null &&
+                              !EmailValidator.validate(value)) {
+                            return 'Lütfen Geçerli bir adres giriniz';
+                          } else {
+                            return null;
+                          }
+                        },
+                        keyboardType: TextInputType.emailAddress,
+                        autofocus: false,
+                        decoration: InputDecoration(
                           prefixIcon: Icon(
-                            Icons.lock,
+                            Icons.mail,
                             color: Colors.purple,
                           ),
+                          hintText: 'Emailinizi giriniz',
                           hintStyle: TextStyle(color: Colors.purple.shade200),
-                          hintText: 'Şifrenizi giriniz.',
+                          border: OutlineInputBorder(),
                           enabledBorder: OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: Colors.purple.shade200)),
-                          disabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.purple.shade200, width: 4))),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Şifremi unuttum.',
-                          style: TextStyle(
-                              color: Colors.purple,
-                              decoration: TextDecoration.underline),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.purple,
-                          minimumSize: Size(
-                              MediaQuery.of(context).size.width * 0.4, 40)),
-                      onPressed: () {},
-                      child: Text(
-                        'Giriş',
-                        style: TextStyle(color: Colors.white),
+                      SizedBox(
+                        height: 10,
                       ),
-                    ),
-                    SizedBox(height: 25),
-                    //*paket kullanarak istediğim buttonları tanımladım çok da pratik oldu.
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      child: SignInButton(
-                        shape: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.purple.shade200)),
-                        Buttons.Google,
-                        onPressed: () {},
+                      TextFormField(
+                        controller: _passwordController,
+                        validator: (value) {
+                          if (value != null && value.length < 6) {
+                            return 'Şifreniz en az 6 karakter olmalıdır';
+                          } else {
+                            return null;
+                          }
+                        },
+                        obscureText: true,
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.lock,
+                              color: Colors.purple,
+                            ),
+                            hintStyle: TextStyle(color: Colors.purple.shade200),
+                            hintText: 'Şifrenizi giriniz.',
+                            enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.purple.shade200)),
+                            disabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.purple.shade200, width: 4))),
                       ),
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    OutlinedButton(
-                        onPressed: () {},
-                        child: Text('Yeni Kullanıcı? Hesap Oluştur'))
-                  ],
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MusteriHesapResetleme(),
+                                ));
+                          },
+                          child: Text(
+                            'Şifremi unuttum.',
+                            style: TextStyle(
+                                color: Colors.purple,
+                                decoration: TextDecoration.underline),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.purple,
+                            minimumSize: Size(
+                                MediaQuery.of(context).size.width * 0.4, 40)),
+                        onPressed: () async {
+                          if (_signInFormKey.currentState!.validate()) {
+                            try {
+                              final user = await Provider.of<Auth>(context,
+                                      listen: false)
+                                  .signInWithEmailAndPassword(
+                                      _emailController.text,
+                                      _passwordController.text);
+
+                              if (user != null && !user.emailVerified) {
+                                await _showMyDialog();
+                                await Provider.of<Auth>(context, listen: false)
+                                    .signOut();
+                              }
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AnaSayfa(),
+                                  ));
+                            } on FirebaseAuthException catch (e) {
+                              _showErrorDialog(e.code);
+                            } catch (e) {
+                              _showErrorDialog(e.toString());
+                            }
+                          }
+                        },
+                        child: Text(
+                          'Giriş',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      SizedBox(height: 25),
+                      //*paket kullanarak istediğim buttonları tanımladım çok da pratik oldu.
+                      /* SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        child: SignInButton(
+                          shape: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.purple.shade200)),
+                          Buttons.Google,
+                          onPressed: () {},
+                        ),
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ), */
+                      OutlinedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) =>
+                                        MusteriHesapOlusturma())));
+                          },
+                          child: Text('Yeni Kullanıcı? Hesap Oluştur'))
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -126,6 +204,65 @@ class SignIn extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('ONAY GEREKİYOR'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Merhaba, lütfen mailinizi kontrol ediniz,'),
+                Text('Onay linkini tıklayıp tekrar giriş yapmalısınız.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('ANLADIM'),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SignIn(),
+                    ));
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showErrorDialog(String errorText) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('BİR HATA OLUŞTU'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(errorText),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
