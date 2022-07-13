@@ -5,6 +5,7 @@ import 'package:idea_ecommerce_app/screens/sign_in.dart';
 import 'package:provider/provider.dart';
 
 import '../../services/auth.dart';
+import '../../services/database.dart';
 
 enum FormStatus { signIn, register, reset }
 
@@ -270,6 +271,11 @@ class _MusteriHesapOlusturmaState extends State<MusteriHesapOlusturma> {
                               listen: false)
                           .createUserWithEmailAndPassword(
                               _emailController.text, _passwordController.text);
+                      if (user != null) {
+                        await Provider.of<Database>(context, listen: false)
+                            .userEkleme(
+                                uid: user.uid, mail: _emailController.text);
+                      }
                       if (user != null && !user.emailVerified) {
                         await user.sendEmailVerification();
                         await _showMyDialog();

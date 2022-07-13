@@ -8,6 +8,7 @@ import 'package:idea_ecommerce_app/screens/musteri/musteri_hesap_resetleme_view.
 import 'package:provider/provider.dart';
 
 import '../services/auth.dart';
+import '../services/database.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -141,18 +142,19 @@ class _SignInState extends State<SignIn> {
                                   .signInWithEmailAndPassword(
                                       _emailController.text,
                                       _passwordController.text);
+                              print(user?.uid);
 
                               if (user != null && !user.emailVerified) {
                                 await _showMyDialog();
                                 await Provider.of<Auth>(context, listen: false)
                                     .signOut();
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AnaSayfa(),
+                                    ));
                               }
-
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AnaSayfa(),
-                                  ));
                             } on FirebaseAuthException catch (e) {
                               _showErrorDialog(e.code);
                             } catch (e) {
