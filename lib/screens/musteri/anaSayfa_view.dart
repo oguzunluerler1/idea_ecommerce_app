@@ -82,7 +82,10 @@ class AnaSayfa extends StatelessWidget {
               ),
 //todo Buradaki futurebuilder şu an için databasedeki bütün ürünlerin bilgisini çekiyor. Normalde popüler ürünleri bir şekilde belirleyip onları çekmesi lazım. Alt taraftakilerde de son gezilen ürünler veya sizin için seçtiklerimiz tarzı listelerden seçmesi lazım.
               FutureBuilder<List<Urun>>(
-                  future: Provider.of<AnasayfaViewModel>(context).veriOkuma(),
+//*Providerın farklı bir kullanım formatını kullandık aşağıda.
+                  future: context
+                      .watch<AnasayfaViewModel>()
+                      .veriOkuma(), //Provider.of<AnasayfaViewModel>(context).veriOkuma(),
                   builder: (centext, snapshot) {
                     if (snapshot.hasData) {
                       return SizedBox(
