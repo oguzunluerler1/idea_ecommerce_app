@@ -48,6 +48,7 @@ dependencies:
 
 #*Firebase authentication özelliğini kullanmak için ekledik.
   firebase_auth: ^3.3.20
+  flutter_multi_formatter: ^2.5.7
 
 #*Firebase storage özelliğini kullanmak için ekledik.
   firebase_storage: ^10.3.1
@@ -85,7 +86,18 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+
+    - assets/kartlogolar/akbank.png
+    - assets/kartlogolar/axess.jpg
+    - assets/kartlogolar/visa.jpg
+    - assets/kartlogolar/chip.jpg
+    - assets/kartlogolar/iş.png
+    - assets/kartlogolar/maximum.png
+    - assets/kartlogolar/mastercard.png
+    - assets/kartlogolar/ziraat.png
+    - assets/kartlogolar/bankkart.png
     - assets/images/
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
