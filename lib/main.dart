@@ -1,8 +1,27 @@
+//todo YAPILACAK SAYFALAR
+/*KullaniciAnaSayfaView -->     Emre +
+KullaniciFavorilerView -->    Emre   +
+AramaView -->            Emre
+SatinAlmaView -->        Emre         +
+YorumlarimView -->        Emre ---------------------yorum yapma view yapmamız lazım +++
+SigninView yaptım ama hesap oluştur yok daha .
+*/
+
 //*Firebase kullanmak için en başta yüklemek zorunda olduğumuz, firebase'i initilize edebilmemize yarayan paket.
 import 'package:firebase_core/firebase_core.dart';
 
-//*Flutter'ın en çok kullandığı standar material kütüphanesi. Flutterla otomatik yüklü geliyor. Sadece import ediyoruz.
+//*Flutter'ın en çok kullandığı standart material kütüphanesi. Flutterla otomatik yüklü geliyor. Sadece import ediyoruz.
 import 'package:flutter/material.dart';
+import 'package:idea_ecommerce_app/screens/musteri/arama_view.dart';
+import 'package:idea_ecommerce_app/screens/musteri/favoriler_view.dart';
+import 'package:idea_ecommerce_app/screens/musteri/kategoriler_view.dart';
+import 'package:idea_ecommerce_app/screens/musteri/musteri_hesap_olusturma_view.dart';
+import 'package:idea_ecommerce_app/screens/musteri/satinAlma_view.dart';
+import 'package:idea_ecommerce_app/screens/musteri/yorum_yapma_view.dart';
+import 'package:idea_ecommerce_app/screens/musteri/yorumlar_view.dart';
+import 'package:idea_ecommerce_app/screens/sign_in.dart';
+import 'package:idea_ecommerce_app/services/auth.dart';
+import 'package:idea_ecommerce_app/widgets/on_board.dart';
 import './screens/musteri/anaSayfa_view_model.dart';
 import 'package:idea_ecommerce_app/services/database.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +45,9 @@ void main() async {
     providers: [
       Provider<Database>(
         create: (context) => Database(),
+      ),
+      Provider<Auth>(
+        create: (context) => Auth(),
       ),
       ChangeNotifierProvider<AnasayfaViewModel>(
           create: ((context) => AnasayfaViewModel()))
@@ -62,7 +84,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
         primaryColor: Colors.deepPurple,
       ),
-      home: MyHomePage(),
+      home: OnBoardWidget(),
     );
   }
 }

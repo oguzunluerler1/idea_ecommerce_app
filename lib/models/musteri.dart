@@ -3,6 +3,7 @@ import 'adres.dart';
 import 'urun.dart';
 
 class Musteri {
+  final String uid;
   final String adSoyad;
   final String cinsiyet;
   final DateTime dogumTarihi;
@@ -14,7 +15,8 @@ class Musteri {
   final List<Adres> adres;
 
   Musteri(
-      {required this.adSoyad,
+      {required this.uid,
+      required this.adSoyad,
       required this.cinsiyet,
       required this.dogumTarihi,
       required this.favoriler,
@@ -25,6 +27,7 @@ class Musteri {
       required this.adres});
 
   Map<String, dynamic> toMap() => {
+        'uid': uid,
         'adSoyad': adSoyad,
         'cinsiyet': cinsiyet,
         'dogumTarihi': Calculator.datetimeToTimestamp(dogumTarihi),
@@ -37,6 +40,7 @@ class Musteri {
       };
 
   factory Musteri.fromMap(Map map) => Musteri(
+      uid: map['uid'],
       adSoyad: map['adSoyad'],
       cinsiyet: map['cinsiyet'],
       dogumTarihi: Calculator.datetimeFromTimestamp(map['dogumTarihi']),
