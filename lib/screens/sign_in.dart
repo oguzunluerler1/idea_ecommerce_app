@@ -18,6 +18,8 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+
+
   @override
   Widget build(BuildContext context) {
     //*Alttaki Form içindeki girilen değerlerin kontrolü için bir tane key tanımlıyoruz.
@@ -142,6 +144,7 @@ class _SignInState extends State<SignIn> {
                                   .signInWithEmailAndPassword(
                                       _emailController.text,
                                       _passwordController.text);
+                              
                               print(user?.uid);
 
                               if (user != null && !user.emailVerified) {

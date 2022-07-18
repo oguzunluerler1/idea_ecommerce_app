@@ -52,7 +52,8 @@ class Arama extends StatelessWidget {
               height: 20,
             ),
             FutureBuilder<List<Urun>>(
-                future: Provider.of<AnasayfaViewModel>(context).veriOkuma(),
+                future: Provider.of<AnasayfaViewModel>(context)
+                    .tumUrunVerisiOkuma(),
                 builder: (centext, snapshot) {
                   if (snapshot.hasData) {
                     return Flexible(

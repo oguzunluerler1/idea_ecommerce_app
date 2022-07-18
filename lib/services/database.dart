@@ -1,14 +1,45 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:idea_ecommerce_app/screens/sign_in.dart';
+
+import '../models/musteri.dart';
 
 class Database {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  Future<Map<String, dynamic>?> musteriVerisiCekme(String? uid) async {
+    var musteriVerisi = await _firestore.collection('Customer').doc(uid).get();
+
+    return musteriVerisi.data();
+  }
+
   userEkleme({required String uid, required String mail}) async {
-    Map<String, dynamic> _eklenecekUser = <String, dynamic>{};
+    Map<String, dynamic> _eklenecekMusteri = Musteri(
+        uid: uid,
+        adSoyad: ' ',
+        adres: [],
+        cinsiyet: ' ',
+        favoriler: [],
+        mail: mail,
+        tiklananUrunler: [],
+        telefon: {},
+        sepettekiUrunler: [],
+        dogumTarihi: DateTime.parse('1900-01-01 00:00:00Z'),
+        kayitliKart: [],
+        siparis: []).toMap();
+
+    //print(_eklenecekMusteri);
+    /* Map<String, dynamic> _eklenecekUser = <String, dynamic>{};
     _eklenecekUser['uid'] = uid;
-    _eklenecekUser['mail'] = mail;
+    _eklenecekUser['mail'] = mail; */
 //*Burada .doc() diyerek document adını kendimiz belirliyoruz. Yoksa kendisi uniqe bir ad tanımlıyor. uid diyerek de auth tarafından oluşturulan user idyi vermiş olduk. set ile de map vererek girilecek verileri girdik. doc adı ile uid aynı olması karışıklık yaratmaması açısından çok mantıklı oldu bence.
-    await _firestore.collection('Customer').doc(uid).set(_eklenecekUser);
+    await _firestore.collection('Customer').doc(uid).set(_eklenecekMusteri);
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> tiklananUrunVerisiOkuma(
+      {required String path, required List urun}) async {
+    var data = await _firestore.collection(path).where('id', whereIn: urun);
+
+    return data.get();
   }
 
   veriEklemeAdd() async {
@@ -21,14 +52,14 @@ class Database {
     await _firestore.collection('Customer').add(_eklenecekUser);
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> urunVerisiOkuma(
+  Future<QuerySnapshot<Map<String, dynamic>>> tumUrunVerisiOkuma(
       String path) async {
     var data = await _firestore.collection(path).get();
     return data;
   }
 
-  Future<int> urunSayisi() async {
+  /* Future<int> urunSayisi() async {
     var products = await _firestore.collection("Product").get();
     return products.docs.length;
-  }
+  } */
 }
