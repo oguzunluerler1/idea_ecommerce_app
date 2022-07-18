@@ -33,11 +33,12 @@ class AnaSayfa extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 10),
               TextField(
                 decoration: InputDecoration(
                     prefixIcon: Icon(Icons.search),
@@ -175,6 +176,8 @@ class AnaSayfa extends StatelessWidget {
                                 crossAxisCount: 1,
                               ),
                               itemBuilder: (BuildContext context, int index) {
+                                print(
+                                    snapshot.data?[index].urunResimleriUrl[0]);
                                 return Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -191,6 +194,11 @@ class AnaSayfa extends StatelessWidget {
                                           color: Colors.black54,
                                         ),
                                       ),
+                                      child: Image(
+                                          image: NetworkImage(snapshot
+                                                  .data?[index]
+                                                  .urunResimleriUrl[0] ??
+                                              '')),
                                     ),
                                     Text(
                                         snapshot.data?[index].fiyat

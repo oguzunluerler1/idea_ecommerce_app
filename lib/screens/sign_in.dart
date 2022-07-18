@@ -18,14 +18,13 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-
-
+//*build fonksiyonu içinde tanımlayınca klavye açılıp hemen kapanıyordu ve textler kendi kendine siliniyordu. State içine alınca düzeldi.
+  final GlobalKey<FormState> _signInFormKey = GlobalKey<FormState>();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     //*Alttaki Form içindeki girilen değerlerin kontrolü için bir tane key tanımlıyoruz.
-    final _signInFormKey = GlobalKey<FormState>();
-    TextEditingController _emailController = TextEditingController();
-    TextEditingController _passwordController = TextEditingController();
 
     return SafeArea(
       child: Scaffold(
@@ -66,7 +65,6 @@ class _SignInState extends State<SignIn> {
                           }
                         },
                         keyboardType: TextInputType.emailAddress,
-                        autofocus: false,
                         decoration: InputDecoration(
                           prefixIcon: Icon(
                             Icons.mail,
@@ -144,7 +142,7 @@ class _SignInState extends State<SignIn> {
                                   .signInWithEmailAndPassword(
                                       _emailController.text,
                                       _passwordController.text);
-                              
+
                               print(user?.uid);
 
                               if (user != null && !user.emailVerified) {
