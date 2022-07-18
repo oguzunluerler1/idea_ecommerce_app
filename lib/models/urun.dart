@@ -5,7 +5,7 @@ class Urun {
   final int stokMiktari;
   final String satici; //todo normalce seller tipinde sonra bakıcam
   final int fiyat;
-
+  final double puanOrt;
   //todo Resim olayını eklemem lazım nasıl yapıcam bakıcam.
 
   Urun(
@@ -14,7 +14,9 @@ class Urun {
       required this.marka,
       required this.stokMiktari,
       required this.satici,
-      required this.fiyat});
+      required this.fiyat,
+      this.puanOrt = 0});
+      //TODO: puan ortalaması şu an direkt olarak default değer alıyor. ona göre bunu yapacaksak daha sonra required yapıp tüm programdaki fonksiyonlara onun da atanması lazım.
 
   factory Urun.fromMap(Map map) => Urun(
       isim: map['isim'],
@@ -22,5 +24,6 @@ class Urun {
       marka: map['marka'],
       stokMiktari: map['stokMiktari'],
       satici: map['satici'],
-      fiyat: map['fiyat']);
+      fiyat: map['fiyat'],
+      puanOrt: map['puanOrt']);
 }
