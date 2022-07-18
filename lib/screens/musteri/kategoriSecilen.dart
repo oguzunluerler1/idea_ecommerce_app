@@ -25,16 +25,16 @@ class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
   List <Urun> sepetUrunleri = [];
   List <Urun> favorilenmisUrunler = [];
   List <Urun> tempUrunListesi = [
-    Urun(isim: "a", kategori: ["PC"], marka: "marka1", stokMiktari: 1, satici: "satici1", fiyat: 10, puanOrt: 3.2),
-    Urun(isim: "b", kategori: ["PC"], marka: "marka2", stokMiktari: 5, satici: "satici2", fiyat: 22, puanOrt: 2.1 ),
-    Urun(isim: "c", kategori: ["PC"], marka: "marka1", stokMiktari: 2, satici: "satici3", fiyat: 333 ,puanOrt: 4.2 ),
-    Urun(isim: "d", kategori: ["PC"], marka: "marka4", stokMiktari: 3, satici: "satici4", fiyat: 2   ,puanOrt: 3.2 ),
-    Urun(isim: "e", kategori: ["PC"], marka: "marka5", stokMiktari: 3, satici: "satici56", fiyat: 11 ,puanOrt: 1.2 ),
-    Urun(isim: "f", kategori: ["PC"], marka: "marka6", stokMiktari: 2, satici: "satici6", fiyat: 212 ,puanOrt: 2.3 ),
-    Urun(isim: "g", kategori: ["PC"], marka: "marka7", stokMiktari: 4, satici: "satici7", fiyat: 52  ,puanOrt: 2.4 ),
-    Urun(isim: "h", kategori: ["PC"], marka: "marka8", stokMiktari: 1, satici: "satici8", fiyat: 1   ,puanOrt: 2.6 ),
-    Urun(isim: "i", kategori: ["PC"], marka: "marka2", stokMiktari: 2, satici: "satici9", fiyat: 23  ,puanOrt: 4.3 ),
-    Urun(isim: "j", kategori: ["PC"], marka: "marka1", stokMiktari: 2, satici: "satici10", fiyat: 104,puanOrt: 3.1 ),
+    Urun(isim: "a", kategori: ["PC"], marka: "marka1", stokMiktari: 1, satici: "satici1", fiyat: 10, puanOrt: 3.2, id: '1', urunResimleriUrl: []),
+    Urun(isim: "b", kategori: ["PC"], marka: "marka2", stokMiktari: 5, satici: "satici2", fiyat: 22, puanOrt: 2.1, id: '2', urunResimleriUrl: []),
+    Urun(isim: "c", kategori: ["PC"], marka: "marka1", stokMiktari: 2, satici: "satici3", fiyat: 333 ,puanOrt: 4.2, id: '3', urunResimleriUrl: [] ),
+    Urun(isim: "d", kategori: ["PC"], marka: "marka4", stokMiktari: 3, satici: "satici4", fiyat: 2   ,puanOrt: 3.2, id: '4', urunResimleriUrl: [] ),
+    Urun(isim: "e", kategori: ["PC"], marka: "marka5", stokMiktari: 3, satici: "satici56", fiyat: 11 ,puanOrt: 1.2, id: '5', urunResimleriUrl: [] ),
+    Urun(isim: "f", kategori: ["PC"], marka: "marka6", stokMiktari: 2, satici: "satici6", fiyat: 212 ,puanOrt: 2.3, id: '6', urunResimleriUrl: [] ),
+    Urun(isim: "g", kategori: ["PC"], marka: "marka7", stokMiktari: 4, satici: "satici7", fiyat: 52  ,puanOrt: 2.4, id: '7', urunResimleriUrl: [] ),
+    Urun(isim: "h", kategori: ["PC"], marka: "marka8", stokMiktari: 1, satici: "satici8", fiyat: 1   ,puanOrt: 2.6, id: '8', urunResimleriUrl: [] ),
+    Urun(isim: "i", kategori: ["PC"], marka: "marka2", stokMiktari: 2, satici: "satici9", fiyat: 23  ,puanOrt: 4.3, id: '9', urunResimleriUrl: [] ),
+    Urun(isim: "j", kategori: ["PC"], marka: "marka1", stokMiktari: 2, satici: "satici10", fiyat: 104,puanOrt: 3.1, id: '10', urunResimleriUrl: [] ),
   ] ;
   bool favoriyeEklenmis = false;
   @override

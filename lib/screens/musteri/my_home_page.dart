@@ -28,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 : index == 2
                     ? Sepet()
                     : index == 3
-                        ? Kategoriler()
+                        ? Kategori()
                         : Hesap(),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: index,
@@ -47,7 +47,31 @@ class _MyHomePageState extends State<MyHomePage> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.favorite), label: "Favorilerim"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart), label: "Sepetim"),
+                icon: Stack(children: [
+                  Icon(Icons.shopping_cart),
+                  Positioned(
+                    right: 0,
+                    bottom: 0,
+                    child: Container(
+                      width: 12,
+                      height: 12,
+                      child: Center(
+//todo Buradaki Texte sepette kaç ürün var ise onu yazdırıcaz.
+                        child: Text(
+                          '8',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 9),
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color.fromARGB(255, 255, 0, 0)),
+                    ),
+                  )
+                ]),
+                label: "Sepetim"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.category), label: "Kategoriler"),
             BottomNavigationBarItem(
