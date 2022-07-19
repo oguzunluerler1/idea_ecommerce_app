@@ -59,7 +59,8 @@ Future<QuerySnapshot<Map<String, dynamic>>> sepetUrunVerisiOkuma(
 
   Future<QuerySnapshot<Map<String, dynamic>>> tiklananUrunVerisiOkuma(
       {required String path, required List urun}) async {
-    var data = await _firestore.collection(path).where('id', whereIn: urun);
+    var data = await _firestore.collection(path);
+    //.where('id', whereIn: urun);  //todo: asdas
 
     return data.get();
   }

@@ -98,7 +98,7 @@ class Musteri {
     var adresAsMap = map['adres'] as List;
     List<Adres> adres =
         adresAsMap.map((adresAsMap) => Adres.fromMap(adresAsMap)).toList();
-    print('adres bilgisi: ${adres[0].adresIsmi}');
+    //print('adres bilgisi: ${adres[0].adresIsmi}');
 
     var kayitliKartAsMap = map['kayitliKart'] as List;
     List<KayitliKart> kayitliKart = kayitliKartAsMap
