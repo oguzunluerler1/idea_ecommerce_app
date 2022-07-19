@@ -12,23 +12,10 @@ import 'package:firebase_core/firebase_core.dart';
 
 //*Flutter'ın en çok kullandığı standart material kütüphanesi. Flutterla otomatik yüklü geliyor. Sadece import ediyoruz.
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:idea_ecommerce_app/app_constants/app_strings.dart';
 import 'package:idea_ecommerce_app/screens/musteri/arama_view_model.dart';
 import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet_View_Model.dart';
-=======
-import 'package:idea_ecommerce_app/screens/musteri/arama_view.dart';
-import 'package:idea_ecommerce_app/screens/musteri/arama_view_model.dart';
-import 'package:idea_ecommerce_app/screens/musteri/favoriler_view.dart';
-import 'package:idea_ecommerce_app/screens/musteri/kategoriler_view.dart';
-import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet.dart';
-import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet_View_Model.dart';
-import 'package:idea_ecommerce_app/screens/musteri/musteri_hesap_olusturma_view.dart';
-import 'package:idea_ecommerce_app/screens/musteri/satinAlma_view.dart';
-import 'package:idea_ecommerce_app/screens/musteri/yorum_yapma_view.dart';
-import 'package:idea_ecommerce_app/screens/musteri/yorumlar_view.dart';
-import 'package:idea_ecommerce_app/screens/sign_in.dart';
->>>>>>> 393fa487b0eca8484c9d0ef80506ad09604c90bb
+
 import 'package:idea_ecommerce_app/services/auth.dart';
 import 'package:idea_ecommerce_app/widgets/on_board.dart';
 import './screens/musteri/anaSayfa_view_model.dart';
@@ -47,28 +34,11 @@ void main() async {
 //*Widget ağacının en başına multiprovider ekledim bunun üzerinden istediğimiz şekilde state management ayarlamalarını yapabileceğiz.
   runApp(MultiProvider(
     providers: [
-<<<<<<< HEAD
       Provider<Database>(create: (context) => Database()),
       Provider<KullaniciSepetViewModel>(create: (context) => KullaniciSepetViewModel()),
       Provider<Auth>(create: (context) => Auth()),
       ChangeNotifierProvider<AnasayfaViewModel>(create: ((context) => AnasayfaViewModel())),
       Provider<AramaViewModel>(create: (context) => AramaViewModel()),
-=======
-      Provider<Database>(
-        create: (context) => Database(),
-      ),
-      Provider<KullaniciSepetViewModel>(
-        create: (context) => KullaniciSepetViewModel(),
-      ),
-      Provider<Auth>(
-        create: (context) => Auth(),
-      ),
-      ChangeNotifierProvider<AnasayfaViewModel>(
-          create: ((context) => AnasayfaViewModel())),
-      Provider<AramaViewModel>(
-        create: (context) => AramaViewModel(),
-      ),
->>>>>>> 393fa487b0eca8484c9d0ef80506ad09604c90bb
     ],
     child: MyApp(),
   ));
