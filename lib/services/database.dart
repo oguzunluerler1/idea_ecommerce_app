@@ -6,6 +6,19 @@ import '../models/musteri.dart';
 class Database {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  Future<QuerySnapshot<Map<String, dynamic>>> arama(
+      {required String path, required String value}) async {
+    var data =
+        await _firestore.collection(path).where('isim', isEqualTo: value);
+    return await data.get();
+  }
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> gecmisBilgisi(
+      {required String path, required String uid}) async {
+    var data = await _firestore.collection(path).doc(uid).get();
+    return data;
+  }
+
   Future<Map<String, dynamic>?> musteriVerisiCekme(String? uid) async {
     var musteriVerisi = await _firestore.collection('Customer').doc(uid).get();
 
@@ -25,7 +38,8 @@ class Database {
         sepettekiUrunler: [],
         dogumTarihi: DateTime.parse('1900-01-01 00:00:00Z'),
         kayitliKart: [],
-        siparis: []).toMap();
+        siparis: [],
+        aramaGecmisi: []).toMap();
 
     //print(_eklenecekMusteri);
     /* Map<String, dynamic> _eklenecekUser = <String, dynamic>{};
@@ -55,6 +69,7 @@ class Database {
   Future<QuerySnapshot<Map<String, dynamic>>> tumUrunVerisiOkuma(
       String path) async {
     var data = await _firestore.collection(path).get();
+   
     return data;
   }
 

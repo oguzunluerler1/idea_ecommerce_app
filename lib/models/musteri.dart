@@ -18,9 +18,11 @@ class Musteri {
   List<Adres> adres;
   List<KayitliKart> kayitliKart;
   List<Siparis> siparis;
+  List<String> aramaGecmisi;
 
   Musteri(
-      {required this.uid,
+      {required this.aramaGecmisi,
+      required this.uid,
       required this.adSoyad,
       required this.cinsiyet,
       required this.dogumTarihi,
@@ -70,7 +72,8 @@ class Musteri {
       'tiklananUrunler': tiklananUrunler,
       'adres': adres,
       'kayitliKart': kayitliKart,
-      'siparis': siparis
+      'siparis': siparis,
+      'aramaGecmisi': aramaGecmisi,
     };
   }
 
@@ -116,6 +119,7 @@ class Musteri {
         tiklananUrunler: map['tiklananUrunler'],
         adres: adres,
         kayitliKart: kayitliKart,
-        siparis: siparis);
+        siparis: siparis,
+        aramaGecmisi: map['aramaGecmisi']);
   }
 }

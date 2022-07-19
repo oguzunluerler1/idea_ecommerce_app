@@ -1,5 +1,11 @@
+//todo Son gezilen ürünler tamam. Diğer ikisi genel ürünleri çekiyor üzerlerinde oynama yapabilirim.
+//todo SepeteEkle tuşunu aktive etmem lazım.
+//todo Reklam panosunu halletmem lazım.
+
 import 'package:flutter/material.dart';
 import 'package:idea_ecommerce_app/models/urun.dart';
+import 'package:idea_ecommerce_app/screens/musteri/arama_view.dart';
+import 'package:idea_ecommerce_app/screens/musteri/urun_ekrani_view.dart';
 import 'package:idea_ecommerce_app/screens/sign_in.dart';
 import 'package:idea_ecommerce_app/services/auth.dart';
 import 'anaSayfa_view_model.dart';
@@ -40,6 +46,10 @@ class AnaSayfa extends StatelessWidget {
             children: [
               SizedBox(height: 10),
               TextField(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: ((context) => Arama())));
+                },
                 decoration: InputDecoration(
                     prefixIcon: Icon(Icons.search),
                     hintText: "Ürün veya Satıcı ismi girerek arayınız."),
@@ -104,15 +114,22 @@ class AnaSayfa extends StatelessWidget {
                             return Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.height * 0.25,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.25,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      color: Colors.black54,
+                                GestureDetector(
+                                  onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => urunEkrani(),
+                                      )),
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.height *
+                                        0.25,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.25,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: Colors.black54,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -197,7 +214,7 @@ class AnaSayfa extends StatelessWidget {
                                       child: Image(
                                           image: NetworkImage(snapshot
                                                   .data?[index]
-                                                  .urunResimleriUrl[0] ??
+                                                  .urunResimleriUrl[index] ??
                                               '')),
                                     ),
                                     Text(

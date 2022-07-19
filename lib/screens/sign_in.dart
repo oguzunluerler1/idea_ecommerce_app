@@ -5,6 +5,7 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:idea_ecommerce_app/screens/musteri/anaSayfa_view.dart';
 import 'package:idea_ecommerce_app/screens/musteri/musteri_hesap_olusturma_view.dart';
 import 'package:idea_ecommerce_app/screens/musteri/musteri_hesap_resetleme_view.dart';
+import 'package:idea_ecommerce_app/screens/musteri/my_home_page.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth.dart';
@@ -153,7 +154,7 @@ class _SignInState extends State<SignIn> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => AnaSayfa(),
+                                      builder: (context) => MyHomePage(),
                                     ));
                               }
                             } on FirebaseAuthException catch (e) {

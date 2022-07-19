@@ -13,6 +13,7 @@ import 'package:firebase_core/firebase_core.dart';
 //*Flutter'ın en çok kullandığı standart material kütüphanesi. Flutterla otomatik yüklü geliyor. Sadece import ediyoruz.
 import 'package:flutter/material.dart';
 import 'package:idea_ecommerce_app/screens/musteri/arama_view.dart';
+import 'package:idea_ecommerce_app/screens/musteri/arama_view_model.dart';
 import 'package:idea_ecommerce_app/screens/musteri/favoriler_view.dart';
 import 'package:idea_ecommerce_app/screens/musteri/kategoriler_view.dart';
 import 'package:idea_ecommerce_app/screens/musteri/musteri_hesap_olusturma_view.dart';
@@ -50,7 +51,10 @@ void main() async {
         create: (context) => Auth(),
       ),
       ChangeNotifierProvider<AnasayfaViewModel>(
-          create: ((context) => AnasayfaViewModel()))
+          create: ((context) => AnasayfaViewModel())),
+          Provider<AramaViewModel>(
+        create: (context) => AramaViewModel(),
+      ),
     ],
     child: MyApp(),
   ));
