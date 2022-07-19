@@ -7,6 +7,7 @@ class Urun {
   final String satici; //todo normalce seller tipinde sonra bakıcam
   final int fiyat;
   final List<dynamic> urunResimleriUrl;
+  final double puanOrt;
 
   Urun(
       {required this.id,
@@ -16,7 +17,9 @@ class Urun {
       required this.marka,
       required this.stokMiktari,
       required this.satici,
-      required this.fiyat});
+      required this.fiyat,
+      this.puanOrt = 0});
+      //TODO: puan ortalaması şu an direkt olarak default değer alıyor. ona göre bunu yapacaksak daha sonra required yapıp tüm programdaki fonksiyonlara onun da atanması lazım.
 
   Map<String, dynamic> toMap() => {
         'id': id,
@@ -37,5 +40,6 @@ class Urun {
       stokMiktari: map['stokMiktari'],
       satici: map['satici'],
       fiyat: map['fiyat'],
+      puanOrt: map['puanOrt'],
       urunResimleriUrl: map['urunResimleriUrl']);
 }
