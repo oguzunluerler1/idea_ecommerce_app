@@ -331,11 +331,7 @@ class _MusteriHesapOlusturmaState extends State<MusteriHesapOlusturma> {
             TextButton(
               child: Text('ANLADIM'),
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SignIn(),
-                    ));
+                Navigator.pop(context);
               },
             ),
           ],

@@ -9,15 +9,26 @@ class Siparis {
   Siparis(
       {required this.id, required this.siparisTarihi, required this.urunler});
 
-  Map<String, dynamic> toMap() => {
-        'id': id,
-        'urunler': urunler,
-        'siparisTarihi': Calculator.datetimeToTimestamp(siparisTarihi),
-      };
+  Map<String, dynamic> toMap() {
+    List<Map<String, dynamic>> urunler =
+        this.urunler.map((urunler) => urunler.toMap()).toList();
 
-  factory Siparis.fromMap(Map map) => Siparis(
-        id: map['id'],
-        urunler: map['urunler'],
-        siparisTarihi: Calculator.datetimeFromTimestamp(map['siparisTarihi']),
-      );
+    return {
+      'id': id,
+      'urunler': urunler,
+      'siparisTarihi': Calculator.datetimeToTimestamp(siparisTarihi),
+    };
+  }
+
+  factory Siparis.fromMap(Map map) {
+    var urunlerAsMap = map['Product'] as List;
+    List<Urun> urunler =
+        urunlerAsMap.map((urunlerAsMap) => Urun.fromMap(urunlerAsMap)).toList();
+
+    return Siparis(
+      id: map['id'],
+      urunler: urunler,
+      siparisTarihi: Calculator.datetimeFromTimestamp(map['siparisTarihi']),
+    );
+  }
 }

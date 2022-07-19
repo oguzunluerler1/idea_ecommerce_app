@@ -58,8 +58,8 @@ class SatinAlmaView extends StatelessWidget {
                   ),
 //todo Şu an için ürünle ilgili veriler geliyor. Normalde buraya adres bilgilerini getirip kutular içerisine yazdırıcaz. Ayrıca tıklama özelliği de ekliycez.
                   FutureBuilder<List<Urun>>(
-                      future:
-                          Provider.of<AnasayfaViewModel>(context).veriOkuma(),
+                      future: Provider.of<AnasayfaViewModel>(context)
+                          .tumUrunVerisiOkuma(),
                       builder: (centext, snapshot) {
                         if (snapshot.hasData) {
                           return SizedBox(

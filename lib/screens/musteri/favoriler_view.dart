@@ -19,7 +19,8 @@ class Favoriler extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
 //todo Burada favori listesindeki ürünleri getirecek şekilde ayarlama yapıcaz. Ayrıca Bir de favori ürünü listeden çıkarmak için buton yapmak lazım.
         child: FutureBuilder<List<Urun>>(
-            future: Provider.of<AnasayfaViewModel>(context).veriOkuma(),
+            future:
+                Provider.of<AnasayfaViewModel>(context).tumUrunVerisiOkuma(),
             builder: (centext, snapshot) {
               if (snapshot.hasData) {
                 return GridView.builder(
@@ -46,6 +47,10 @@ class Favoriler extends StatelessWidget {
                                   color: Colors.black54,
                                 ),
                               ),
+                              child: Image(
+                                  image: NetworkImage(snapshot
+                                          .data?[index].urunResimleriUrl[0] ??
+                                      '')),
                             ),
                             Positioned(
                               right: 5,

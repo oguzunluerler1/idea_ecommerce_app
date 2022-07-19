@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet.dart';
+import 'package:provider/provider.dart';
+import '../../models/urun.dart';
 import 'anaSayfa_view.dart';
 import 'favoriler_view.dart';
 import 'hesap_view.dart';
 import 'kategoriler_view.dart';
-import 'sepet_view.dart';
+import 'kullanicisepet_View_Model.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key}) : super(key: key);
@@ -26,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
             : index == 1
                 ? Favoriler()
                 : index == 2
-                    ? Sepet()
+                    ? KullaniciSepetView()
                     : index == 3
                         ? Kategori()
                         : Hesap(),
@@ -57,14 +60,39 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 12,
                       child: Center(
 //todo Buradaki Texte sepette kaç ürün var ise onu yazdırıcaz.
-                        child: Text(
+                          child: FutureBuilder<List<Urun>>(
+                        future: Provider.of<KullaniciSepetViewModel>(context)
+                            .sepetUrunVerisiOkuma(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Text(
+                              snapshot.data!.length.toString(),
+                              style: TextStyle(color: Colors.white,fontSize: 10),
+                            );
+                          } else {
+                            return Center(
+                              child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.height * 0.40,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.40,
+//*indicatorın boyutunu ayarlamak için transform scale kullanmak zorunda kaldım. Sizedbox bile işe yaramadı. Bu şekilde alana göre küçülttüm ve oldu.
+                                  child: Transform.scale(
+                                      scale: 0.3,
+                                      child: CircularProgressIndicator())),
+                            );
+                          }
+                        },
+                      )),
+
+                      /* Text(
                           '8',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 9),
-                        ),
-                      ),
+                        ), */
+
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: Color.fromARGB(255, 255, 0, 0)),
