@@ -11,7 +11,7 @@ class KullaniciSepetView extends StatefulWidget {
 }
 
 class _KullaniciSepetViewState extends State<KullaniciSepetView> {
-  bool? _checked = true;
+  List<bool?> _checked = List<bool>.filled(100, true);
   int? _urunSayiDegiskeni = 1;
   @override
   Widget build(BuildContext context) {
@@ -126,10 +126,10 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
                                         )
                                       ],
                                     ),
-                                    value: _checked,
+                                    value: _checked[index],
                                     onChanged: (bool? value) {
                                       setState(() {
-                                        _checked = value;
+                                        _checked[index] = value;
                                       });
                                     },
                                   ),
@@ -210,11 +210,16 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
                     "Ödeme ekranına, kayıtlı kart ve adreslere sırayla gidecek");
               },
               child: Container(
-                  decoration:
-                      BoxDecoration(color: Colors.orange, border: Border.all()),
+                  decoration: BoxDecoration(
+                      color: Colors.purple,
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(10)),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text("Ödemeyi Tamamla"),
+                    child: Text(
+                      "Ödemeyi Tamamla",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   )),
             ),
             Spacer(),
@@ -224,7 +229,7 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
     );
   }
 
-  Widget urunListTile() {
+  /*  Widget urunListTile() {
     return Visibility(
         child: Padding(
           padding: const EdgeInsets.all(2.0),
@@ -317,7 +322,7 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
         ),
         visible: _urunSayiDegiskeni! <= 0 ? false : true);
   }
-
+ */
   Container saticiKargoListTile() {
     return Container(
       decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 0.1))),
@@ -343,11 +348,11 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
           children: [
             Row(
               children: [
-                Icon(Icons.local_shipping, color: Colors.orange),
+                Icon(Icons.local_shipping, color: Colors.purple),
                 Text(
                   " Kargo Bedava",
                   style: TextStyle(
-                      color: Colors.orange, fontWeight: FontWeight.bold),
+                      color: Colors.purple, fontWeight: FontWeight.bold),
                 )
               ],
             )
