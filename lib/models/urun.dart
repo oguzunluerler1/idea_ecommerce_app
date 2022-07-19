@@ -1,3 +1,6 @@
+//todo Urun açıklamaları, Urun Özellikleri
+
+
 class Urun {
   final String id;
   final String isim;

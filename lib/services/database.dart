@@ -69,7 +69,7 @@ class Database {
   Future<QuerySnapshot<Map<String, dynamic>>> tumUrunVerisiOkuma(
       String path) async {
     var data = await _firestore.collection(path).get();
-   
+
     return data;
   }
 

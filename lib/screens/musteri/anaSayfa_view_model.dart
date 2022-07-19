@@ -16,11 +16,11 @@ class AnasayfaViewModel extends ChangeNotifier {
     Map<String, dynamic>? musteriBilgisiMap =
         await _database.musteriVerisiCekme(uid);
 
-    //todo burada databaseden çektiğim müşteri bilgilerini içeren mapi müşteriye çevirip onun üzerinden işlem yapacaktım ama hata vermiyor ama müşteri nesnesi de oluşmuyor çözemedim bir türlü. O yüzden şimdilik direk mapden aldığım bilgiyi kullanıyorum.
-    //!Musteri musteriBilgisi = Musteri.fromMap(musteriBilgisiMap!);
+    //*HALLETTİM. burada databaseden çektiğim müşteri bilgilerini içeren mapi müşteriye çevirip onun üzerinden işlem yapacaktım ama hata vermiyor ama müşteri nesnesi de oluşmuyor çözemedim bir türlü. O yüzden şimdilik direk mapden aldığım bilgiyi kullanıyorum.
+    Musteri musteriBilgisi = Musteri.fromMap(musteriBilgisiMap!);
 
     var data = await _database.tiklananUrunVerisiOkuma(
-        path: 'Product', urun: musteriBilgisiMap!['tiklananUrunler']);
+        path: 'Product', urun: musteriBilgisi.tiklananUrunler);
 
     List<Urun> docSnap = data.docs.map((e) => Urun.fromMap(e.data())).toList();
     docSnap.shuffle();
