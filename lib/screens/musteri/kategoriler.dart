@@ -74,7 +74,7 @@ class _kategoriViewState extends State<kategoriView> {
   Widget build(BuildContext context) {
     sifirla();
     return SafeArea(
-      child: Scaffold(
+      child: Scaffold( 
         body: bodyMethod(),
       ),
     );
