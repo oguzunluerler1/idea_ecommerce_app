@@ -16,6 +16,8 @@ import 'package:idea_ecommerce_app/screens/musteri/arama_view.dart';
 import 'package:idea_ecommerce_app/screens/musteri/arama_view_model.dart';
 import 'package:idea_ecommerce_app/screens/musteri/favoriler_view.dart';
 import 'package:idea_ecommerce_app/screens/musteri/kategoriler_view.dart';
+import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet.dart';
+import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet_View_Model.dart';
 import 'package:idea_ecommerce_app/screens/musteri/musteri_hesap_olusturma_view.dart';
 import 'package:idea_ecommerce_app/screens/musteri/satinAlma_view.dart';
 import 'package:idea_ecommerce_app/screens/musteri/yorum_yapma_view.dart';
@@ -47,12 +49,15 @@ void main() async {
       Provider<Database>(
         create: (context) => Database(),
       ),
+      Provider<KullaniciSepetViewModel>(
+        create: (context) => KullaniciSepetViewModel(),
+      ),
       Provider<Auth>(
         create: (context) => Auth(),
       ),
       ChangeNotifierProvider<AnasayfaViewModel>(
           create: ((context) => AnasayfaViewModel())),
-          Provider<AramaViewModel>(
+      Provider<AramaViewModel>(
         create: (context) => AramaViewModel(),
       ),
     ],

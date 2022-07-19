@@ -44,7 +44,7 @@ class Urun {
         stokMiktari: map['stokMiktari'],
         satici: map['satici'],
         fiyat: map['fiyat'],
-        puanOrt: map['puanOrt'],
+        puanOrt: map['puanOrt'].toDouble(),
         urunResimleriUrl: map['urunResimleriUrl'],
       );
 }

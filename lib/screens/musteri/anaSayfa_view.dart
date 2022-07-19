@@ -132,6 +132,11 @@ class AnaSayfa extends StatelessWidget {
                                         color: Colors.black54,
                                       ),
                                     ),
+                                    child: Image(
+                                        image: NetworkImage(snapshot
+                                                .data?[index]
+                                                .urunResimleriUrl[0] ??
+                                            '')),
                                   ),
                                 ),
                                 Text(
@@ -194,8 +199,6 @@ class AnaSayfa extends StatelessWidget {
                                 crossAxisCount: 1,
                               ),
                               itemBuilder: (BuildContext context, int index) {
-                                print(
-                                    snapshot.data?[index].urunResimleriUrl[0]);
                                 return Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -223,7 +226,7 @@ class AnaSayfa extends StatelessWidget {
                                         child: Image(
                                             image: NetworkImage(snapshot
                                                     .data?[index]
-                                                    .urunResimleriUrl[index] ??
+                                                    .urunResimleriUrl[0] ??
                                                 '')),
                                       ),
                                     ),
@@ -283,16 +286,29 @@ class AnaSayfa extends StatelessWidget {
                             return Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.height * 0.25,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.25,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      color: Colors.black54,
+                                GestureDetector(
+                                  onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            urunEkrani(snapshot.data![index]),
+                                      )),
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.height *
+                                        0.25,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.25,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: Colors.black54,
+                                      ),
                                     ),
+                                    child: Image(
+                                        image: NetworkImage(snapshot
+                                                .data?[index]
+                                                .urunResimleriUrl[0] ??
+                                            '')),
                                   ),
                                 ),
                                 Text(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet.dart';
 import 'anaSayfa_view.dart';
 import 'favoriler_view.dart';
 import 'hesap_view.dart';
 import 'kategoriler_view.dart';
-import 'sepet_view.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key}) : super(key: key);
@@ -26,7 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
             : index == 1
                 ? Favoriler()
                 : index == 2
-                    ? Sepet()
+                    ? KullaniciSepetView()
                     : index == 3
                         ? Kategori()
                         : Hesap(),

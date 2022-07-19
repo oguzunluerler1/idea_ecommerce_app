@@ -47,6 +47,10 @@ class Favoriler extends StatelessWidget {
                                   color: Colors.black54,
                                 ),
                               ),
+                              child: Image(
+                                  image: NetworkImage(snapshot
+                                          .data?[index].urunResimleriUrl[0] ??
+                                      '')),
                             ),
                             Positioned(
                               right: 5,

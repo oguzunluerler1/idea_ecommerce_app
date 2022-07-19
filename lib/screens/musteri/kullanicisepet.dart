@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet_View_Model.dart';
+import 'package:provider/provider.dart';
 
-class sepetim extends StatefulWidget {
-  const sepetim({Key? key}) : super(key: key);
+import '../../models/urun.dart';
+
+class KullaniciSepetView extends StatefulWidget {
+  const KullaniciSepetView({Key? key}) : super(key: key);
   @override
-  State<sepetim> createState() => _sepetimState();
+  State<KullaniciSepetView> createState() => _KullaniciSepetViewState();
 }
 
-class _sepetimState extends State<sepetim> {
+class _KullaniciSepetViewState extends State<KullaniciSepetView> {
   bool? _checked = true;
   int? _urunSayiDegiskeni = 1;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              'Sepetim',
+              style: TextStyle(color: Colors.purple, fontSize: 30),
+            )),
         body: bodyMethod(),
       ),
     );
@@ -21,10 +31,135 @@ class _sepetimState extends State<sepetim> {
   Widget bodyMethod() {
     return Column(
       children: [
-        enUstKutuSepetimBaslikli(),
+        //enUstKutuSepetimBaslikli(),
         saticiKargoListTile(),
         alisverisTamamla(),
-        Expanded(
+        FutureBuilder<List<Urun>>(
+            future: Provider.of<KullaniciSepetViewModel>(context)
+                .sepetUrunVerisiOkuma(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: snapshot.data?.length,
+                    itemBuilder: (context, index) {
+                      print('uzunluk ${snapshot.data?.length}');
+                      return Visibility(
+                          child: Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: Container(
+                              decoration:
+                                  BoxDecoration(border: Border.all(width: 1)),
+                              child: Column(
+                                children: [
+                                  CheckboxListTile(
+                                    title: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Container(
+                                              height: 50,
+                                              width: 50,
+                                              child: Image(
+                                                image: NetworkImage(snapshot
+                                                        .data?[index]
+                                                        .urunResimleriUrl[0] ??
+                                                    ''),
+                                                fit: BoxFit.contain,
+                                              )),
+                                        ),
+                                        Container(
+                                          width: 150,
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                "XX Marka El Çantası",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(
+                                                "En geç 20 temmuz Çarşamba günü kargoda",
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                                width: 1,
+                                              ),
+                                              Text("35.90 TL")
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    secondary: Column(
+                                      children: [
+                                        Expanded(
+                                          child: GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  _urunSayiDegiskeni =
+                                                      (_urunSayiDegiskeni! + 1);
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.add,
+                                                size: 18,
+                                              )),
+                                        ),
+                                        Text("$_urunSayiDegiskeni",
+                                            style: TextStyle(fontSize: 12)),
+                                        Expanded(
+                                          child: GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  _urunSayiDegiskeni =
+                                                      _urunSayiDegiskeni! - 1;
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.remove,
+                                                size: 18,
+                                              )),
+                                        )
+                                      ],
+                                    ),
+                                    value: _checked,
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        _checked = value;
+                                      });
+                                    },
+                                  ),
+                                  GestureDetector(
+                                      onTap: () {
+                                        print(
+                                            "ilişkili ürünün linkine gidecek");
+                                      },
+                                      child: Text("Ürün ayrıntıları")),
+                                ],
+                              ),
+                            ),
+                          ),
+                          visible: _urunSayiDegiskeni! <= 0 ? false : true);
+                    },
+                  ),
+                );
+              } else {
+                return Center(
+                  child: Container(
+                      width: MediaQuery.of(context).size.height * 0.40,
+                      height: MediaQuery.of(context).size.height * 0.40,
+//*indicatorın boyutunu ayarlamak için transform scale kullanmak zorunda kaldım. Sizedbox bile işe yaramadı. Bu şekilde alana göre küçülttüm ve oldu.
+                      child: Transform.scale(
+                          scale: 0.3, child: CircularProgressIndicator())),
+                );
+              }
+            }),
+
+        /* Expanded(
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -36,7 +171,7 @@ class _sepetimState extends State<sepetim> {
               ],
             ),
           ),
-        ),
+        ), */
       ],
     );
   }
@@ -103,12 +238,13 @@ class _sepetimState extends State<sepetim> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Container(
-                            height: 50,
-                            width: 50,
-                            child: Image.asset(
+                          height: 50,
+                          width: 50,
+                          /* child: Image.asset(
                               "assets/canta.jpg",
                               fit: BoxFit.contain,
-                            )),
+                            ) */
+                        ),
                       ),
                       Container(
                         width: 150,
@@ -236,7 +372,7 @@ class _sepetimState extends State<sepetim> {
                 child: ListTile(
                   title: Text(
                     "Sepetim",
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 30, color: Colors.purple),
                   ),
                   subtitle: Text("(3 ürün)"),
                   trailing: GestureDetector(

@@ -6,6 +6,14 @@ import '../models/musteri.dart';
 class Database {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+Future<QuerySnapshot<Map<String, dynamic>>> sepetUrunVerisiOkuma(
+      {required String path, required List urun}) async {
+    var data = await _firestore.collection(path).where('id', whereIn: urun);
+
+    return data.get();
+  }
+
+
   Future<QuerySnapshot<Map<String, dynamic>>> arama(
       {required String path, required String value}) async {
     var data =
