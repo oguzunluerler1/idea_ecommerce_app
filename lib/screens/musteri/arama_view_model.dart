@@ -6,6 +6,8 @@ class AramaViewModel {
   Database _database = Database();
   Auth _auth = Auth();
 
+  
+
   Future<List<dynamic>> gecmisBilgisi() async {
     String? uid = _auth.onlineUser()?.uid;
 

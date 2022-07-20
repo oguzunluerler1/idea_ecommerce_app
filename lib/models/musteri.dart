@@ -103,13 +103,13 @@ class Musteri {
     List<KayitliKart> kayitliKart = kayitliKartAsMap
         .map((kayitliKartAsMap) => KayitliKart.fromMap(kayitliKartAsMap))
         .toList();
-    print(kayitliKart);
+    //print(kayitliKart);
 
     var siparisAsMap = map['siparis'] as List;
     List<Siparis> siparis = siparisAsMap
         .map((siparisAsMap) => Siparis.fromMap(siparisAsMap))
         .toList();
-    print(siparis);
+    //print(siparis);
     return Musteri(
         uid: map['uid'],
         adSoyad: map['adSoyad'],

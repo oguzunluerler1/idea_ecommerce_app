@@ -5,14 +5,30 @@ import '../models/musteri.dart';
 class Database {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-Future<QuerySnapshot<Map<String, dynamic>>> sepetUrunVerisiOkuma(
+  sepeteUrunEkleme(String path, String docId, String uid) async {
+    var musteriBilgisi = await _firestore
+        .collection(path)
+        .doc(uid)
+        .get()
+        .then((value) => value.data());
+    List sepettekiUrunler = musteriBilgisi?['sepettekiUrunler'];
+
+    if (!sepettekiUrunler.contains(docId)) {
+      sepettekiUrunler.add(docId);
+    }
+
+    musteriBilgisi?['sepettekiUrunler'] = sepettekiUrunler;
+    //print(musteriBilgisi?['sepettekiUrunler']);
+    await _firestore.collection(path).doc(uid).set(musteriBilgisi!);
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> sepetUrunVerisiOkuma(
       {required String path, required List urun}) async {
     var data = await _firestore.collection(path);
     //.where('id', whereIn: urun);  //TODO: hata fırlatıyor ürün parametresini boş veya null kabul etmiyor
 
     return data.get();
   }
-
 
   Future<QuerySnapshot<Map<String, dynamic>>> arama(
       {required String path, required String value}) async {
@@ -59,8 +75,9 @@ Future<QuerySnapshot<Map<String, dynamic>>> sepetUrunVerisiOkuma(
 
   Future<QuerySnapshot<Map<String, dynamic>>> tiklananUrunVerisiOkuma(
       {required String path, required List urun}) async {
-    var data = await _firestore.collection(path);
-    //.where('id', whereIn: urun);  //todo: asdas
+    var data = await _firestore
+        .collection(path)
+        .where('id', whereIn: urun); //todo: asdas
 
     return data.get();
   }

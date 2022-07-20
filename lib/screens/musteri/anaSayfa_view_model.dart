@@ -10,6 +10,11 @@ class AnasayfaViewModel extends ChangeNotifier {
   Database _database = Database();
   Auth _auth = Auth();
 
+sepeteUrunEkleme(String docId) async {
+    String? uid = await _auth.onlineUser()?.uid;
+    _database.sepeteUrunEkleme('Customer', docId, uid!);
+  }
+
   Future<List<Urun>> tiklananUrunVerisiOkuma() async {
     String? uid = _auth.onlineUser()?.uid;
 
@@ -34,9 +39,9 @@ class AnasayfaViewModel extends ChangeNotifier {
   Future<List<Urun>> tumUrunVerisiOkuma() async {
     QuerySnapshot<Map<String, dynamic>> data =
         await _database.tumUrunVerisiOkuma('Product');
-    print(data);
+    //print(data);
     List<Urun> docSnap = data.docs.map((e) => Urun.fromMap(e.data())).toList();
-    print(docSnap);
+    //print(docSnap);
     docSnap.shuffle();
     return docSnap;
   }

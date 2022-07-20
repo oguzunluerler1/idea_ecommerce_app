@@ -99,7 +99,7 @@ class _AramaState extends State<Arama> {
                 future: Provider.of<AramaViewModel>(context, listen: false)
                     .arama(arama.text),
                 builder: (centext, snapshot) {
-                  print(arama.text);
+                  //print(arama.text);
                   if (snapshot.hasData) {
                     return Expanded(
                       child: GridView.builder(
