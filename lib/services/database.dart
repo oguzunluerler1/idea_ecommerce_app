@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:idea_ecommerce_app/screens/sign_in.dart';
 
 import '../models/musteri.dart';
 

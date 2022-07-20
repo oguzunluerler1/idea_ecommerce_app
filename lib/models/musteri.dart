@@ -3,7 +3,6 @@ import 'package:idea_ecommerce_app/models/siparis.dart';
 
 import '../services/calculator.dart';
 import 'adres.dart';
-import 'urun.dart';
 
 class Musteri {
   final String uid;
