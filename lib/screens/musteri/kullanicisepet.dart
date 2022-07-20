@@ -23,153 +23,152 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
               'Sepetim',
               style: TextStyle(color: Colors.purple, fontSize: 30),
             )),
-        body: bodyMethod(),
+        body: bodyMethod(context),
       ),
     );
   }
 
-  Widget bodyMethod() {
-    return Column(
-      children: [
-        //enUstKutuSepetimBaslikli(),
-        saticiKargoListTile(),
-        alisverisTamamla(),
-        FutureBuilder<List<Urun>>(
-            future: Provider.of<KullaniciSepetViewModel>(context)
-                .sepetUrunVerisiOkuma(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: snapshot.data?.length,
-                    itemBuilder: (context, index) {
-                      //print('uzunluk ${snapshot.data?.length}');
-                      return Visibility(
-                          child: Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: Container(
-                              decoration:
-                                  BoxDecoration(border: Border.all(width: 1)),
-                              child: Column(
-                                children: [
-                                  CheckboxListTile(
-                                    title: Row(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: Container(
-                                              height: 50,
-                                              width: 50,
-                                              child: Image(
-                                                image: NetworkImage(snapshot
-                                                        .data?[index]
-                                                        .urunResimleriUrl[0] ??
-                                                    ''),
-                                                fit: BoxFit.contain,
-                                              )),
-                                        ),
-                                        Container(
-                                          width: 150,
-                                          child: Column(
-                                            children: [
-                                              Text(
-                                                "XX Marka El Çantası",
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              Text(
-                                                "En geç 20 temmuz Çarşamba günü kargoda",
-                                                style: TextStyle(fontSize: 12),
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                                width: 1,
-                                              ),
-                                              Text("35.90 TL")
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    secondary: Column(
-                                      children: [
-                                        Expanded(
-                                          child: GestureDetector(
-                                              onTap: () {
-                                                setState(() {
-                                                  _urunSayiDegiskeni =
-                                                      (_urunSayiDegiskeni! + 1);
-                                                });
-                                              },
-                                              child: Icon(
-                                                Icons.add,
-                                                size: 18,
-                                              )),
-                                        ),
-                                        Text("$_urunSayiDegiskeni",
-                                            style: TextStyle(fontSize: 12)),
-                                        Expanded(
-                                          child: GestureDetector(
-                                              onTap: () {
-                                                setState(() {
-                                                  _urunSayiDegiskeni =
-                                                      _urunSayiDegiskeni! - 1;
-                                                });
-                                              },
-                                              child: Icon(
-                                                Icons.remove,
-                                                size: 18,
-                                              )),
-                                        )
-                                      ],
-                                    ),
-                                    value: _checked[index],
-                                    onChanged: (bool? value) {
-                                      setState(() {
-                                        _checked[index] = value;
-                                      });
-                                    },
-                                  ),
-                                  GestureDetector(
-                                      onTap: () {
-                                        print(
-                                            "ilişkili ürünün linkine gidecek");
-                                      },
-                                      child: Text("Ürün ayrıntıları")),
-                                ],
-                              ),
-                            ),
-                          ),
-                          visible: _urunSayiDegiskeni! <= 0 ? false : true);
-                    },
-                  ),
-                );
-              } else {
-                return Container();
-              }
-            }),
+  Widget bodyMethod(BuildContext context) {
+    return FutureBuilder<List<Urun>>(
+        future: Provider.of<KullaniciSepetViewModel>(context)
+            .sepetUrunVerisiOkuma(),
+        builder: (context, snapshot) {
+          return Column(
+            children: [
+              //enUstKutuSepetimBaslikli(),
+              saticiKargoListTile(),
+              alisverisTamamla(context, snapshot),
 
-        /* Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                urunListTile(),
-                urunListTile(),
-                urunListTile(),
-                urunListTile(),
-                urunListTile(),
-              ],
-            ),
-          ),
-        ), */
-      ],
-    );
+              snapshot.hasData
+                  ? Expanded(
+                      child: ListView.builder(
+                        itemCount: snapshot.data?.length,
+                        itemBuilder: (context, index) {
+                          //print('uzunluk ${snapshot.data?.length}');
+                          return Visibility(
+                              child: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(width: 1)),
+                                  child: Column(
+                                    children: [
+                                      CheckboxListTile(
+                                        title: Row(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(4.0),
+                                              child: Container(
+                                                  height: 50,
+                                                  width: 50,
+                                                  child: Image(
+                                                    image: NetworkImage(snapshot
+                                                                .data?[index]
+                                                                .urunResimleriUrl[
+                                                            0] ??
+                                                        ''),
+                                                    fit: BoxFit.contain,
+                                                  )),
+                                            ),
+                                            Container(
+                                              width: 150,
+                                              child: Column(
+                                                children: [
+                                                  Text(
+                                                    snapshot.data![index].isim,
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                    "En geç 20 temmuz Çarşamba günü kargoda",
+                                                    style:
+                                                        TextStyle(fontSize: 12),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                    width: 1,
+                                                  ),
+                                                  Text(snapshot
+                                                      .data![index].fiyat
+                                                      .toString())
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        controlAffinity:
+                                            ListTileControlAffinity.leading,
+                                        secondary: Column(
+                                          children: [
+                                            Expanded(
+                                              child: GestureDetector(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      _urunSayiDegiskeni =
+                                                          (_urunSayiDegiskeni! +
+                                                              1);
+                                                    });
+                                                  },
+                                                  child: Icon(
+                                                    Icons.add,
+                                                    size: 18,
+                                                  )),
+                                            ),
+                                            Text("$_urunSayiDegiskeni",
+                                                style: TextStyle(fontSize: 12)),
+                                            Expanded(
+                                              child: GestureDetector(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      _urunSayiDegiskeni =
+                                                          _urunSayiDegiskeni! -
+                                                              1;
+                                                    });
+                                                  },
+                                                  child: Icon(
+                                                    Icons.remove,
+                                                    size: 18,
+                                                  )),
+                                            )
+                                          ],
+                                        ),
+                                        value: _checked[index],
+                                        onChanged: (bool? value) {
+                                          setState(() {
+                                            _checked[index] = value;
+                                          });
+                                        },
+                                      ),
+                                      GestureDetector(
+                                          onTap: () {
+                                            print(
+                                                "ilişkili ürünün linkine gidecek");
+                                          },
+                                          child: Text("Ürün ayrıntıları")),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              visible: _urunSayiDegiskeni! <= 0 ? false : true);
+                        },
+                      ),
+                    )
+                  : Container()
+            ],
+          );
+        });
   }
 
-  Container alisverisTamamla() {
+  Container alisverisTamamla(
+      BuildContext context, AsyncSnapshot<List<Urun>> snapshot) {
+    int toplamFiyat = 0;
+    if (snapshot.data != null) {
+      for (var fiyat in snapshot.data!) {
+        toplamFiyat = toplamFiyat + fiyat.fiyat;
+      }
+    }
     return Container(
       decoration: BoxDecoration(
           border: Border(
@@ -182,7 +181,7 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
             Spacer(),
             Text("Seçilen Ürünler (3)"),
             Text(
-              "82,70 TL",
+              "$toplamFiyat TL",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             Text("Kargo bedeli = 0 TL"),
@@ -193,7 +192,7 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
           children: [
             Spacer(),
             Text(
-              "Toplam: 82,70 TL",
+              "$toplamFiyat TL",
               style: TextStyle(fontSize: 11),
             ),
             Spacer(),
