@@ -94,12 +94,12 @@ class _MusteriHesapOlusturmaState extends State<MusteriHesapOlusturma> {
                     final user = await Provider.of<Auth>(context, listen: false)
                         .signInWithEmailAndPassword(
                             _emailController.text, _passwordController.text);
-
+    
                     if (user != null && !user.emailVerified) {
                       await _showMyDialog();
                       await Provider.of<Auth>(context, listen: false).signOut();
                     }
-
+    
                     Navigator.pop(context);
                   } on FirebaseAuthException catch (e) {
                     _showErrorDialog(e.code);
@@ -199,115 +199,117 @@ class _MusteriHesapOlusturmaState extends State<MusteriHesapOlusturma> {
       padding: const EdgeInsets.all(20.0),
       child: Form(
           key: _registerFormKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Kayıt Formu', style: TextStyle(fontSize: 25)),
-              SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                controller: _emailController,
-                validator: (value) {
-                  if (!EmailValidator.validate(value!)) {
-                    return 'Lütfen Geçerli bir adres giriniz';
-                  } else {
-                    return null;
-                  }
-                },
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.email),
-                    hintText: 'E-mail',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0))),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                controller: _passwordController,
-                validator: (value) {
-                  if (value != null && value.length < 6) {
-                    return 'Şifreniz en az 6 karakter olmalıdır';
-                  } else {
-                    return null;
-                  }
-                },
-                obscureText: true,
-                decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.lock),
-                    hintText: 'Şifre',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0))),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                controller: _passwordConfirmController,
-                validator: (value) {
-                  if (value != _passwordController.text) {
-                    return 'Şifreler Uyuşmuyor';
-                  } else {
-                    return null;
-                  }
-                },
-                obscureText: true,
-                decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.lock),
-                    hintText: 'Şifre Tekrar',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0))),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    if (_registerFormKey.currentState!.validate()) {
-                      final user = await Provider.of<Auth>(context,
-                              listen: false)
-                          .createUserWithEmailAndPassword(
-                              _emailController.text, _passwordController.text);
-                      if (user != null) {
-                        await Provider.of<Database>(context, listen: false)
-                            .userEkleme(
-                                uid: user.uid, mail: _emailController.text);
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Kayıt Formu', style: TextStyle(fontSize: 25)),
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  controller: _emailController,
+                  validator: (value) {
+                    if (!EmailValidator.validate(value!)) {
+                      return 'Lütfen Geçerli bir adres giriniz';
+                    } else {
+                      return null;
+                    }
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.email),
+                      hintText: 'E-mail',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0))),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  controller: _passwordController,
+                  validator: (value) {
+                    if (value != null && value.length < 6) {
+                      return 'Şifreniz en az 6 karakter olmalıdır';
+                    } else {
+                      return null;
+                    }
+                  },
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.lock),
+                      hintText: 'Şifre',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0))),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  controller: _passwordConfirmController,
+                  validator: (value) {
+                    if (value != _passwordController.text) {
+                      return 'Şifreler Uyuşmuyor';
+                    } else {
+                      return null;
+                    }
+                  },
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.lock),
+                      hintText: 'Şifre Tekrar',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0))),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      if (_registerFormKey.currentState!.validate()) {
+                        final user = await Provider.of<Auth>(context,
+                                listen: false)
+                            .createUserWithEmailAndPassword(
+                                _emailController.text, _passwordController.text);
+                        if (user != null) {
+                          await Provider.of<Database>(context, listen: false)
+                              .userEkleme(
+                                  uid: user.uid, mail: _emailController.text);
+                        }
+                        if (user != null && !user.emailVerified) {
+                          await user.sendEmailVerification();
+                          await _showMyDialog();
+                          await Provider.of<Auth>(context, listen: false)
+                              .signOut();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SignIn(),
+                              ));
+                        }
                       }
-                      if (user != null && !user.emailVerified) {
-                        await user.sendEmailVerification();
-                        await _showMyDialog();
-                        await Provider.of<Auth>(context, listen: false)
-                            .signOut();
+                    } on FirebaseAuthException catch (e) {
+                      _showErrorDialog(e.code);
+                    } catch (e) {
+                      _showErrorDialog(e.toString());
+                    }
+                  },
+                  child: Text('Kayıt Oluştur'),
+                ),
+                TextButton(
+                    onPressed: () {
+                      setState(() {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => SignIn(),
                             ));
-                      }
-                    }
-                  } on FirebaseAuthException catch (e) {
-                    _showErrorDialog(e.code);
-                  } catch (e) {
-                    _showErrorDialog(e.toString());
-                  }
-                },
-                child: Text('Kayıt Oluştur'),
-              ),
-              TextButton(
-                  onPressed: () {
-                    setState(() {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignIn(),
-                          ));
-                    });
-                  },
-                  child: Text('Zaten üye misiniz? Tıklayınız')),
-            ],
+                      });
+                    },
+                    child: Text('Zaten üye misiniz? Tıklayınız')),
+              ],
+            ),
           )),
     );
   }
