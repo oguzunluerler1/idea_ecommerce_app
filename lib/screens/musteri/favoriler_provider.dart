@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:idea_ecommerce_app/models/urun.dart';
+import '../../models/urun.dart';
 
 import '../../services/auth.dart';
 

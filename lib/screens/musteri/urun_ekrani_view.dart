@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:idea_ecommerce_app/screens/musteri/favoriler_provider.dart';
-import 'package:idea_ecommerce_app/utilities/route_helper.dart';
-import 'package:idea_ecommerce_app/widgets/add_basket_button.dart';
+import 'favoriler_provider.dart';
+import '../../utilities/route_helper.dart';
+import '../../widgets/add_basket_button.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/urun.dart';
@@ -104,7 +104,7 @@ class _urunEkraniState extends State<urunEkrani> {
       ),
     );
   }
-  
+
   Padding eTicaretTextButton() {
     return Padding(
       padding: const EdgeInsets.only(right: 10.0),

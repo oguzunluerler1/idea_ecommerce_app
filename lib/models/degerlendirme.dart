@@ -1,4 +1,4 @@
-import 'package:idea_ecommerce_app/services/calculator.dart';
+import '../services/calculator.dart';
 
 import 'urun.dart';
 

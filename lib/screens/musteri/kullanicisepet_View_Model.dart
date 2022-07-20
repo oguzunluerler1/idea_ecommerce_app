@@ -1,4 +1,4 @@
-import 'package:idea_ecommerce_app/services/database.dart';
+import '../../services/database.dart';
 
 import '../../models/musteri.dart';
 import '../../models/urun.dart';

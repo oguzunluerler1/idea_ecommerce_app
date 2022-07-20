@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:idea_ecommerce_app/app_constants/app_strings.dart';
-import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet.dart';
-import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet_View_Model.dart';
-import 'package:idea_ecommerce_app/widgets/loading_indicator.dart';
+import '../../app_constants/app_strings.dart';
+import 'kullanicisepet.dart';
+import 'kullanicisepet_View_Model.dart';
+import '../../widgets/loading_indicator.dart';
 import 'package:provider/provider.dart';
 import '../../models/urun.dart';
 import 'anaSayfa_view.dart';

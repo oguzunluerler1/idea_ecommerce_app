@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet_View_Model.dart';
+import 'kullanicisepet_View_Model.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/urun.dart';
