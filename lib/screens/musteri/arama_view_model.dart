@@ -9,6 +9,11 @@ class AramaViewModel {
   Database _database = Database();
   Auth _auth = Auth();
 
+  sepeteUrunEkleme(String docId)async {
+    String? uid = await _auth.onlineUser()?.uid;
+    _database.sepeteUrunEkleme('Customer', docId, uid!);
+  }
+
   Future<List<dynamic>> gecmisBilgisi() async {
     String? uid = _auth.onlineUser()?.uid;
 

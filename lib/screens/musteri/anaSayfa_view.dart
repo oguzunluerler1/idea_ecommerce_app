@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:idea_ecommerce_app/app_constants/app_strings.dart';
 import 'package:idea_ecommerce_app/models/urun.dart';
 import 'package:idea_ecommerce_app/screens/musteri/arama_view.dart';
+import 'package:idea_ecommerce_app/screens/musteri/arama_view_model.dart';
 import 'package:idea_ecommerce_app/screens/musteri/urun_ekrani_view.dart';
 import 'package:idea_ecommerce_app/screens/sign_in.dart';
 import 'package:idea_ecommerce_app/services/auth.dart';
@@ -17,7 +18,9 @@ class AnaSayfa extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: appBarTitle(),
-        actions: [ logOutButton(context), ],
+        actions: [
+          logOutButton(context),
+        ],
       ),
       body: _bodyView(context),
     );
@@ -26,7 +29,7 @@ class AnaSayfa extends StatelessWidget {
   Text appBarTitle() {
     return Text(
       '$homePageAppTitle',
-      style:TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold),
+      style: TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold),
     );
   }
 
@@ -34,7 +37,11 @@ class AnaSayfa extends StatelessWidget {
     return IconButton(
       onPressed: () {
         Provider.of<Auth>(context, listen: false).signOut();
-        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => SignIn(),));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SignIn(),
+            ));
       },
       icon: Icon(Icons.logout, color: Colors.black.withOpacity(0.6)),
     );
@@ -56,14 +63,25 @@ class AnaSayfa extends StatelessWidget {
             SizedBox(height: 10),
             //todo Buradaki futurebuilder şu an için databasedeki bütün ürünlerin bilgisini çekiyor. Normalde popüler ürünleri bir şekilde belirleyip onları çekmesi lazım. Alt taraftakilerde de son gezilen ürünler veya sizin için seçtiklerimiz tarzı listelerden seçmesi lazım.
             //*Providerın farklı bir kullanım formatını kullandık aşağıda.
-            productFutureBuilder(context: context, future: context.watch<AnasayfaViewModel>().tumUrunVerisiOkuma()),
+            productFutureBuilder(
+                context: context,
+                future:
+                    context.watch<AnasayfaViewModel>().tumUrunVerisiOkuma()),
             sectionTitle(text: sonGezilenUrunlerText),
             SizedBox(height: 10),
-            productFutureBuilder(context: context,future: Provider.of<AnasayfaViewModel>(context).tiklananUrunVerisiOkuma()),
+            productFutureBuilder(
+                context: context,
+                future: Provider.of<AnasayfaViewModel>(context)
+                    .tiklananUrunVerisiOkuma()),
             sectionTitle(text: sizinIcinSectikText),
             SizedBox(height: 10),
-            productFutureBuilder(context: context, future: Provider.of<AnasayfaViewModel>(context).tumUrunVerisiOkuma()),
-            SizedBox(height: 10,),
+            productFutureBuilder(
+                context: context,
+                future: Provider.of<AnasayfaViewModel>(context)
+                    .tumUrunVerisiOkuma()),
+            SizedBox(
+              height: 10,
+            ),
           ],
         ),
       ),
@@ -73,7 +91,8 @@ class AnaSayfa extends StatelessWidget {
   TextField searchTextField(BuildContext context) {
     return TextField(
       onTap: () {
-        Navigator.push(context,MaterialPageRoute(builder: ((context) => Arama())));
+        Navigator.push(
+            context, MaterialPageRoute(builder: ((context) => Arama())));
       },
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.search),
@@ -82,14 +101,16 @@ class AnaSayfa extends StatelessWidget {
     );
   }
 
-  Center reklamPanosu({required BuildContext context, required String imageUrl}) {
+  Center reklamPanosu(
+      {required BuildContext context, required String imageUrl}) {
     return Center(
       child: Container(
         width: MediaQuery.of(context).size.width * 0.9,
         height: MediaQuery.of(context).size.height * 0.20,
         decoration: BoxDecoration(
-        //todo Burada reklam panosuna geçici bir resim ekledim url koyarak. Normalde adminler tarafından belirlenen kampanyaların resimlerini koyucaz ve gesturededector ile farklı resimlere geçmelerini veya tıklayarak ilgili kampanya ürünlerini görmelerini sağlayacağız.
-          image: DecorationImage(image: NetworkImage('$imageUrl'), fit: BoxFit.fill),
+          //todo Burada reklam panosuna geçici bir resim ekledim url koyarak. Normalde adminler tarafından belirlenen kampanyaların resimlerini koyucaz ve gesturededector ile farklı resimlere geçmelerini veya tıklayarak ilgili kampanya ürünlerini görmelerini sağlayacağız.
+          image: DecorationImage(
+              image: NetworkImage('$imageUrl'), fit: BoxFit.fill),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: Colors.black54),
         ),
@@ -99,25 +120,27 @@ class AnaSayfa extends StatelessWidget {
 
   Text sectionTitle({required String text}) {
     return Text(
-    "$text", 
-    textAlign: TextAlign.left,
-    style: TextStyle(
-      color: Color.fromARGB(255, 40, 2, 104),
-      fontWeight: FontWeight.bold),
+      "$text",
+      textAlign: TextAlign.left,
+      style: TextStyle(
+          color: Color.fromARGB(255, 40, 2, 104), fontWeight: FontWeight.bold),
     );
   }
 
-  FutureBuilder<List<Urun>> productFutureBuilder({required BuildContext context, Future<List<Urun>>? future}) {
+  FutureBuilder<List<Urun>> productFutureBuilder(
+      {required BuildContext context, Future<List<Urun>>? future}) {
     return FutureBuilder<List<Urun>>(
-      future: future,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) return productGridView(context, snapshot);
-        else return loading(context);
-      }
-    );
+        future: future,
+        builder: (context, snapshot) {
+          if (snapshot.hasData)
+            return productGridView(context, snapshot);
+          else
+            return loading(context);
+        });
   }
 
-  SizedBox productGridView(BuildContext context, AsyncSnapshot<List<Urun>> snapshot) {
+  SizedBox productGridView(
+      BuildContext context, AsyncSnapshot<List<Urun>> snapshot) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.4,
       child: GridView.builder(
@@ -134,34 +157,41 @@ class AnaSayfa extends StatelessWidget {
     );
   }
 
-  Column productColumn(BuildContext context, AsyncSnapshot<List<Urun>> snapshot, int index) {
+  Column productColumn(
+      BuildContext context, AsyncSnapshot<List<Urun>> snapshot, int index) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         productContainer(
-          context: context, imageUrl: snapshot.data?[index].urunResimleriUrl[0], 
-          onTap: () => goToProductDetail(context: context, urun: snapshot.data![index])
-        ),
-        productLabel(context: context, text: snapshot.data?[index].fiyat.toString() ?? ''),
+            context: context,
+            imageUrl: snapshot.data?[index].urunResimleriUrl[0],
+            onTap: () => goToProductDetail(
+                context: context, urun: snapshot.data![index])),
+        productLabel(
+            context: context,
+            text: snapshot.data?[index].fiyat.toString() ?? ''),
         productLabel(context: context, text: snapshot.data?[index].isim ?? ''),
-        addBasketButton(),
+        addBasketButton(context: context, text: snapshot.data?[index].id ?? ''),
       ],
     );
   }
 
-  void goToProductDetail({required BuildContext context,required Urun urun}){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => urunEkrani(urun)));
+  void goToProductDetail({required BuildContext context, required Urun urun}) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => urunEkrani(urun)));
   }
 
-  Widget productContainer({required BuildContext context, required String imageUrl,required VoidCallback onTap}){
+  Widget productContainer(
+      {required BuildContext context,
+      required String imageUrl,
+      required VoidCallback onTap}) {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: MediaQuery.of(context).size.height * 0.25,
-        height: MediaQuery.of(context).size.height * 0.25,
-        decoration: imageBorder(),
-        child: productImage(url: imageUrl)
-      ),
+          width: MediaQuery.of(context).size.height * 0.25,
+          height: MediaQuery.of(context).size.height * 0.25,
+          decoration: imageBorder(),
+          child: productImage(url: imageUrl)),
     );
   }
 
@@ -182,15 +212,19 @@ class AnaSayfa extends StatelessWidget {
   }
 
   Text productLabel({required BuildContext context, required String text}) {
-    return Text(text, style:Theme.of(context).textTheme.headline6);
+    return Text(text, style: Theme.of(context).textTheme.headline6);
   }
+
   //tood ya widget olarak çıkarılır opressed dışardan verilir ya da parametre geçilir
-  Expanded addBasketButton() {
+  Expanded addBasketButton(
+      {required BuildContext context, required String text}) {
     return Expanded(
       child: OutlinedButton(
-        onPressed: () {},
-        child: Text(sepeteEkleText)
-      ),
+          onPressed: () {
+            Provider.of<AramaViewModel>(context, listen: false)
+                .sepeteUrunEkleme(text);
+          },
+          child: Text(sepeteEkleText)),
     );
   }
 
@@ -199,11 +233,9 @@ class AnaSayfa extends StatelessWidget {
       child: Container(
           width: MediaQuery.of(context).size.height * 0.40,
           height: MediaQuery.of(context).size.height * 0.40,
-        //*indicatorın boyutunu ayarlamak için transform scale kullanmak zorunda kaldım. Sizedbox bile işe yaramadı. Bu şekilde alana göre küçülttüm ve oldu.
-          child: Transform.scale(
-              scale: 0.3,
-              child: CircularProgressIndicator())),
+          //*indicatorın boyutunu ayarlamak için transform scale kullanmak zorunda kaldım. Sizedbox bile işe yaramadı. Bu şekilde alana göre küçülttüm ve oldu.
+          child:
+              Transform.scale(scale: 0.3, child: CircularProgressIndicator())),
     );
   }
-
 }
