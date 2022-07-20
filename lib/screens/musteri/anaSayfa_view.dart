@@ -221,7 +221,7 @@ class AnaSayfa extends StatelessWidget {
     return Expanded(
       child: OutlinedButton(
           onPressed: () {
-            Provider.of<AramaViewModel>(context, listen: false)
+            Provider.of<AnasayfaViewModel>(context, listen: false)
                 .sepeteUrunEkleme(text);
           },
           child: Text(sepeteEkleText)),
