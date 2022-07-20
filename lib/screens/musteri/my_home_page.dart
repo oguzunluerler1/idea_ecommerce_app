@@ -59,14 +59,30 @@ class _MyHomePageState extends State<MyHomePage> {
         width: 12,
         height: 12,
         child: Center(
-          child: Text(
-            '8', //todo Buradaki Texte sepette kaç ürün var ise onu yazdırıcaz.
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 9
-            ),
-          ),
+          child:FutureBuilder<List<Urun>>(
+                        future: Provider.of<KullaniciSepetViewModel>(context)
+                            .sepetUrunVerisiOkuma(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Text(
+                              snapshot.data!.length.toString(),
+                              style: TextStyle(color: Colors.white,fontSize: 10),
+                            );
+                          } else {
+                            return Center(
+                              child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.height * 0.40,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.40,
+//*indicatorın boyutunu ayarlamak için transform scale kullanmak zorunda kaldım. Sizedbox bile işe yaramadı. Bu şekilde alana göre küçülttüm ve oldu.
+                                  child: Transform.scale(
+                                      scale: 0.3,
+                                      child: CircularProgressIndicator())),
+                            );
+                          }
+                        },
+                      ),
         ),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
