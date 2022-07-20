@@ -34,9 +34,9 @@ class AnasayfaViewModel extends ChangeNotifier {
   Future<List<Urun>> tumUrunVerisiOkuma() async {
     QuerySnapshot<Map<String, dynamic>> data =
         await _database.tumUrunVerisiOkuma('Product');
-    print(data);
+    //print(data);
     List<Urun> docSnap = data.docs.map((e) => Urun.fromMap(e.data())).toList();
-    print(docSnap);
+    //print(docSnap);
     docSnap.shuffle();
     return docSnap;
   }

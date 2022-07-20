@@ -62,6 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
         width: 12,
         height: 12,
         child: Center(
+//todo Bu şekilde sepet sayısını yazdırıyorum ama anasayfa üzerinde sepete birşey eklediğimde sayı değişmiyor. notifier kullanmak lazım herhalde. 
           child:FutureBuilder<List<Urun>>(
                         future: Provider.of<KullaniciSepetViewModel>(context)
                             .sepetUrunVerisiOkuma(),

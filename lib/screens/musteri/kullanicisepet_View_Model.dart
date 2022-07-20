@@ -10,13 +10,13 @@ class KullaniciSepetViewModel {
 
   Future<List<Urun>> sepetUrunVerisiOkuma() async {
     String? uid = _auth.onlineUser()?.uid;
-    print('musteri uid $uid');
+    //print('musteri uid $uid');
     Map<String, dynamic>? musteriBilgisiMap =
         await _database.musteriVerisiCekme(uid);
-    print('musterimap $musteriBilgisiMap');
+    //print('musterimap $musteriBilgisiMap');
     //*HALLETTİM. burada databaseden çektiğim müşteri bilgilerini içeren mapi müşteriye çevirip onun üzerinden işlem yapacaktım ama hata vermiyor ama müşteri nesnesi de oluşmuyor çözemedim bir türlü. O yüzden şimdilik direk mapden aldığım bilgiyi kullanıyorum.
     Musteri musteriBilgisi = Musteri.fromMap(musteriBilgisiMap!);
-    print(musteriBilgisi.adSoyad);
+    //print(musteriBilgisi.adSoyad);
 
     var data = await _database.sepetUrunVerisiOkuma(
         path: 'Product', urun: musteriBilgisi.sepettekiUrunler);
