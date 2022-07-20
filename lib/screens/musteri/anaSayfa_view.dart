@@ -8,6 +8,12 @@ import 'package:idea_ecommerce_app/screens/musteri/arama_view.dart';
 import 'package:idea_ecommerce_app/screens/musteri/urun_ekrani_view.dart';
 import 'package:idea_ecommerce_app/screens/sign_in.dart';
 import 'package:idea_ecommerce_app/services/auth.dart';
+import 'package:idea_ecommerce_app/widgets/add_basket_button.dart';
+import 'package:idea_ecommerce_app/widgets/loading_indicator.dart';
+import 'package:idea_ecommerce_app/widgets/product_container.dart';
+import 'package:idea_ecommerce_app/widgets/product_label_headline6.dart';
+import '../../utilities/route_helper.dart';
+import '../../widgets/page_appbar_title.dart';
 import 'anaSayfa_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -16,17 +22,10 @@ class AnaSayfa extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: appBarTitle(),
+        title: PageAppBarTitle(text: homePageAppTitle),
         actions: [ logOutButton(context), ],
       ),
       body: _bodyView(context),
-    );
-  }
-
-  Text appBarTitle() {
-    return Text(
-      '$homePageAppTitle',
-      style:TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold),
     );
   }
 
@@ -112,7 +111,7 @@ class AnaSayfa extends StatelessWidget {
       future: future,
       builder: (context, snapshot) {
         if (snapshot.hasData) return productGridView(context, snapshot);
-        else return loading(context);
+        else return LoadingIndicator();
       }
     );
   }
@@ -138,72 +137,15 @@ class AnaSayfa extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        productContainer(
-          context: context, imageUrl: snapshot.data?[index].urunResimleriUrl[0], 
-          onTap: () => goToProductDetail(context: context, urun: snapshot.data![index])
+        ProductContainer(
+          onTap: () => RouteHelper.goRoute(context: context, page: urunEkrani(snapshot.data![index])), 
+          imageUrl: snapshot.data?[index].urunResimleriUrl[0]
         ),
-        productLabel(context: context, text: snapshot.data?[index].fiyat.toString() ?? ''),
-        productLabel(context: context, text: snapshot.data?[index].isim ?? ''),
-        addBasketButton(),
+        ProductLabelHeadline6(text: snapshot.data?[index].fiyat.toString() ?? ''),
+        ProductLabelHeadline6(text: snapshot.data?[index].isim ?? ''),
+        Expanded(child: AddBasketButton(onTap: (){ } )),
       ],
     );
   }
-
-  void goToProductDetail({required BuildContext context,required Urun urun}){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => urunEkrani(urun)));
-  }
-
-  Widget productContainer({required BuildContext context, required String imageUrl,required VoidCallback onTap}){
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        width: MediaQuery.of(context).size.height * 0.25,
-        height: MediaQuery.of(context).size.height * 0.25,
-        decoration: imageBorder(),
-        child: productImage(url: imageUrl)
-      ),
-    );
-  }
-
-  BoxDecoration imageBorder() {
-    return BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      border: Border.all(
-        color: Colors.black54,
-      ),
-    );
-  }
-
-  Image productImage({required String url}) {
-    return Image.network(
-      url,
-      errorBuilder: (context, error, stackTrace) => Icon(Icons.error_outline),
-    );
-  }
-
-  Text productLabel({required BuildContext context, required String text}) {
-    return Text(text, style:Theme.of(context).textTheme.headline6);
-  }
-  //tood ya widget olarak çıkarılır opressed dışardan verilir ya da parametre geçilir
-  Expanded addBasketButton() {
-    return Expanded(
-      child: OutlinedButton(
-        onPressed: () {},
-        child: Text(sepeteEkleText)
-      ),
-    );
-  }
-
-  Center loading(BuildContext context) {
-    return Center(
-      child: Container(
-          width: MediaQuery.of(context).size.height * 0.40,
-          height: MediaQuery.of(context).size.height * 0.40,
-        //*indicatorın boyutunu ayarlamak için transform scale kullanmak zorunda kaldım. Sizedbox bile işe yaramadı. Bu şekilde alana göre küçülttüm ve oldu.
-          child: Transform.scale(
-              scale: 0.3,
-              child: CircularProgressIndicator())),
-    );
-  }
-
 }
+

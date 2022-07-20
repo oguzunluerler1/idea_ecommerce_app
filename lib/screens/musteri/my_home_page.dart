@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:idea_ecommerce_app/app_constants/app_strings.dart';
 import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet.dart';
+import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet_View_Model.dart';
+import 'package:idea_ecommerce_app/widgets/loading_indicator.dart';
+import 'package:provider/provider.dart';
+import '../../models/urun.dart';
 import 'anaSayfa_view.dart';
 import 'favoriler_view.dart';
 import 'hesap_view.dart';
@@ -24,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-//*index durumuna göre body olarak kullanılacak sayfayı belirleyen turnery kodu
+//*index durumuna göre body olarak kullanılacak sayfayı belirleyen kod
         body: pages[index],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: index,
@@ -59,30 +63,19 @@ class _MyHomePageState extends State<MyHomePage> {
         width: 12,
         height: 12,
         child: Center(
-          child:FutureBuilder<List<Urun>>(
-                        future: Provider.of<KullaniciSepetViewModel>(context)
-                            .sepetUrunVerisiOkuma(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return Text(
-                              snapshot.data!.length.toString(),
-                              style: TextStyle(color: Colors.white,fontSize: 10),
-                            );
-                          } else {
-                            return Center(
-                              child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.height * 0.40,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.40,
-//*indicatorın boyutunu ayarlamak için transform scale kullanmak zorunda kaldım. Sizedbox bile işe yaramadı. Bu şekilde alana göre küçülttüm ve oldu.
-                                  child: Transform.scale(
-                                      scale: 0.3,
-                                      child: CircularProgressIndicator())),
-                            );
-                          }
-                        },
-                      ),
+          child:FutureBuilder<List<Urun>?>(
+            future: Provider.of<KullaniciSepetViewModel>(context).sepetUrunVerisiOkuma(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Text(
+                  snapshot.data!.length.toString(),
+                  style: TextStyle(color: Colors.white,fontSize: 10),
+                );
+              } else {
+                return LoadingIndicator();
+              }
+            },
+          ),
         ),
         decoration: BoxDecoration(
           shape: BoxShape.circle,

@@ -34,7 +34,7 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
         //enUstKutuSepetimBaslikli(),
         saticiKargoListTile(),
         alisverisTamamla(),
-        FutureBuilder<List<Urun>>(
+        FutureBuilder<List<Urun>?>(
             future: Provider.of<KullaniciSepetViewModel>(context)
                 .sepetUrunVerisiOkuma(),
             builder: (context, snapshot) {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:idea_ecommerce_app/screens/musteri/my_home_page.dart';
 import 'package:idea_ecommerce_app/screens/sign_in.dart';
+import 'package:idea_ecommerce_app/widgets/loading_indicator.dart';
 import '../services/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -27,13 +28,7 @@ class _OnBoardWidgetState extends State<OnBoardWidget> {
         if (snapshot.connectionState == ConnectionState.active) {
           return snapshot.data != null ? MyHomePage() : SignIn();
         } else {
-          return Center(
-            child: SizedBox(
-              height: 200,
-              width: 200,
-              child: CircularProgressIndicator(),
-            ),
-          );
+          return LoadingIndicator();
         }
       }
     );
