@@ -18,11 +18,12 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-            centerTitle: true,
-            title: Text(
-              'Sepetim',
-              style: TextStyle(color: Colors.purple, fontSize: 30),
-            )),
+          title: Text(
+            "Sepetim",
+            style: TextStyle(
+                color: Colors.deepPurple, fontWeight: FontWeight.bold),
+          ),
+        ),
         body: bodyMethod(context),
       ),
     );
@@ -161,7 +162,7 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
         });
   }
 
-  Container alisverisTamamla(
+  Widget alisverisTamamla(
       BuildContext context, AsyncSnapshot<List<Urun>> snapshot) {
     int toplamFiyat = 0;
     if (snapshot.data != null) {
@@ -190,31 +191,20 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
         ),
         trailing: Column(
           children: [
-            Spacer(),
-            Text(
-              "$toplamFiyat TL",
-              style: TextStyle(fontSize: 11),
+            Expanded(
+              child: Text("$toplamFiyat TL",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             ),
-            Spacer(),
-            GestureDetector(
-              onTap: () {
-                print(
-                    "Ödeme ekranına, kayıtlı kart ve adreslere sırayla gidecek");
-              },
-              child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.purple,
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(10)),
+            SizedBox(height: 10),
+            Expanded(
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      onPrimary: Colors.white, primary: Colors.purple),
+                  onPressed: () {},
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Ödemeyi Tamamla",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  )),
+                      padding: EdgeInsets.all(2),
+                      child: Text('Ödemeyi Tamamla'))),
             ),
-            Spacer(),
           ],
         ),
       ),

@@ -8,20 +8,23 @@ class KullaniciHesabiView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'E-Commerce',
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
+          "Hesabım",
+          style:
+              TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold),
         ),
-        centerTitle: true,
-        backgroundColor: Colors.purple,
-        toolbarHeight: 80,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.asset('imagess/profile.jpg', height: 150, width: 100),
-            Text(
-              'Metin Çiçek',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                'Metin Çiçek',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.purple),
+              ),
             ),
             GestureDetector(
               onTap: () {
@@ -29,175 +32,68 @@ class KullaniciHesabiView extends StatelessWidget {
                   'siparişlerime gidecek',
                 );
               },
-              child: Card(
-                elevation: 50,
-                child: SizedBox(
-                    height: 55,
-                    width: double.infinity,
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(Icons.shopping_basket),
-                        ),
-                        Text(
-                          'Siparişlerim',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w400),
-                        ),
-                      ],
-                    )),
-              ),
+              child: myCard(Icons.shopping_basket, 'Siparişlerim'),
             ),
             GestureDetector(
               onTap: () {
                 print('cüzdanıma gidecek');
               },
-              child: Card(
-                elevation: 50,
-                child: SizedBox(
-                    height: 55,
-                    width: double.infinity,
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(Icons.wallet_giftcard),
-                        ),
-                        Text(('Cüzdanım'),
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w400)),
-                      ],
-                    )),
-              ),
+              child: myCard(Icons.wallet_giftcard, 'Cüzdanım'),
             ),
             GestureDetector(
               onTap: () {
                 print('favorilerime gidecek');
               },
-              child: Card(
-                elevation: 50,
-                child: SizedBox(
-                  height: 55,
-                  width: double.infinity,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.favorite),
-                      ),
-                      Text(
-                        'Favorilerim',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w400),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              child: myCard(Icons.favorite, 'Favorilerim'),
             ),
             GestureDetector(
               onTap: () {
                 print('Adreslerim sayfasına gidecek');
               },
-              child: Card(
-                elevation: 50,
-                child: SizedBox(
-                  height: 55,
-                  width: double.infinity,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.location_pin),
-                      ),
-                      Text(
-                        'Adreslerim',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w400),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              child: myCard(Icons.location_pin, 'Adreslerim'),
             ),
             GestureDetector(
               onTap: () {
                 print('Değerlendirmelerim sayfasına gidecek');
               },
-              child: Card(
-                elevation: 50,
-                child: SizedBox(
-                  height: 55,
-                  width: double.infinity,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.stars),
-                      ),
-                      Text(
-                        'Değerlendirmelerim',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w400),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              child: myCard(Icons.stars, 'Değerlendirmelerim'),
             ),
             GestureDetector(
               onTap: () {
                 print('Müşteri Hizmetleri sayfasına gidecek');
               },
-              child: Card(
-                  elevation: 50,
-                  child: SizedBox(
-                    height: 55,
-                    width: double.infinity,
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(Icons.headphones),
-                        ),
-                        Text(
-                          'Müşteri Hizmetleri',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w400),
-                        ),
-                      ],
-                    ),
-                  )),
+              child: myCard(Icons.headphones, 'Müşteri Hizmetleri'),
             ),
             GestureDetector(
               onTap: () {
                 print('ayarlarıma gidecek');
               },
-              child: Card(
-                elevation: 50,
-                child: SizedBox(
-                  height: 55,
-                  width: double.infinity,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.settings),
-                      ),
-                      Text(
-                        'Ayarlarım',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w400),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              child: myCard(Icons.settings, 'Ayarlarım'),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Card myCard(IconData icon, String text) {
+    return Card(
+      elevation: 5,
+      child: SizedBox(
+          height: 55,
+          width: double.infinity,
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(icon, color: Colors.purple.shade400),
+              ),
+              Text(
+                text,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+              ),
+            ],
+          )),
     );
   }
 }
