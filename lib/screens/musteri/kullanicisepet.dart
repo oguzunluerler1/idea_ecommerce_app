@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet_View_Model.dart';
+import 'kullanicisepet_View_Model.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/urun.dart';
@@ -28,6 +28,7 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
       ),
     );
   }
+
 
   Widget bodyMethod(BuildContext context) {
     return FutureBuilder<List<Urun>>(
@@ -95,6 +96,7 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
                                                       .data![index].fiyat
                                                       .toString())
                                                 ],
+
                                               ),
                                             )
                                           ],

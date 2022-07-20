@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:idea_ecommerce_app/models/urun.dart';
-import 'package:idea_ecommerce_app/services/database.dart';
+import '../../models/urun.dart';
+import '../../services/database.dart';
 
 import '../../models/musteri.dart';
 import '../../services/auth.dart';

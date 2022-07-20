@@ -1,7 +1,5 @@
 //todo ÖDEME YÖNTEMLERİ ÜZERİNE ARAŞTIRMA YAPMAK LAZIM. BAYA KAPSAMLI BİR KONU KISA BAKTIM AMA TAM ANLAYAMADIM.
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class KayitliKart {
   final String id;
   final String kartNumarasi;

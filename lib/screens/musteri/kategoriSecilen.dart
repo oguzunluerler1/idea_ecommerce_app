@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:idea_ecommerce_app/models/urun.dart';
+import '../../models/urun.dart';
 
 
 class secilmisKategoriScreen extends StatefulWidget {

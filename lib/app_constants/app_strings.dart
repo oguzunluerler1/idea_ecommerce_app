@@ -14,3 +14,5 @@ const String reklamPanoImageUrl = "https://cdn.civilim.com/Uploads/2019/Ocak/30o
 const String populerUrunlerText = "Popüler Ürünler";
 const String sonGezilenUrunlerText = "Son Gezilen Ürünler";
 const String sizinIcinSectikText = "Sizin İçin Seçtiklerimiz";
+//favorilerim
+const String favorilerimAppTitle = "Favoriler";

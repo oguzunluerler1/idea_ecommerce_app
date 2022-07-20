@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:idea_ecommerce_app/app_constants/app_strings.dart';
-import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet.dart';
+
+import '../../app_constants/app_strings.dart';
+import 'kullanicisepet.dart';
+import 'kullanicisepet_View_Model.dart';
+import '../../widgets/loading_indicator.dart';
 import 'package:provider/provider.dart';
 import '../../models/urun.dart';
 import 'anaSayfa_view.dart';
@@ -31,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-//*index durumuna göre body olarak kullanılacak sayfayı belirleyen turnery kodu
+//*index durumuna göre body olarak kullanılacak sayfayı belirleyen kod
         body: pages[index],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: index,
@@ -66,21 +69,19 @@ class _MyHomePageState extends State<MyHomePage> {
         width: 12,
         height: 12,
         child: Center(
-//todo Bu şekilde sepet sayısını yazdırıyorum ama anasayfa üzerinde sepete birşey eklediğimde sayı değişmiyor. notifier kullanmak lazım herhalde.
-          child: FutureBuilder<List<Urun>>(
-            future: Provider.of<KullaniciSepetViewModel>(context)
-                .sepetUrunVerisiOkuma(),
+
+          child:FutureBuilder<List<Urun>?>(
+            future: Provider.of<KullaniciSepetViewModel>(context).sepetUrunVerisiOkuma(),
+
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Text(
                   snapshot.data!.length.toString(),
-                  style: TextStyle(color: Colors.white, fontSize: 10),
+                  style: TextStyle(color: Colors.white,fontSize: 10),
                 );
               } else {
-                return Text(
-                  '0',
-                  style: TextStyle(color: Colors.white, fontSize: 10),
-                );
+                return LoadingIndicator();
+
               }
             },
           ),

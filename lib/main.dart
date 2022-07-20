@@ -8,12 +8,14 @@ SigninView yaptım ama hesap oluştur yok daha .
 */
 
 //*Firebase kullanmak için en başta yüklemek zorunda olduğumuz, firebase'i initilize edebilmemize yarayan paket.
+
 import 'package:firebase_core/firebase_core.dart';
 
 //*Flutter'ın en çok kullandığı standart material kütüphanesi. Flutterla otomatik yüklü geliyor. Sadece import ediyoruz.
 import 'package:flutter/material.dart';
 import 'package:idea_ecommerce_app/app_constants/app_strings.dart';
 import 'package:idea_ecommerce_app/screens/musteri/arama_view_model.dart';
+import 'package:idea_ecommerce_app/screens/musteri/favoriler_provider.dart';
 import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet_View_Model.dart';
 
 import 'package:idea_ecommerce_app/services/auth.dart';
@@ -34,6 +36,7 @@ void main() async {
 //*Widget ağacının en başına multiprovider ekledim bunun üzerinden istediğimiz şekilde state management ayarlamalarını yapabileceğiz.
   runApp(MultiProvider(
     providers: [
+      ChangeNotifierProvider(create: (context) => FavorilerProvider()),
       Provider<Database>(create: (context) => Database()),
       Provider<KullaniciSepetViewModel>(create: (context) => KullaniciSepetViewModel()),
       Provider<Auth>(create: (context) => Auth()),

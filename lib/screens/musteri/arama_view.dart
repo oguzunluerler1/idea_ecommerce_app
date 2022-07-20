@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:idea_ecommerce_app/screens/musteri/arama_view_model.dart';
+import 'arama_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/urun.dart';
-import 'anaSayfa_view_model.dart';
 
 class Arama extends StatefulWidget {
   const Arama({Key? key}) : super(key: key);
