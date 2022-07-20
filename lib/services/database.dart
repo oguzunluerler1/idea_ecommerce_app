@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:idea_ecommerce_app/screens/sign_in.dart';
 
 import '../models/musteri.dart';
 
@@ -14,7 +13,9 @@ class Database {
         .then((value) => value.data());
     List sepettekiUrunler = musteriBilgisi?['sepettekiUrunler'];
 
-    sepettekiUrunler.add(docId);
+    if (!sepettekiUrunler.contains(docId)) {
+      sepettekiUrunler.add(docId);
+    }
 
     musteriBilgisi?['sepettekiUrunler'] = sepettekiUrunler;
     //print(musteriBilgisi?['sepettekiUrunler']);

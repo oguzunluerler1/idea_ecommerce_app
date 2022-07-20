@@ -43,7 +43,7 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
                   child: ListView.builder(
                     itemCount: snapshot.data?.length,
                     itemBuilder: (context, index) {
-                      print('uzunluk ${snapshot.data?.length}');
+                      //print('uzunluk ${snapshot.data?.length}');
                       return Visibility(
                           child: Padding(
                             padding: const EdgeInsets.all(2.0),
@@ -148,14 +148,7 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
                   ),
                 );
               } else {
-                return Center(
-                  child: Container(
-                      width: MediaQuery.of(context).size.height * 0.40,
-                      height: MediaQuery.of(context).size.height * 0.40,
-//*indicatorın boyutunu ayarlamak için transform scale kullanmak zorunda kaldım. Sizedbox bile işe yaramadı. Bu şekilde alana göre küçülttüm ve oldu.
-                      child: Transform.scale(
-                          scale: 0.3, child: CircularProgressIndicator())),
-                );
+                return Container();
               }
             }),
 

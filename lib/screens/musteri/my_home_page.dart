@@ -77,13 +77,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: TextStyle(color: Colors.white, fontSize: 10),
                 );
               } else {
-                return Center(
-                  child: Container(
-                      width: MediaQuery.of(context).size.height * 0.40,
-                      height: MediaQuery.of(context).size.height * 0.40,
-//*indicatorın boyutunu ayarlamak için transform scale kullanmak zorunda kaldım. Sizedbox bile işe yaramadı. Bu şekilde alana göre küçülttüm ve oldu.
-                      child: Transform.scale(
-                          scale: 0.3, child: CircularProgressIndicator())),
+                return Text(
+                  '0',
+                  style: TextStyle(color: Colors.white, fontSize: 10),
                 );
               }
             },
