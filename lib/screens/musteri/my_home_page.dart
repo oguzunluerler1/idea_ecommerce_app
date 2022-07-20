@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:idea_ecommerce_app/app_constants/app_strings.dart';
 import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet.dart';
+import 'package:provider/provider.dart';
+import '../../models/urun.dart';
 import 'anaSayfa_view.dart';
 import 'favoriler_view.dart';
 import 'hesap_view.dart';
 import 'kategoriler_view.dart';
+import 'kullanicisepet_View_Model.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key}) : super(key: key);
