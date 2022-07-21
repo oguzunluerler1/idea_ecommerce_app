@@ -83,7 +83,7 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
                                                         fontWeight:
                                                             FontWeight.bold),
                                                   ),
-                                                  Text(
+                                                  /* Text(
                                                     "En geç 20 temmuz Çarşamba günü kargoda",
                                                     style:
                                                         TextStyle(fontSize: 12),
@@ -91,7 +91,7 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
                                                   SizedBox(
                                                     height: 5,
                                                     width: 1,
-                                                  ),
+                                                  ), */
                                                   Text(snapshot
                                                       .data![index].fiyat
                                                       .toString())
@@ -146,12 +146,12 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
                                           });
                                         },
                                       ),
-                                      GestureDetector(
+                                      /* GestureDetector(
                                           onTap: () {
                                             print(
                                                 "ilişkili ürünün linkine gidecek");
                                           },
-                                          child: Text("Ürün ayrıntıları")),
+                                          child: Text("Ürün ayrıntıları")), */
                                     ],
                                   ),
                                 ),
