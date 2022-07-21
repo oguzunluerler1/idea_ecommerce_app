@@ -12,6 +12,7 @@ class KullaniciSepetView extends StatefulWidget {
 
 class _KullaniciSepetViewState extends State<KullaniciSepetView> {
   List<bool?> _checked = List<bool>.filled(100, true);
+  int _checkedNumber = 0;
   int? _urunSayiDegiskeni = 1;
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,6 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
       ),
     );
   }
-
 
   Widget bodyMethod(BuildContext context) {
     return FutureBuilder<List<Urun>>(
@@ -96,7 +96,6 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
                                                       .data![index].fiyat
                                                       .toString())
                                                 ],
-
                                               ),
                                             )
                                           ],
@@ -141,6 +140,9 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
                                         onChanged: (bool? value) {
                                           setState(() {
                                             _checked[index] = value;
+                                            value!
+                                                ? _checkedNumber--
+                                                : _checkedNumber++;
                                           });
                                         },
                                       ),
@@ -180,22 +182,24 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
       width: double.infinity,
       child: ListTile(
         title: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(),
-            Text("Seçilen Ürünler (3)"),
+            //Spacer(),
+            Text("Seçilen Ürünler ${secilenUrunSayisi(snapshot)}"),
             Text(
               "$toplamFiyat TL",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            Text("Kargo bedeli = 0 TL"),
-            Spacer(),
+            /*  Text("Kargo bedeli = 0 TL"),
+            Spacer(), */
           ],
         ),
         trailing: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
               child: Text("$toplamFiyat TL",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             ),
             SizedBox(height: 10),
             Expanded(
@@ -211,6 +215,10 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
         ),
       ),
     );
+  }
+
+  int secilenUrunSayisi(AsyncSnapshot snapshot) {
+    return snapshot.data?.length - _checkedNumber;
   }
 
   /*  Widget urunListTile() {
