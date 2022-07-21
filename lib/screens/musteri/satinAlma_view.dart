@@ -37,7 +37,7 @@ class SatinAlmaView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.75,
+            height: MediaQuery.of(context).size.height * 0.7,
             child: SingleChildScrollView(
                 child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -129,39 +129,42 @@ class SatinAlmaView extends StatelessWidget {
               ),
             )),
           ),
-          Container(
-            decoration: BoxDecoration(color: Colors.grey[200]),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.all(40.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(children: [
-                      Text(
-                        'Ödenecek Tutar',
-                        style: TextStyle(
-                            color: Colors.purple, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        'Fiyat Gelecek',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(color: Colors.grey[200]),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(40.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(children: [
+                        Text(
+                          'Ödenecek Tutar',
+                          style: TextStyle(
+                              color: Colors.purple,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          'Fiyat Gelecek',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        )
+                      ]),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Siparişi Onayla',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                        style: ElevatedButton.styleFrom(primary: Colors.purple),
                       )
-                    ]),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Siparişi Onayla',
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                      style: ElevatedButton.styleFrom(primary: Colors.purple),
-                    )
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

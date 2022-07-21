@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:idea_ecommerce_app/screens/musteri/satinAlma_view.dart';
 import 'kullanicisepet_View_Model.dart';
 import 'package:provider/provider.dart';
 
@@ -206,7 +207,13 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       onPrimary: Colors.white, primary: Colors.purple),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SatinAlmaView(),
+                        ));
+                  },
                   child: Padding(
                       padding: EdgeInsets.all(2),
                       child: Text('Ödemeyi Tamamla'))),
