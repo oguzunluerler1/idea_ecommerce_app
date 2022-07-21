@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:idea_ecommerce_app/screens/musteri/adreslerim.dart';
+import 'package:idea_ecommerce_app/screens/musteri/sikayet.dart';
+import 'package:idea_ecommerce_app/screens/musteri/yorumlar_view.dart';
 
 class KullaniciHesabiView extends StatelessWidget {
   const KullaniciHesabiView({Key? key}) : super(key: key);
@@ -60,6 +62,22 @@ class KullaniciHesabiView extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => sikayetEkrani(),
+                    ));
+                print('Adreslerim sayfasına gidecek');
+              },
+              child: myCard(Icons.sentiment_dissatisfied, 'Şikayet'),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => YorumlarView(),
+                    ));
                 print('Değerlendirmelerim sayfasına gidecek');
               },
               child: myCard(Icons.stars, 'Değerlendirmelerim'),
