@@ -170,8 +170,8 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
       BuildContext context, AsyncSnapshot<List<Urun>> snapshot) {
     int toplamFiyat = 0;
     if (snapshot.data != null) {
-      for (var fiyat in snapshot.data!) {
-        toplamFiyat = toplamFiyat + fiyat.fiyat;
+      for (var i = 0; i < snapshot.data!.length; i++) {
+        if (_checked[i]!) toplamFiyat = toplamFiyat + snapshot.data![i].fiyat;
       }
     }
     return Container(
