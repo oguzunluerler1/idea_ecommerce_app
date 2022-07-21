@@ -13,7 +13,8 @@ class KullaniciSepetView extends StatefulWidget {
 class _KullaniciSepetViewState extends State<KullaniciSepetView> {
   List<bool?> _checked = List<bool>.filled(100, true);
   int _checkedNumber = 0;
-  int? _urunSayiDegiskeni = 1;
+  List<int> _urunSayiDegiskeni = List<int>.filled(100, 1);
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -47,116 +48,113 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
                         itemCount: snapshot.data?.length,
                         itemBuilder: (context, index) {
                           //print('uzunluk ${snapshot.data?.length}');
-                          return Visibility(
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      border: Border.all(width: 1)),
-                                  child: Column(
-                                    children: [
-                                      CheckboxListTile(
-                                        title: Row(
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(4.0),
-                                              child: Container(
-                                                  height: 50,
-                                                  width: 50,
-                                                  child: Image(
-                                                    image: NetworkImage(snapshot
-                                                                .data?[index]
-                                                                .urunResimleriUrl[
-                                                            0] ??
-                                                        ''),
-                                                    fit: BoxFit.contain,
-                                                  )),
-                                            ),
-                                            Container(
-                                              width: 150,
-                                              child: Column(
-                                                children: [
-                                                  Text(
-                                                    snapshot.data![index].isim,
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  /* Text(
-                                                    "En geç 20 temmuz Çarşamba günü kargoda",
-                                                    style:
-                                                        TextStyle(fontSize: 12),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 5,
-                                                    width: 1,
-                                                  ), */
-                                                  Text(snapshot
-                                                      .data![index].fiyat
-                                                      .toString())
-                                                ],
+                          return Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: Container(
+                              decoration:
+                                  BoxDecoration(border: Border.all(width: 1)),
+                              child: Column(
+                                children: [
+                                  CheckboxListTile(
+                                    title: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Container(
+                                              height: 50,
+                                              width: 50,
+                                              child: Image(
+                                                image: NetworkImage(snapshot
+                                                        .data?[index]
+                                                        .urunResimleriUrl[0] ??
+                                                    ''),
+                                                fit: BoxFit.contain,
+                                              )),
+                                        ),
+                                        Container(
+                                          width: 150,
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                snapshot.data![index].isim,
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               ),
-                                            )
-                                          ],
+                                              /* Text(
+                                                  "En geç 20 temmuz Çarşamba günü kargoda",
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                  width: 1,
+                                                ), */
+                                              Text(snapshot.data![index].fiyat
+                                                  .toString())
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    secondary: Column(
+                                      children: [
+                                        Expanded(
+                                          child: GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  _urunSayiDegiskeni[index] =
+                                                      (_urunSayiDegiskeni[
+                                                              index] +
+                                                          1);
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.add,
+                                                size: 18,
+                                              )),
                                         ),
-                                        controlAffinity:
-                                            ListTileControlAffinity.leading,
-                                        secondary: Column(
-                                          children: [
-                                            Expanded(
-                                              child: GestureDetector(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      _urunSayiDegiskeni =
-                                                          (_urunSayiDegiskeni! +
-                                                              1);
-                                                    });
-                                                  },
-                                                  child: Icon(
-                                                    Icons.add,
-                                                    size: 18,
-                                                  )),
-                                            ),
-                                            Text("$_urunSayiDegiskeni",
-                                                style: TextStyle(fontSize: 12)),
-                                            Expanded(
-                                              child: GestureDetector(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      _urunSayiDegiskeni =
-                                                          _urunSayiDegiskeni! -
-                                                              1;
-                                                    });
-                                                  },
-                                                  child: Icon(
-                                                    Icons.remove,
-                                                    size: 18,
-                                                  )),
-                                            )
-                                          ],
-                                        ),
-                                        value: _checked[index],
-                                        onChanged: (bool? value) {
-                                          setState(() {
-                                            _checked[index] = value;
-                                            value!
-                                                ? _checkedNumber--
-                                                : _checkedNumber++;
-                                          });
-                                        },
-                                      ),
-                                      /* GestureDetector(
-                                          onTap: () {
-                                            print(
-                                                "ilişkili ürünün linkine gidecek");
-                                          },
-                                          child: Text("Ürün ayrıntıları")), */
-                                    ],
+                                        Text("${_urunSayiDegiskeni[index]}",
+                                            style: TextStyle(fontSize: 12)),
+                                        Expanded(
+                                          child: GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  _urunSayiDegiskeni[index] =
+                                                      (_urunSayiDegiskeni[
+                                                              index] -
+                                                          1);
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.remove,
+                                                size: 18,
+                                              )),
+                                        )
+                                      ],
+                                    ),
+                                    value: _checked[index],
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        _checked[index] = value;
+                                        value!
+                                            ? _checkedNumber--
+                                            : _checkedNumber++;
+                                      });
+                                    },
                                   ),
-                                ),
+                                  /* GestureDetector(
+                                        onTap: () {
+                                          print(
+                                              "ilişkili ürünün linkine gidecek");
+                                        },
+                                        child: Text("Ürün ayrıntıları")), */
+                                ],
                               ),
-                              visible: _urunSayiDegiskeni! <= 0 ? false : true);
+                            ),
+                          );
                         },
                       ),
                     )
@@ -171,7 +169,9 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
     int toplamFiyat = 0;
     if (snapshot.data != null) {
       for (var i = 0; i < snapshot.data!.length; i++) {
-        if (_checked[i]!) toplamFiyat = toplamFiyat + snapshot.data![i].fiyat;
+        if (_checked[i]!)
+          toplamFiyat =
+              toplamFiyat + snapshot.data![i].fiyat * _urunSayiDegiskeni[i];
       }
     }
     return Container(
