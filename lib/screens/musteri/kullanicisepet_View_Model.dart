@@ -9,7 +9,7 @@ class KullaniciSepetViewModel {
   final _database = Database();
 
   Future<List<Urun>> sepetUrunVerisiOkuma() async {
-    String? uid = _auth.onlineUser()?.uid;
+    String? uid = await _auth.onlineUser()?.uid;
     //print('musteri uid $uid');
     Map<String, dynamic>? musteriBilgisiMap =
         await _database.musteriVerisiCekme(uid);

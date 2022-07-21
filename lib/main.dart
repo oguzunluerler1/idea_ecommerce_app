@@ -27,7 +27,6 @@ import 'package:provider/provider.dart';
 //*Firebase'i initialize ederken options kısmındaki komutu kullanmamızı sağlayan dosya. Firebase CLI sayesinde kuruyoruz. İşlem biraz uzun FlutterFire sitesinde ayrıntılı dökümanı var. Bu şekilde her platform için Firebase ayarlarını otomatik yapıyor.
 import 'firebase_options.dart';
 
-
 //*Firebase'in initialize edilmesi asenkron bir işlem olduğu için main fonksiyonunu async yapıyoruz. İnitialize yaparken de await ifadesi ile sistemi bekletiyoruz.
 void main() async {
 //*Buradaki komut daha program kurulmadan bir işlem yapılacaksa bunu bildirmek için yazılıyor. Eğer bu komutu yazmazsak program hata veriyor.
@@ -38,9 +37,11 @@ void main() async {
     providers: [
       ChangeNotifierProvider(create: (context) => FavorilerProvider()),
       Provider<Database>(create: (context) => Database()),
-      Provider<KullaniciSepetViewModel>(create: (context) => KullaniciSepetViewModel()),
+      Provider<KullaniciSepetViewModel>(
+          create: (context) => KullaniciSepetViewModel()),
       Provider<Auth>(create: (context) => Auth()),
-      ChangeNotifierProvider<AnasayfaViewModel>(create: ((context) => AnasayfaViewModel())),
+      ChangeNotifierProvider<AnasayfaViewModel>(
+          create: ((context) => AnasayfaViewModel())),
       Provider<AramaViewModel>(create: (context) => AramaViewModel()),
     ],
     child: MyApp(),
@@ -57,21 +58,19 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            primary: Colors.white,
-            onSurface: Colors.black,
-            onPrimary: Colors.black,
-            textStyle: TextStyle(color: Colors.black)
-          )
-        ),
+            style: ElevatedButton.styleFrom(
+                primary: Colors.white,
+                onSurface: Colors.black,
+                onPrimary: Colors.black,
+                textStyle: TextStyle(color: Colors.black))),
         textTheme: TextTheme(headline6: TextStyle(fontWeight: FontWeight.bold)),
-        inputDecorationTheme:InputDecorationTheme(border: OutlineInputBorder()),
+        inputDecorationTheme:
+            InputDecorationTheme(border: OutlineInputBorder()),
         appBarTheme: AppBarTheme(color: Colors.white, elevation: 3),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-          unselectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-          unselectedItemColor: Colors.black.withOpacity(0.6)
-        ),
+            selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+            unselectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+            unselectedItemColor: Colors.black.withOpacity(0.6)),
         primarySwatch: Colors.deepPurple,
         primaryColor: Colors.deepPurple,
       ),
