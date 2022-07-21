@@ -218,7 +218,11 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
   }
 
   int secilenUrunSayisi(AsyncSnapshot snapshot) {
-    return snapshot.data?.length - _checkedNumber;
+    if (snapshot.data != null) {
+      int toplam = snapshot.data?.length - _checkedNumber;
+      return toplam;
+    } else
+      return 0;
   }
 
   /*  Widget urunListTile() {
