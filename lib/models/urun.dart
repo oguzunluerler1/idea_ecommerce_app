@@ -1,3 +1,5 @@
+//todo Oğuz eğer bunu görüyorsan güncel halini indirmişsin demektir:)))22 07 2022 2330
+
 //todo Urun açıklamaları, Urun Özellikleri
 
 class Urun {
