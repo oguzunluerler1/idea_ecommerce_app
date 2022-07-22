@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'favoriler_provider.dart';
-import '../../utilities/route_helper.dart';
+import '../../providers/favoriler_provider.dart';
 import '../../widgets/add_basket_button.dart';
 import 'package:provider/provider.dart';
 
@@ -175,7 +172,7 @@ class _urunEkraniState extends State<urunEkrani> {
         ),
         Spacer(),
         favoriteIconButton(context),
-        AddBasketButton(onTap: (){})
+        AddBasketButton(urun: widget.urun,)
       ],
     );
   }

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:idea_ecommerce_app/app_constants/app_strings.dart';
 import 'package:idea_ecommerce_app/models/urun.dart';
 import 'package:idea_ecommerce_app/screens/musteri/arama_view.dart';
-import 'package:idea_ecommerce_app/screens/musteri/arama_view_model.dart';
 import 'package:idea_ecommerce_app/screens/musteri/urun_ekrani_view.dart';
 import 'package:idea_ecommerce_app/screens/sign_in.dart';
 import 'package:idea_ecommerce_app/services/auth.dart';
@@ -23,7 +22,7 @@ class AnaSayfa extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
+        leading: SizedBox.shrink(),
         title: PageAppBarTitle(text: homePageAppTitle),
         actions: [ logOutButton(context), ],
 
@@ -170,7 +169,7 @@ class AnaSayfa extends StatelessWidget {
         ),
         ProductLabelHeadline6(text: snapshot.data?[index].fiyat.toString() ?? ''),
         ProductLabelHeadline6(text: snapshot.data?[index].isim ?? ''),
-        Expanded(child: AddBasketButton(onTap: (){ } )),
+        Expanded(child: AddBasketButton(urun: snapshot.data![index],)),
       ],
     );
   }

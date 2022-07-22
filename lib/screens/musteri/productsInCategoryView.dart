@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:idea_ecommerce_app/app_constants/app_strings.dart';
-import 'package:idea_ecommerce_app/screens/musteri/productsInCategoryView.dart';
-import 'package:idea_ecommerce_app/utilities/route_helper.dart';
 import 'package:idea_ecommerce_app/widgets/page_appbar_title.dart';
 
-class KategorilerView extends StatefulWidget {
-  const KategorilerView({Key? key}) : super(key: key);
-
-
+class ProductsInCat extends StatefulWidget {
+  const ProductsInCat({Key? key, required this.title}) : super(key: key);
+  final String title;
   @override
-  State<KategorilerView> createState() => _KategorilerViewState();
+  State<ProductsInCat> createState() => _ProductsInCatState();
 }
 
-class _KategorilerViewState extends State<KategorilerView> {
+class _ProductsInCatState extends State<ProductsInCat> {
 
   List<String> urlList = [
     "https://www.pngmart.com/files/3/Music-PNG-Photos.png",
@@ -28,7 +24,7 @@ class _KategorilerViewState extends State<KategorilerView> {
     return Scaffold(
       appBar: AppBar(
         leading: SizedBox.shrink(),
-        title: PageAppBarTitle(text: kategorilerAppTitle),
+        title: PageAppBarTitle(text: widget.title),
       ),
       body: bodyMethod(),
     );
@@ -39,16 +35,14 @@ class _KategorilerViewState extends State<KategorilerView> {
       padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+          crossAxisCount: 3,
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
         ),
         itemCount: 6,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
-            onTap: (){
-              RouteHelper.goRoute(context: context, page: ProductsInCat(title: "Kategori $index",));
-            },
+            onTap: (){ },
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [

@@ -14,8 +14,9 @@ import 'package:firebase_core/firebase_core.dart';
 //*Flutter'ın en çok kullandığı standart material kütüphanesi. Flutterla otomatik yüklü geliyor. Sadece import ediyoruz.
 import 'package:flutter/material.dart';
 import 'package:idea_ecommerce_app/app_constants/app_strings.dart';
+import 'package:idea_ecommerce_app/providers/basket_provider.dart';
 import 'package:idea_ecommerce_app/screens/musteri/arama_view_model.dart';
-import 'package:idea_ecommerce_app/screens/musteri/favoriler_provider.dart';
+import 'package:idea_ecommerce_app/providers/favoriler_provider.dart';
 import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet_View_Model.dart';
 
 import 'package:idea_ecommerce_app/services/auth.dart';
@@ -26,6 +27,7 @@ import 'package:provider/provider.dart';
 
 //*Firebase'i initialize ederken options kısmındaki komutu kullanmamızı sağlayan dosya. Firebase CLI sayesinde kuruyoruz. İşlem biraz uzun FlutterFire sitesinde ayrıntılı dökümanı var. Bu şekilde her platform için Firebase ayarlarını otomatik yapıyor.
 import 'firebase_options.dart';
+import 'providers/favoriler_provider.dart';
 
 //*Firebase'in initialize edilmesi asenkron bir işlem olduğu için main fonksiyonunu async yapıyoruz. İnitialize yaparken de await ifadesi ile sistemi bekletiyoruz.
 void main() async {
@@ -36,6 +38,7 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => FavorilerProvider()),
+      ChangeNotifierProvider(create: (context) => BasketProvider()),
       Provider<Database>(create: (context) => Database()),
       Provider<KullaniciSepetViewModel>(
           create: (context) => KullaniciSepetViewModel()),
@@ -64,9 +67,8 @@ class MyApp extends StatelessWidget {
                 onPrimary: Colors.black,
                 textStyle: TextStyle(color: Colors.black))),
         textTheme: TextTheme(headline6: TextStyle(fontWeight: FontWeight.bold)),
-        inputDecorationTheme:
-            InputDecorationTheme(border: OutlineInputBorder()),
-        appBarTheme: AppBarTheme(color: Colors.white, elevation: 3),
+        inputDecorationTheme:InputDecorationTheme(border: OutlineInputBorder()),
+        appBarTheme: AppBarTheme(centerTitle: true, color: Colors.white, elevation: 3),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
             selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
             unselectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
