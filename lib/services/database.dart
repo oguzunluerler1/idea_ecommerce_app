@@ -76,8 +76,8 @@ class Database {
   Future<QuerySnapshot<Map<String, dynamic>>> tiklananUrunVerisiOkuma(
       {required String path, required List urun}) async {
     var data = await _firestore
-        .collection(path)
-        .where('id', whereIn: urun); //todo: asdas
+        .collection(path);
+        //.where('id', whereIn: urun); //todo: asdas
 
     return data.get();
   }

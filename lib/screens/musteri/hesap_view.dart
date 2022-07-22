@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:idea_ecommerce_app/app_constants/app_strings.dart';
+import 'package:idea_ecommerce_app/widgets/page_appbar_title.dart';
 
 class KullaniciHesabiView extends StatelessWidget {
   const KullaniciHesabiView({Key? key}) : super(key: key);
@@ -7,11 +9,8 @@ class KullaniciHesabiView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Hesabım",
-          style:
-              TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold),
-        ),
+        leading: SizedBox.shrink(),
+        title: PageAppBarTitle(text: hesabimAppTitle)
       ),
       body: SingleChildScrollView(
         child: Column(

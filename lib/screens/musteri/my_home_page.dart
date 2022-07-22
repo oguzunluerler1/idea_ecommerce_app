@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
 import '../../app_constants/app_strings.dart';
+import '../../providers/basket_provider.dart';
+import '../../providers/favoriler_provider.dart';
 import 'kullanicisepet.dart';
 import 'kullanicisepet_View_Model.dart';
 import '../../widgets/loading_indicator.dart';
@@ -10,7 +11,6 @@ import 'anaSayfa_view.dart';
 import 'favoriler_view.dart';
 import 'hesap_view.dart';
 import 'kategoriler_view.dart';
-import 'kullanicisepet_View_Model.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key}) : super(key: key);
@@ -26,9 +26,19 @@ class _MyHomePageState extends State<MyHomePage> {
     AnaSayfa(),
     Favoriler(),
     KullaniciSepetView(),
-    Kategori(),
+    KategorilerView(),
     KullaniciHesabiView(),
   ];
+  int basketCount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<FavorilerProvider>().getFavorites();
+      context.read<BasketProvider>().getBasket();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Text(
-                  snapshot.data!.length.toString(),
+                  "${context.watch<BasketProvider>().amount.fold<int>(0, (previousValue, element) => previousValue + element)}",
                   style: TextStyle(color: Colors.white,fontSize: 10),
                 );
               } else {

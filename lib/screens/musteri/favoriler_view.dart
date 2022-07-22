@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../app_constants/app_strings.dart';
-import 'favoriler_provider.dart';
+import '../../providers/favoriler_provider.dart';
 import 'urun_ekrani_view.dart';
 import '../../widgets/add_basket_button.dart';
-import '../../widgets/loading_indicator.dart';
 import '../../widgets/page_appbar_title.dart';
 import '../../widgets/product_container.dart';
 import '../../widgets/product_label_headline6.dart';
@@ -20,7 +19,9 @@ class _FavorilerState extends State<Favoriler> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: PageAppBarTitle(text: "$favorilerimAppTitle")),
+      appBar: AppBar(
+        leading: SizedBox.shrink(),
+        title: PageAppBarTitle(text: "$favorilerimAppTitle")),
       body: _bodyView(context),
     );
   }
@@ -34,7 +35,6 @@ class _FavorilerState extends State<Favoriler> {
   }
 
   GridView product_gridView(BuildContext context) {
-    print(context.watch<FavorilerProvider>().getfavoriUrunler.length);
     return GridView.builder(
       itemCount: context.watch<FavorilerProvider>().getfavoriUrunler.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -63,7 +63,7 @@ class _FavorilerState extends State<Favoriler> {
         ),
         ProductLabelHeadline6(text: favoriListesi[index].fiyat.toString()),
         ProductLabelHeadline6(text: favoriListesi[index].isim),
-        AddBasketButton(onTap: () async {}),
+        AddBasketButton(urun: favoriListesi[index]),
       ],
     );
   }

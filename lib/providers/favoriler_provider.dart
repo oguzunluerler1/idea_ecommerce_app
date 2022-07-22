@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../../models/urun.dart';
+import '../models/urun.dart';
 
-import '../../services/auth.dart';
+import '../services/auth.dart';
 
 class FavorilerProvider extends ChangeNotifier {
 
@@ -19,7 +19,7 @@ class FavorilerProvider extends ChangeNotifier {
   }  
 
   Future<void> getFavorites() async {
-    var uid = _auth.onlineUser()!.uid;
+    var uid = _auth.onlineUser()?.uid;
     var response = await FirebaseFirestore.instance.collection("Customer").doc(uid).get().then((value) => value.data()?["favoriler"]);
     _favoritedProductIds = response;
     await _getFavoriteProducts(_favoritedProductIds);
