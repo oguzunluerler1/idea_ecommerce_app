@@ -4,7 +4,6 @@ import '../services/auth.dart';
 import '../services/database.dart';
 
 class YeniAdresOlusturProvider {
-  Database _database = Database();
   Auth _auth = Auth();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 

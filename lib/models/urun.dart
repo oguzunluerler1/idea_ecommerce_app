@@ -1,6 +1,5 @@
 //todo Urun açıklamaları, Urun Özellikleri
 
-
 class Urun {
   final String id;
   final String isim;
@@ -11,6 +10,8 @@ class Urun {
   final int fiyat;
   final List<dynamic> urunResimleriUrl;
   final double puanOrt;
+  final String urunAciklamasi;
+  final String urunOzellikleri;
 
   Urun(
       {required this.id,
@@ -21,7 +22,9 @@ class Urun {
       required this.stokMiktari,
       required this.satici,
       required this.fiyat,
-      this.puanOrt = 0});
+      this.puanOrt = 0,
+      required this.urunAciklamasi,
+      required this.urunOzellikleri});
   //TODO: puan ortalaması şu an direkt olarak default değer alıyor. ona göre bunu yapacaksak daha sonra required yapıp tüm programdaki fonksiyonlara onun da atanması lazım.
 
   Map<String, dynamic> toMap() => {
@@ -34,6 +37,8 @@ class Urun {
         'satici': satici,
         'fiyat': fiyat,
         'puanOrt': puanOrt,
+        'urunAciklamasi': urunAciklamasi,
+        'urunOzellikleri': urunOzellikleri
       };
 
   factory Urun.fromMap(Map<String, dynamic> map) => Urun(
@@ -46,5 +51,7 @@ class Urun {
         fiyat: map['fiyat'],
         puanOrt: map['puanOrt'].toDouble(),
         urunResimleriUrl: map['urunResimleriUrl'],
+        urunAciklamasi: map['urunAciklamasi'],
+        urunOzellikleri: map['urunOzellikleri'],
       );
 }

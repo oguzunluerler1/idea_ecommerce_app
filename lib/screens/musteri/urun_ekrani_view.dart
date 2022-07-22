@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:idea_ecommerce_app/screens/musteri/urun_ozellikleri.dart';
 import '../../providers/favoriler_provider.dart';
 import '../../widgets/add_basket_button.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,8 @@ class _urunEkraniState extends State<urunEkrani> {
 
   @override
   Widget build(BuildContext context) {
-    inList = context.read<FavorilerProvider>().getProductInListValue(widget.urun);
+    inList =
+        context.read<FavorilerProvider>().getProductInListValue(widget.urun);
     return Scaffold(
       appBar: AppBar(
         title: Text('${widget.urun.isim}'),
@@ -65,7 +67,9 @@ class _urunEkraniState extends State<urunEkrani> {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 15),
-          child: Text('4.8',style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+          child: Text(
+            '4.8',
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
           ),
         ),
         Padding(
@@ -76,17 +80,16 @@ class _urunEkraniState extends State<urunEkrani> {
         Padding(
           padding: const EdgeInsets.only(right: 130.0),
           child: GestureDetector(
-            onTap: () {
-              print('değerlendirme sayfasına girecek');
-            },
-            child: Text(
-              'Tüm Değerlendirmeler(12276)',
-              style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.purple),
-            )
-          ),
+              onTap: () {
+                print('değerlendirme sayfasına girecek');
+              },
+              child: Text(
+                'Tüm Değerlendirmeler(12276)',
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.purple),
+              )),
         ),
       ],
     );
@@ -106,18 +109,16 @@ class _urunEkraniState extends State<urunEkrani> {
     return Padding(
       padding: const EdgeInsets.only(right: 10.0),
       child: GestureDetector(
-        onTap: () {
-          //todo: satıcı ekranına gönderilecek
-        },
-        child: Text(
-          'E-ticaret',
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-            color: Colors.purple[800]
-          ),
-        )
-      ),
+          onTap: () {
+            //todo: satıcı ekranına gönderilecek
+          },
+          child: Text(
+            'E-ticaret',
+            style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: Colors.purple[800]),
+          )),
     );
   }
 
@@ -134,31 +135,46 @@ class _urunEkraniState extends State<urunEkrani> {
   Column productDetails() {
     return Column(
       children: [
-        productDetailTile(text: "Ürün Açıklamaları", onTap: (){
-          //RouteHelper.goRoute(context: context, page: adreslerim());
-        }),
-        productDetailTile(text: "Ürün Özellikleri", onTap: (){}),
-        productDetailTile(text: "Kampanyalar", onTap: (){}),
-        productDetailTile(text: "Soru&Cevap", onTap: (){}),
-        productDetailTile(text: "İptal Ve iade Koşulları", onTap: (){}),
+        productDetailTile(
+            text: "Ürün Açıklamaları",
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UrunOzellikleriView(urun: widget.urun),
+                  ));
+              //RouteHelper.goRoute(context: context, page: adreslerim());
+            }),
+        productDetailTile(text: "Ürün Özellikleri", onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UrunOzellikleriView(urun: widget.urun),
+                  ));
+            }),
+        //productDetailTile(text: "Kampanyalar", onTap: () {}),
+        //productDetailTile(text: "Soru&Cevap", onTap: () {}),
+        productDetailTile(text: "İptal Ve iade Koşulları", onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UrunOzellikleriView(urun: widget.urun),
+                  ));
+            }),
       ],
     );
   }
 
-  Row productDetailTile({required String text,required VoidCallback onTap}) {
+  Row productDetailTile({required String text, required VoidCallback onTap}) {
     return Row(
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(
-            '$text',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400)),
+          child: Text('$text',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400)),
         ),
         Spacer(),
-        InkWell(
-          onTap: onTap,
-          child: Icon(Icons.arrow_circle_right_outlined)
-        ),
+        InkWell(onTap: onTap, child: Icon(Icons.arrow_circle_right_outlined)),
       ],
     );
   }
@@ -172,7 +188,9 @@ class _urunEkraniState extends State<urunEkrani> {
         ),
         Spacer(),
         favoriteIconButton(context),
-        AddBasketButton(urun: widget.urun,)
+        AddBasketButton(
+          urun: widget.urun,
+        )
       ],
     );
   }
@@ -180,17 +198,15 @@ class _urunEkraniState extends State<urunEkrani> {
   InkWell favoriteIconButton(BuildContext context) {
     return InkWell(
       onTap: () async {
-        await context.read<FavorilerProvider>().clickToUpdateFavorite(widget.urun);
+        await context
+            .read<FavorilerProvider>()
+            .clickToUpdateFavorite(widget.urun);
         await context.read<FavorilerProvider>().getFavorites();
-        setState(() {
-          
-        });
+        setState(() {});
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: inList
-            ? Icon(Icons.favorite)
-            : Icon(Icons.favorite_border),
+        child: inList ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
       ),
     );
   }

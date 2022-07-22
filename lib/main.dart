@@ -14,11 +14,14 @@ import 'package:firebase_core/firebase_core.dart';
 //*Flutter'ın en çok kullandığı standart material kütüphanesi. Flutterla otomatik yüklü geliyor. Sadece import ediyoruz.
 import 'package:flutter/material.dart';
 import 'package:idea_ecommerce_app/app_constants/app_strings.dart';
+import 'package:idea_ecommerce_app/providers/adreslerim_provider.dart';
 import 'package:idea_ecommerce_app/providers/basket_provider.dart';
+import 'package:idea_ecommerce_app/providers/urun_ozellikleri_provider.dart';
 import 'package:idea_ecommerce_app/providers/yeni_adres_olustur_provider.dart';
 import 'package:idea_ecommerce_app/screens/musteri/arama_view_model.dart';
 import 'package:idea_ecommerce_app/providers/favoriler_provider.dart';
 import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet_View_Model.dart';
+import 'package:idea_ecommerce_app/screens/musteri/urun_ekrani_view.dart';
 
 import 'package:idea_ecommerce_app/services/auth.dart';
 import 'package:idea_ecommerce_app/widgets/on_board.dart';
@@ -41,6 +44,9 @@ void main() async {
       ChangeNotifierProvider(create: (context) => FavorilerProvider()),
       ChangeNotifierProvider(create: (context) => BasketProvider()),
       Provider<Database>(create: (context) => Database()),
+      Provider<UrunOzellikleriProvider>(
+          create: (context) => UrunOzellikleriProvider()),
+      Provider<AdreslerimProvider>(create: (context) => AdreslerimProvider()),
       Provider<YeniAdresOlusturProvider>(
           create: (context) => YeniAdresOlusturProvider()),
       Provider<KullaniciSepetViewModel>(
