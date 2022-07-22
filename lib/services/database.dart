@@ -5,6 +5,8 @@ import '../models/musteri.dart';
 class Database {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+ 
+
   sepeteUrunEkleme(String path, String docId, String uid) async {
     var musteriBilgisi = await _firestore
         .collection(path)

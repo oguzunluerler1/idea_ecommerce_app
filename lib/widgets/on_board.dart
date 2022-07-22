@@ -5,7 +5,6 @@ import 'package:idea_ecommerce_app/providers/basket_provider.dart';
 import 'package:idea_ecommerce_app/screens/sign_in.dart';
 import 'package:idea_ecommerce_app/utilities/route_helper.dart';
 import '../screens/musteri/my_home_page.dart';
-import '../providers/favoriler_provider.dart';
 import '../services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:lottie/lottie.dart';

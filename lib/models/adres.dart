@@ -2,7 +2,7 @@ class Adres {
   final String adresIsmi;
   final String apartman;
   final String cadde;
-  final int daireNo;
+  final String daireNo;
   final String duzMetin;
   final String il;
   final String ilce;

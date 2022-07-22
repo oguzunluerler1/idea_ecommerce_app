@@ -15,6 +15,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:idea_ecommerce_app/app_constants/app_strings.dart';
 import 'package:idea_ecommerce_app/providers/basket_provider.dart';
+import 'package:idea_ecommerce_app/providers/yeni_adres_olustur_provider.dart';
 import 'package:idea_ecommerce_app/screens/musteri/arama_view_model.dart';
 import 'package:idea_ecommerce_app/providers/favoriler_provider.dart';
 import 'package:idea_ecommerce_app/screens/musteri/kullanicisepet_View_Model.dart';
@@ -40,6 +41,8 @@ void main() async {
       ChangeNotifierProvider(create: (context) => FavorilerProvider()),
       ChangeNotifierProvider(create: (context) => BasketProvider()),
       Provider<Database>(create: (context) => Database()),
+      Provider<YeniAdresOlusturProvider>(
+          create: (context) => YeniAdresOlusturProvider()),
       Provider<KullaniciSepetViewModel>(
           create: (context) => KullaniciSepetViewModel()),
       Provider<Auth>(create: (context) => Auth()),
@@ -67,8 +70,10 @@ class MyApp extends StatelessWidget {
                 onPrimary: Colors.black,
                 textStyle: TextStyle(color: Colors.black))),
         textTheme: TextTheme(headline6: TextStyle(fontWeight: FontWeight.bold)),
-        inputDecorationTheme:InputDecorationTheme(border: OutlineInputBorder()),
-        appBarTheme: AppBarTheme(centerTitle: true, color: Colors.white, elevation: 3),
+        inputDecorationTheme:
+            InputDecorationTheme(border: OutlineInputBorder()),
+        appBarTheme:
+            AppBarTheme(centerTitle: true, color: Colors.white, elevation: 3),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
             selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
             unselectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
