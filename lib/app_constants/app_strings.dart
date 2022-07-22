@@ -16,3 +16,7 @@ const String sonGezilenUrunlerText = "Son Gezilen Ürünler";
 const String sizinIcinSectikText = "Sizin İçin Seçtiklerimiz";
 //favorilerim
 const String favorilerimAppTitle = "Favoriler";
+//kategoriler
+const String kategorilerAppTitle = "Kategoriler";
+//
+const String hesabimAppTitle = "Hesabım";
