@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:idea_ecommerce_app/screens/musteri/adreslerim.dart';
 import 'package:idea_ecommerce_app/screens/musteri/sikayet.dart';
+import 'package:idea_ecommerce_app/screens/musteri/siparislerim.dart';
 import 'package:idea_ecommerce_app/screens/musteri/yorumlar_view.dart';
 import 'package:idea_ecommerce_app/app_constants/app_strings.dart';
+import 'package:idea_ecommerce_app/services/auth.dart';
+import 'package:idea_ecommerce_app/utilities/route_helper.dart';
 import 'package:idea_ecommerce_app/widgets/page_appbar_title.dart';
 
 class KullaniciHesabiView extends StatelessWidget {
@@ -21,7 +24,7 @@ class KullaniciHesabiView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Text(
-                'Metin Çiçek',
+                '${Auth().onlineUser()?.email}',
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -30,9 +33,7 @@ class KullaniciHesabiView extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                print(
-                  'siparişlerime gidecek',
-                );
+                  RouteHelper.goRoute(context: context, page: siparislerView());
               },
               child: myCard(Icons.shopping_basket, 'Siparişlerim'),
             ),

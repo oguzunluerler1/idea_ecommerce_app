@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:idea_ecommerce_app/providers/favoriler_provider.dart';
+import 'package:idea_ecommerce_app/screens/musteri/arama_view.dart';
+import 'package:idea_ecommerce_app/screens/musteri/my_home_page.dart';
+import 'package:idea_ecommerce_app/screens/musteri/urun_ekrani_view.dart';
 import 'package:idea_ecommerce_app/services/database.dart';
+import 'package:idea_ecommerce_app/utilities/route_helper.dart';
 import 'package:idea_ecommerce_app/widgets/add_basket_button.dart';
 import 'package:provider/provider.dart';
 import '../../models/urun.dart';
@@ -13,8 +17,11 @@ class secilmisKategoriScreen extends StatefulWidget {
   @override
   State<secilmisKategoriScreen> createState() => _secilmisKategoriScreenState();
 }
+  final key = GlobalKey<MyHomePageState>();
 
 class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
+
+
   List markaSecilenler = [];
   List filtreFiyatListesi = [
     {"min": 0, "max": 999999999},
@@ -62,26 +69,32 @@ class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        foregroundColor: Colors.deepPurple,
         actions: [
           GestureDetector(
-              onTap: () {},
+              onTap: () {
+                RouteHelper.goRoute(context: context, page: Arama());
+              },
               child: Icon(
                 Icons.search,
                 color: Colors.purple,
-              )), //TODO: Arama ekranına geçecek
+              )),
           GestureDetector(
-              onTap: () {},
+              onTap: () async {
+                Navigator.pop(context);
+                await Future.delayed(Duration.zero,(){
+                  key.currentState?.goToSelectedPage(4);
+                });
+              },
               child: Icon(
                 Icons.person,
                 color: Colors.purple,
-              )), //TODO: Profil ekranına geçilecek
+              )),
         ],
         title: Text(
           "${widget.title} (${products.length})",
-          style: TextStyle(color: Colors.purple),
+          style: TextStyle(color: Color.fromARGB(255, 152, 99, 161)),
         ),
-        centerTitle: true,
       ),
       body: bodyMethod(),
     );
@@ -109,17 +122,22 @@ class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
       itemCount: products.length,
       itemBuilder: (BuildContext context, int index) {
         Urun currentUrun = products[index];
-        return Card(
-          color: Colors.primaries[index % 17].shade200,
-          child: Column(
-            children: [
-              Expanded(child: FavoriIconu(currentUrun, index)),
-              urunResimleri(index),
-              Text("${products[index].isim}"),
-              puanlamalarDegerlendirmesayisi(products[index]),
-              fiyatlar(index),
-              SepeteEkleMetod(index, context)
-            ],
+        return InkWell(
+          onTap: () {
+            RouteHelper.goRoute(context: context, page: urunEkrani(currentUrun));
+          },
+          child: Card(
+            color: Colors.primaries[index % 17].shade200,
+            child: Column(
+              children: [
+                Expanded(child: FavoriIconu(currentUrun, index)),
+                urunResimleri(index),
+                Text("${products[index].isim}"),
+                puanlamalarDegerlendirmesayisi(products[index]),
+                fiyatlar(index),
+                SepeteEkleMetod(index, context)
+              ],
+            ),
           ),
         );
       },
@@ -254,7 +272,7 @@ class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
   }
 
   void siraYok() {
-      //todo saaaaa
+      
     products = [];
     products.addAll(tempProducts);
     setState(() {});
@@ -491,7 +509,7 @@ class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
   }
 
   void markaDialog() {
-    var markalar = tempProducts.map((e) => e.marka).toSet().toList();
+    List<String> markalar = tempProducts.map((e) => e.marka).toSet().toList();
     showDialog(
         context: context,
         builder: (context) {

@@ -22,6 +22,7 @@ class _UrunOzellikleriViewState extends State<UrunOzellikleriView> {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
+            foregroundColor: Colors.deepPurple,
             title: PageAppBarTitle(text: 'Ürün Özellikleri'),
             bottom: TabBar(
               labelStyle: TextStyle(

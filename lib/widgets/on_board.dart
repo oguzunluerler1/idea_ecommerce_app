@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:idea_ecommerce_app/providers/basket_provider.dart';
+import 'package:idea_ecommerce_app/screens/musteri/kategoriSecilen.dart';
 import 'package:idea_ecommerce_app/screens/sign_in.dart';
 import 'package:idea_ecommerce_app/utilities/route_helper.dart';
 import '../screens/musteri/my_home_page.dart';
@@ -25,8 +26,8 @@ class _OnBoardWidgetState extends State<OnBoardWidget> {
   void getLoginInfo() async {
     final _auth = Provider.of<Auth>(context, listen: false);
     var isLoggedIn = _auth.onlineUser();
-    await Future.delayed(Duration(milliseconds: 5000),() {
-      RouteHelper.goRouteReplacement(context: context, page: isLoggedIn != null ? MyHomePage() : SignIn());
+    await Future.delayed(Duration(milliseconds: 4000),() {
+      RouteHelper.goRouteReplacement(context: context, page: isLoggedIn != null ? MyHomePage(key:key,) : SignIn());
     },);
   }
 

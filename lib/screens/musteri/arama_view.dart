@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'arama_view_model.dart';
-import 'package:provider/provider.dart';
+import 'package:idea_ecommerce_app/screens/musteri/urun_ekrani_view.dart';
+import 'package:idea_ecommerce_app/utilities/route_helper.dart';
 
+import '../../app_constants/app_strings.dart';
 import '../../models/urun.dart';
+import '../../services/database.dart';
 
 class Arama extends StatefulWidget {
   const Arama({Key? key}) : super(key: key);
@@ -11,16 +14,52 @@ class Arama extends StatefulWidget {
   State<Arama> createState() => _AramaState();
 }
 
-TextEditingController arama = TextEditingController();
+TextEditingController tfArama = TextEditingController();
 
 class _AramaState extends State<Arama> {
+
+
+    List<Urun> products = [];
+    List<Urun> productsSearch = [];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getSelectedProducts();
+    });
+  }
+
+  void getSelectedProducts() async {
+  QuerySnapshot<Map<String, dynamic>> data =
+        await Database().tumUrunVerisiOkuma('Product');
+    //print(data);
+    products = data.docs.map((e) => Urun.fromMap(e.data())).toList();
+    productsSearch = products;
+    setState(() {
+      
+    });
+    //products = docSnap.where((element) => element.kategoriId == widget.categoryId).toList();
+  }
+
+  void buildSearch(String query){
+    print(query);
+    if (query.isNotEmpty) {
+      productsSearch = products.where((element) => element.isim.toLowerCase().contains(query.toLowerCase())).toList();
+    }else{
+      productsSearch = products;
+    }
+    setState(() { });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.deepPurple,
         centerTitle: true,
         title: Text(
-          'Arama Ekranı',
+          'Ürün Arama',
           style: TextStyle(color: Colors.purple),
         ),
       ),
@@ -31,133 +70,66 @@ class _AramaState extends State<Arama> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
-              onChanged: (value) {
-                setState(() {});
-
-                //Provider.of<AramaViewModel>(context).arama(value);
+              onChanged: (String value) {
+                buildSearch(value);
               },
-              controller: arama,
+              controller: tfArama,
               autofocus: true,
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.search),
-                  hintText: "Ürün veya Satıcı ismi girerek arayınız."),
+                  hintText: searchHintText),
             ),
             SizedBox(
               height: 10,
             ),
-            Text(
-              'Geçmiş Aramalar',
-              style:
-                  TextStyle(color: Colors.purple, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            //todo Row olarak yaptım ama çok fazla sayı olduğunda satıra sığmahyınca sıkıntı olur. Aslında Gridview olarak da yaplabilirdi.
-            FutureBuilder<List<dynamic>?>(
-                future: Provider.of<AramaViewModel>(context, listen: false)
-                    .gecmisBilgisi(),
-                builder: (centext, snapshot) {
-                  if (snapshot.hasData) {
-                    return SizedBox(
-                      height: MediaQuery.of(context).size.height * .05,
-                      child: GridView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: snapshot.data?.length,
-                        //shrinkWrap: true,
-
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          childAspectRatio: .4,
-                          crossAxisCount: 1,
-                        ),
-                        itemBuilder: (BuildContext context, int index) {
-                          return OutlinedButton(
-                              onPressed: () {},
-                              child: Text(
-                                snapshot.data![index],
-                              ));
-                        },
-                      ),
-                    );
-                  } else {
-                    return Center(
-                      child: Container(
-                          width: MediaQuery.of(context).size.height * 0.20,
-                          height: MediaQuery.of(context).size.height * 0.20,
-                          //*indicatorın boyutunu ayarlamak için transform scale kullanmak zorunda kaldım. Sizedbox bile işe yaramadı. Bu şekilde alana göre küçülttüm ve oldu.
-                          child: Transform.scale(
-                              scale: 0.3, child: CircularProgressIndicator())),
-                    );
-                  }
-                }),
-            SizedBox(
-              height: 20,
-            ),
-            FutureBuilder<List<Urun>>(
-                future: Provider.of<AramaViewModel>(context, listen: false)
-                    .arama(arama.text),
-                builder: (centext, snapshot) {
-                  //print(arama.text);
-                  if (snapshot.hasData) {
-                    return Expanded(
-                      child: GridView.builder(
-                        itemCount: snapshot.data?.length,
-                        //shrinkWrap: true,
-                        //scrollDirection: Axis.vertical,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          mainAxisSpacing: 10,
-                          //childAspectRatio: 1.5,
-                          crossAxisCount: 2,
-                        ),
-                        itemBuilder: (BuildContext context, int index) {
-                          return Column(
-                            //mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.height * 0.25,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.25,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      color: Colors.black54,
-                                    ),
-                                  ),
-                                  child: Image(
-                                      image: NetworkImage(snapshot.data?[index]
-                                              .urunResimleriUrl[index] ??
-                                          '')),
-                                ),
-                              ),
-                              Text(snapshot.data?[index].fiyat.toString() ?? '',
-                                  style: Theme.of(context).textTheme.headline6),
-                              Text(snapshot.data?[index].isim ?? '',
-                                  style: Theme.of(context).textTheme.headline6),
-                              OutlinedButton(
-                                  onPressed: () {}, child: Text("Sepete Ekle")),
-                            ],
-                          );
-                        },
-                      ),
-                    );
-                  } else {
-                    return Center(
-                      child: Container(
-                          width: MediaQuery.of(context).size.height * 0.40,
-                          height: MediaQuery.of(context).size.height * 0.40,
-//*indicatorın boyutunu ayarlamak için transform scale kullanmak zorunda kaldım. Sizedbox bile işe yaramadı. Bu şekilde alana göre küçülttüm ve oldu.
-                          child: Transform.scale(
-                              scale: 0.3, child: CircularProgressIndicator())),
-                    );
-                  }
-                }),
+            Expanded(child: grid()),
           ],
         ),
       ),
     );
   }
+
+  Padding grid() {
+    return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+    child: GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        childAspectRatio: 1/2,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 8,
+      ),
+      itemCount: productsSearch.length,
+      itemBuilder: (BuildContext context, int index) {
+        return GestureDetector(
+          onTap: (){
+            RouteHelper.goRoute(context: context, page: urunEkrani(productsSearch[index]));
+          },
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                flex: 2,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    color: Colors.primaries[index % Colors.primaries.length].shade200,
+                    child: image(index)
+                  )
+                ),
+              ),
+              SizedBox(height: 8,),
+              Expanded(child: Text(productsSearch[index].isim,textAlign: TextAlign.center,))
+            ],
+          ),
+        );
+      },
+    ),
+  );
+  }
+
+  Image image(int index) => Image.network("${productsSearch[index].urunResimleriUrl[0]}", fit: BoxFit.contain);
+
 }

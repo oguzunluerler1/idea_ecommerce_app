@@ -51,4 +51,12 @@ class BasketProvider extends ChangeNotifier {
     var uid = _auth.onlineUser()?.uid;
     await FirebaseFirestore.instance.collection("Customer").doc(uid).update(updateBasketList);
   }
+
+  Future<void> sepetiBosalt() async {
+    Map<String, dynamic> updateBasketList = {
+      "sepettekiUrunler": []
+    };
+    var uid = _auth.onlineUser()?.uid;
+    await FirebaseFirestore.instance.collection("Customer").doc(uid).update(updateBasketList);
+  }
 }

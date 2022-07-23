@@ -12,6 +12,7 @@ class YorumlarView extends StatelessWidget {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
+            foregroundColor: Colors.deepPurple,
             title: Text(
               "Değerlendirmelerim",
               style: TextStyle(
@@ -33,7 +34,7 @@ class YorumlarView extends StatelessWidget {
             Degerlendirilenler(),
             DegerlendirmeBekleyenler(),
           ])
-
+      
           /* Column(
           children: [
             

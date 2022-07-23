@@ -18,6 +18,7 @@ import 'anaSayfa_view_model.dart';
 import 'package:provider/provider.dart';
 
 class AnaSayfa extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,8 +100,8 @@ class AnaSayfa extends StatelessWidget {
       ),
     );
   }
-
-  Center reklamPanosu(
+      
+  Widget reklamPanosu(
       {required BuildContext context, required String imageUrl}) {
     return Center(
       child: Container(
@@ -167,8 +168,8 @@ class AnaSayfa extends StatelessWidget {
           onTap: () => RouteHelper.goRoute(context: context, page: urunEkrani(snapshot.data![index])), 
           imageUrl: snapshot.data?[index].urunResimleriUrl[0]
         ),
-        ProductLabelHeadline6(text: snapshot.data?[index].fiyat.toString() ?? ''),
-        ProductLabelHeadline6(text: snapshot.data?[index].isim ?? ''),
+        ProductLabelHeadline6(text: "${snapshot.data?[index].fiyat.toString()} TL"),
+        Text(snapshot.data?[index].isim ?? '', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
         Expanded(child: AddBasketButton(urun: snapshot.data![index],)),
       ],
     );

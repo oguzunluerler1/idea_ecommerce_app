@@ -19,6 +19,7 @@ class _adreslerimState extends State<adreslerim> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.deepPurple,
         title: PageAppBarTitle(text: 'Adreslerim'),
       ),
       body: Padding(

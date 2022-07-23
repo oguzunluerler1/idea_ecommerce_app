@@ -31,7 +31,7 @@ class _YeniAdresOlusturState extends State<YeniAdresOlustur> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(title: PageAppBarTitle(text: 'Adres Ekleme')),
+        appBar: AppBar(title: PageAppBarTitle(text: 'Adres Ekleme'),foregroundColor: Colors.deepPurple,),
 //*Klavye ekranı yukarı ittiriyordu. Onun için koydum.
         resizeToAvoidBottomInset: true,
         body: SizedBox(
