@@ -272,7 +272,7 @@ class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
   }
 
   void siraYok() {
-      //todo saaaaa
+      
     products = [];
     products.addAll(tempProducts);
     setState(() {});
@@ -509,7 +509,7 @@ class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
   }
 
   void markaDialog() {
-    var markalar = tempProducts.map((e) => e.marka).toSet().toList();
+    List<String> markalar = tempProducts.map((e) => e.marka).toSet().toList();
     showDialog(
         context: context,
         builder: (context) {

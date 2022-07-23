@@ -24,7 +24,7 @@ class _sikayetEkraniState extends State<sikayetEkrani> {
         appBar: AppBar(
           title: Text('Şikayetlerim'),
           centerTitle: true,
-          backgroundColor: Colors.purple,
+          foregroundColor: Colors.deepPurple,
         ),
         body: SingleChildScrollView(
           child: SafeArea(

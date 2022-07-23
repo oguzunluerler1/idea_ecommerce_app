@@ -99,7 +99,7 @@ class _urunEkraniState extends State<urunEkrani> {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0),
       child: Text(
-        'Satıcı',
+        "Satıcı",
         style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
       ),
     );
@@ -113,7 +113,7 @@ class _urunEkraniState extends State<urunEkrani> {
             //todo: satıcı ekranına gönderilecek
           },
           child: Text(
-            'E-ticaret',
+            widget.urun.satici,
             style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w600,

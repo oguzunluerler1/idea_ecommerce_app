@@ -1,7 +1,6 @@
 //todo Son gezilen ürünler tamam. Diğer ikisi genel ürünleri çekiyor üzerlerinde oynama yapabilirim.
 //todo SepeteEkle tuşunu aktive etmem lazım.
 //todo Reklam panosunu halletmem lazım.
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:idea_ecommerce_app/app_constants/app_strings.dart';
 import 'package:idea_ecommerce_app/models/urun.dart';
@@ -170,7 +169,7 @@ class AnaSayfa extends StatelessWidget {
           imageUrl: snapshot.data?[index].urunResimleriUrl[0]
         ),
         ProductLabelHeadline6(text: "${snapshot.data?[index].fiyat.toString()} TL"),
-        Text(snapshot.data?[index].isim ?? '', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        Text(snapshot.data?[index].isim ?? '', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
         Expanded(child: AddBasketButton(urun: snapshot.data![index],)),
       ],
     );
