@@ -1,8 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:idea_ecommerce_app/app_constants/app_strings.dart';
+import 'package:idea_ecommerce_app/models/urun.dart';
+import 'package:idea_ecommerce_app/providers/category_provider.dart';
+import 'package:idea_ecommerce_app/screens/musteri/kategoriSecilen.dart';
 import 'package:idea_ecommerce_app/screens/musteri/productsInCategoryView.dart';
 import 'package:idea_ecommerce_app/utilities/route_helper.dart';
 import 'package:idea_ecommerce_app/widgets/page_appbar_title.dart';
+import 'package:provider/provider.dart';
 
 class KategorilerView extends StatefulWidget {
   const KategorilerView({Key? key}) : super(key: key);
@@ -15,12 +21,7 @@ class KategorilerView extends StatefulWidget {
 class _KategorilerViewState extends State<KategorilerView> {
 
   List<String> urlList = [
-    "https://www.pngmart.com/files/3/Music-PNG-Photos.png",
-    "https://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c543.png",
-    "https://assets.stickpng.com/images/580b57fcd9996e24bc43c53e.png",
-    "https://assets.stickpng.com/images/580b57fcd9996e24bc43c4cf.png",
-    "https://assets.stickpng.com/images/580b585b2edbce24c47b2cf2.png",
-    "https://assets.stickpng.com/images/580b57fcd9996e24bc43c548.png",
+    "https://www.pngall.com/wp-content/uploads/4/White-Cup-PNG.png"
   ];
 
   @override
@@ -43,16 +44,20 @@ class _KategorilerViewState extends State<KategorilerView> {
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
         ),
-        itemCount: 6,
+        itemCount: context.watch<CategoryProvider>().getCategories.length,
         itemBuilder: (BuildContext context, int index) {
+          String category = context.read<CategoryProvider>().getCategories[index];
+          String categoryId = context.read<CategoryProvider>().getCategoryDetailMap[index]["id"];
+          
           return GestureDetector(
             onTap: (){
-              RouteHelper.goRoute(context: context, page: ProductsInCat(title: "Kategori $index",));
+              //RouteHelper.goRoute(context: context, page: ProductsInCat(title: "${category}",categoryId: categoryId,));
+              RouteHelper.goRoute(context: context, page: secilmisKategoriScreen(title: "${category}",categoryId: categoryId,));
             },
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Expanded(
+                Expanded( flex: 4,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Container(
@@ -63,8 +68,8 @@ class _KategorilerViewState extends State<KategorilerView> {
                     )
                   ),
                 ),
-                SizedBox(height: 8,),
-                Text("Kategori $index")
+                SizedBox(height: 6,),
+                Expanded(child: Text("${context.read<CategoryProvider>().getCategories[index]}",textAlign: TextAlign.center,))
               ],
             ),
           );
@@ -73,5 +78,10 @@ class _KategorilerViewState extends State<KategorilerView> {
     );
   }
 
-  Image image(int index) => Image.network("${urlList[index]}", fit: BoxFit.contain);
+  Image image(int index) {
+    return Image.network(
+      "${context.read<CategoryProvider>().getCategoryDetailMap[index]["resimurl"]}", 
+      fit: BoxFit.contain
+    );
+  }
 }

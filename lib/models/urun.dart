@@ -14,6 +14,8 @@ class Urun {
   final double puanOrt;
   final String urunAciklamasi;
   final String urunOzellikleri;
+  final String kategoriId;
+  final int degsayisi;
 
   Urun(
       {required this.id,
@@ -26,7 +28,11 @@ class Urun {
       required this.fiyat,
       this.puanOrt = 0,
       required this.urunAciklamasi,
-      required this.urunOzellikleri});
+      required this.urunOzellikleri,
+      required this.kategoriId,
+      this.degsayisi = 0,
+    });
+    //TODO: degsayisi buglu neden bilmiyorum ama şu an hata veriyor required yaptığımda. Bakıcam
   //TODO: puan ortalaması şu an direkt olarak default değer alıyor. ona göre bunu yapacaksak daha sonra required yapıp tüm programdaki fonksiyonlara onun da atanması lazım.
 
   Map<String, dynamic> toMap() => {
@@ -40,7 +46,9 @@ class Urun {
         'fiyat': fiyat,
         'puanOrt': puanOrt,
         'urunAciklamasi': urunAciklamasi,
-        'urunOzellikleri': urunOzellikleri
+        'urunOzellikleri': urunOzellikleri,
+        'kategoriId' : kategoriId,
+        'degsayisi' : degsayisi,
       };
 
   factory Urun.fromMap(Map<String, dynamic> map) => Urun(
@@ -55,5 +63,7 @@ class Urun {
         urunResimleriUrl: map['urunResimleriUrl'],
         urunAciklamasi: map['urunAciklamasi'],
         urunOzellikleri: map['urunOzellikleri'],
+        kategoriId : map['kategoriId'],
+        degsayisi: map  ['degsayisi'],
       );
 }

@@ -1,11 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:idea_ecommerce_app/screens/musteri/satinAlma_view.dart';
 import 'package:idea_ecommerce_app/providers/basket_provider.dart';
 import 'package:idea_ecommerce_app/services/calculator.dart';
 import 'package:idea_ecommerce_app/widgets/page_appbar_title.dart';
-import 'kullanicisepet_View_Model.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/urun.dart';
@@ -58,8 +57,13 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
               ),
             )
           : Expanded(
-              child: Center(  //TODO: LOTTİE GELCEK
-                child: Text("Sepet Boş Aga Alışveriş Yapsana Ba Ba")
+              child: Center(  
+                child: Column(
+                  children: [
+                    Expanded(flex: 4,child: Lottie.network("https://assets4.lottiefiles.com/packages/lf20_iszpuyas.json",fit: BoxFit.fitHeight)),
+                    Expanded(child: Text("Sepetiniz boş! Alışveriş yapmak için ürün ekleyiniz.",style: TextStyle(fontWeight: FontWeight.bold),))
+                  ],
+                ),
               )
             )
       ],

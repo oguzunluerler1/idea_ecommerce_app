@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:idea_ecommerce_app/providers/category_provider.dart';
+import 'package:idea_ecommerce_app/screens/musteri/kategoriSecilen.dart';
 import '../../app_constants/app_strings.dart';
 import '../../providers/basket_provider.dart';
 import '../../providers/favoriler_provider.dart';
@@ -37,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<FavorilerProvider>().getFavorites();
       context.read<BasketProvider>().getBasket();
+      context.read<CategoryProvider>().getAllCategories();
     });
   }
 
@@ -65,6 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 icon: Icon(Icons.category), label: "$navBarKategorilerText"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.account_box), label: "$navBarHesabimText"),
+
           ],
         ),
       ),

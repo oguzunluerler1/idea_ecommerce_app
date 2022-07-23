@@ -1,8 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:idea_ecommerce_app/providers/favoriler_provider.dart';
+import 'package:idea_ecommerce_app/services/database.dart';
+import 'package:idea_ecommerce_app/widgets/add_basket_button.dart';
+import 'package:provider/provider.dart';
 import '../../models/urun.dart';
 
 class secilmisKategoriScreen extends StatefulWidget {
-  const secilmisKategoriScreen({Key? key}) : super(key: key);
+  const secilmisKategoriScreen({Key? key, required this.title, required this.categoryId}) : super(key: key);
+  final String title;
+  final String categoryId;
   @override
   State<secilmisKategoriScreen> createState() => _secilmisKategoriScreenState();
 }
@@ -18,138 +25,37 @@ class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
   ];
   int secilmisFiyatOpt = 0;
   List<Urun> filtreList = [];
-  List<Urun> urunListesi = [];
   int selectedValuePop = 1;
   bool isChecked = false;
   List<Urun> sepetUrunleri = [];
   List<Urun> favorilenmisUrunler = [];
-  List<Urun> tempUrunListesi = [
-    Urun(
-        isim: "a",
-        kategori: ["PC"],
-        marka: "marka1",
-        stokMiktari: 1,
-        satici: "satici1",
-        fiyat: 10,
-        puanOrt: 3.2,
-        id: '1',
-        urunResimleriUrl: [],
-        urunAciklamasi: "lkjdskfd",
-        urunOzellikleri: "slkdflskdjflskd"),
-    Urun(
-        isim: "b",
-        kategori: ["PC"],
-        marka: "marka2",
-        stokMiktari: 5,
-        satici: "satici2",
-        fiyat: 22,
-        puanOrt: 2.1,
-        id: '2',
-        urunResimleriUrl: [],
-        urunAciklamasi: "lkjdskfd",
-        urunOzellikleri: "slkdflskdjflskd"),
-    Urun(
-        isim: "c",
-        kategori: ["PC"],
-        marka: "marka1",
-        stokMiktari: 2,
-        satici: "satici3",
-        fiyat: 333,
-        puanOrt: 4.2,
-        id: '3',
-        urunResimleriUrl: [],
-        urunAciklamasi: "lkjdskfd",
-        urunOzellikleri: "slkdflskdjflskd"),
-    Urun(
-        isim: "d",
-        kategori: ["PC"],
-        marka: "marka4",
-        stokMiktari: 3,
-        satici: "satici4",
-        fiyat: 2,
-        puanOrt: 3.2,
-        id: '4',
-        urunResimleriUrl: [],
-        urunAciklamasi: "lkjdskfd",
-        urunOzellikleri: "slkdflskdjflskd"),
-    Urun(
-        isim: "e",
-        kategori: ["PC"],
-        marka: "marka5",
-        stokMiktari: 3,
-        satici: "satici56",
-        fiyat: 11,
-        puanOrt: 1.2,
-        id: '5',
-        urunResimleriUrl: [],
-        urunAciklamasi: "lkjdskfd",
-        urunOzellikleri: "slkdflskdjflskd"),
-    Urun(
-        isim: "f",
-        kategori: ["PC"],
-        marka: "marka6",
-        stokMiktari: 2,
-        satici: "satici6",
-        fiyat: 212,
-        puanOrt: 2.3,
-        id: '6',
-        urunResimleriUrl: [],
-        urunAciklamasi: "lkjdskfd",
-        urunOzellikleri: "slkdflskdjflskd"),
-    Urun(
-        isim: "g",
-        kategori: ["PC"],
-        marka: "marka7",
-        stokMiktari: 4,
-        satici: "satici7",
-        fiyat: 52,
-        puanOrt: 2.4,
-        id: '7',
-        urunResimleriUrl: [],
-        urunAciklamasi: "lkjdskfd",
-        urunOzellikleri: "slkdflskdjflskd"),
-    Urun(
-        isim: "h",
-        kategori: ["PC"],
-        marka: "marka8",
-        stokMiktari: 1,
-        satici: "satici8",
-        fiyat: 1,
-        puanOrt: 2.6,
-        id: '8',
-        urunResimleriUrl: [],
-        urunAciklamasi: "lkjdskfd",
-        urunOzellikleri: "slkdflskdjflskd"),
-    Urun(
-        isim: "i",
-        kategori: ["PC"],
-        marka: "marka2",
-        stokMiktari: 2,
-        satici: "satici9",
-        fiyat: 23,
-        puanOrt: 4.3,
-        id: '9',
-        urunResimleriUrl: [],
-        urunAciklamasi: "lkjdskfd",
-        urunOzellikleri: "slkdflskdjflskd"),
-    Urun(
-        isim: "j",
-        kategori: ["PC"],
-        marka: "marka1",
-        stokMiktari: 2,
-        satici: "satici10",
-        fiyat: 104,
-        puanOrt: 3.1,
-        id: '10',
-        urunResimleriUrl: [],
-        urunAciklamasi: "lkjdskfd",
-        urunOzellikleri: "slkdflskdjflskd"),
-  ];
   bool favoriyeEklenmis = false;
+  //üst silincek
+  //
+
+  List<Urun> products = [];
+  List<Urun> tempProducts = [];
+
   @override
   void initState() {
-    urunListesi.addAll(tempUrunListesi);
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getSelectedProducts();
+    });
+  }
+
+  void getSelectedProducts() async {
+  QuerySnapshot<Map<String, dynamic>> data =
+        await Database().tumUrunVerisiOkuma('Product');
+    //print(data);
+    List<Urun> docSnap = data.docs.map((e) => Urun.fromMap(e.data())).toList();
+    tempProducts = docSnap.where((element) => element.kategoriId == widget.categoryId).toList();
+    tempProducts.forEach((element) {print(element.isim);});
+    products = tempProducts;
+    favorilenmisUrunler = context.read<FavorilerProvider>().getfavoriUrunler;
+    setState(() {
+      
+    });
   }
 
   @override
@@ -172,7 +78,7 @@ class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
               )), //TODO: Profil ekranına geçilecek
         ],
         title: Text(
-          "PC (${urunListesi.length})",
+          "${widget.title} (${products.length})",
           style: TextStyle(color: Colors.purple),
         ),
         centerTitle: true,
@@ -200,17 +106,17 @@ class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
         childAspectRatio: 0.6,
         crossAxisCount: 2,
       ),
-      itemCount: urunListesi.length,
+      itemCount: products.length,
       itemBuilder: (BuildContext context, int index) {
-        Urun currentUrun = urunListesi[index];
+        Urun currentUrun = products[index];
         return Card(
           color: Colors.primaries[index % 17].shade200,
           child: Column(
             children: [
               Expanded(child: FavoriIconu(currentUrun, index)),
               urunResimleri(index),
-              Text("${urunListesi[index].isim}"),
-              puanlamalarDegerlendirmesayisi(urunListesi[index]),
+              Text("${products[index].isim}"),
+              puanlamalarDegerlendirmesayisi(products[index]),
               fiyatlar(index),
               SepeteEkleMetod(index, context)
             ],
@@ -220,17 +126,8 @@ class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
     );
   }
 
-  ElevatedButton SepeteEkleMetod(int index, BuildContext context) {
-    return ElevatedButton(
-        onPressed: () {
-          sepetUrunleri.add(urunListesi[index]);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(
-                  "${urunListesi[index].isim} isimli ürün sepete eklendi.")));
-          print(
-              "sepet listesi sepete girince görüntülenecek."); //TODO: sepet listesini sepetim sayfasına aktar
-        },
-        child: Text("Sepete Ekle"));
+  Widget SepeteEkleMetod(int index, BuildContext context) {
+    return AddBasketButton(urun: products[index]);
   }
 
   Expanded urunResimleri(int index) {
@@ -239,7 +136,7 @@ class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Image.network(
-            "https://picsum.photos/150/100?random=$index",
+            products[index].urunResimleriUrl[0],
             fit: BoxFit.cover,
           ),
         ));
@@ -251,7 +148,7 @@ class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
         padding: const EdgeInsets.only(left: 15.0),
         child: Align(
             alignment: Alignment.centerLeft,
-            child: Text("${urunListesi[index].fiyat} TL")),
+            child: Text("${products[index].fiyat} TL")),
       ),
     );
   }
@@ -265,13 +162,13 @@ class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
           Row(
               children: List.generate(5, (index) {
             return Icon(
-              index + 1 < urun.puanOrt ? Icons.star : Icons.star_border,
+              index + 1 <= urun.puanOrt ? Icons.star : Icons.star_border,
               size: 18,
             );
           })),
           Expanded(
               flex: 2,
-              child: Text("(100)")), //TODO: Degerlendirme sayısı eklenecek
+              child: Text("(${urun.degsayisi})")), 
           Spacer(),
         ],
       ),
@@ -336,29 +233,30 @@ class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
   }
 
   void artanSirala() {
-    urunListesi.sort(((a, b) {
+    products.sort(((a, b) {
       return a.fiyat.compareTo(b.fiyat);
     }));
     setState(() {});
   }
 
   void azalanSirala() {
-    urunListesi.sort(((a, b) {
+    products.sort(((a, b) {
       return b.fiyat.compareTo(a.fiyat);
     }));
     setState(() {});
   }
 
   void puanSirala() {
-    urunListesi.sort(((a, b) {
+    products.sort(((a, b) {
       return b.puanOrt.compareTo(a.puanOrt);
     }));
     setState(() {});
   }
 
   void siraYok() {
-    urunListesi = [];
-    urunListesi.addAll(tempUrunListesi);
+      //todo saaaaa
+    products = [];
+    products.addAll(tempProducts);
     setState(() {});
   }
 
@@ -366,12 +264,13 @@ class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
     return GestureDetector(
         onTap: () {
           setState(() {
+            context.read<FavorilerProvider>().clickToUpdateFavorite(currentUrun);
             if (favorilenmisUrunler.contains(currentUrun)) {
               favorilenmisUrunler
                   .remove(currentUrun); //TODO: favorilerden çıkartılacak
             } else
               favorilenmisUrunler
-                  .add(urunListesi[index]); //TODO: favorilere eklenecek
+                  .add(products[index]); //TODO: favorilere eklenecek
           });
         },
         child: Padding(
@@ -476,13 +375,13 @@ class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
                 ElevatedButton(
                     onPressed: () {
                       if (markaSecilenler.isNotEmpty) {
-                        filtreList = tempUrunListesi
+                        filtreList = tempProducts
                             .where((e) => markaSecilenler.contains(e.marka))
                             .toList();
                       } else {
-                        filtreList = tempUrunListesi;
+                        filtreList = tempProducts;
                       }
-                      urunListesi = filtreList
+                      products = filtreList
                           .where((e) =>
                               e.fiyat >=
                                   filtreFiyatListesi[secilmisFiyatOpt]["min"] &&
@@ -592,7 +491,7 @@ class _secilmisKategoriScreenState extends State<secilmisKategoriScreen> {
   }
 
   void markaDialog() {
-    var markalar = tempUrunListesi.map((e) => e.marka).toSet().toList();
+    var markalar = tempProducts.map((e) => e.marka).toSet().toList();
     showDialog(
         context: context,
         builder: (context) {

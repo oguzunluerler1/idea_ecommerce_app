@@ -25,7 +25,7 @@ class _OnBoardWidgetState extends State<OnBoardWidget> {
   void getLoginInfo() async {
     final _auth = Provider.of<Auth>(context, listen: false);
     var isLoggedIn = _auth.onlineUser();
-    await Future.delayed(Duration(milliseconds: 1000),() {
+    await Future.delayed(Duration(milliseconds: 5000),() {
       RouteHelper.goRouteReplacement(context: context, page: isLoggedIn != null ? MyHomePage() : SignIn());
     },);
   }
