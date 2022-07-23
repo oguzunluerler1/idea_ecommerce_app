@@ -8,7 +8,7 @@ const String navBarKategorilerText = "Kategoriler";
 const String navBarHesabimText = "Hesabım";
 //anasayfa
 const String homePageAppTitle = "Ecommerce App";
-const String searchHintText = "Ürün veya Satıcı ismi girerek arayınız.";
+const String searchHintText = "Ürün ismi girerek arayınız.";
 const String sepeteEkleText = "Sepete Ekle";
 const String reklamPanoImageUrl = "https://cdn.civilim.com/Uploads/2019/Ocak/30ocak/lookbook/2.png";
 const String populerUrunlerText = "Popüler Ürünler";
@@ -20,3 +20,7 @@ const String favorilerimAppTitle = "Favoriler";
 const String kategorilerAppTitle = "Kategoriler";
 //
 const String hesabimAppTitle = "Hesabım";
+
+  String getTeslimTarihi(String date){
+    return "En Geç $date tarihinde kargoya verilecek."; 
+  }

@@ -18,10 +18,10 @@ class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyHomePage> createState() => MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
 //*index değişkeni tanımladım ve varsayılan olarak 0 belirledim. Böylece ilk ekran açıldığında anasayfa geliyor. Bu index değişimine göre sayfa geçişleri yapılacak.
   int index = 0;
   List<Widget> pages = [
@@ -40,6 +40,13 @@ class _MyHomePageState extends State<MyHomePage> {
       context.read<FavorilerProvider>().getFavorites();
       context.read<BasketProvider>().getBasket();
       context.read<CategoryProvider>().getAllCategories();
+    });
+  }
+
+  void goToSelectedPage(int num){
+    index = num;
+    setState(() {
+      
     });
   }
 

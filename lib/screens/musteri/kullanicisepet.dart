@@ -7,6 +7,7 @@ import 'package:idea_ecommerce_app/widgets/page_appbar_title.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
+import '../../app_constants/app_strings.dart';
 import '../../models/urun.dart';
 
 class KullaniciSepetView extends StatefulWidget {
@@ -16,16 +17,6 @@ class KullaniciSepetView extends StatefulWidget {
 }
 
 class _KullaniciSepetViewState extends State<KullaniciSepetView> {
-
-  late String teslimTarihi;
-
-  @override
-  void initState() {
-    super.initState();
-    int rndDay = Random().nextInt(3);
-    teslimTarihi = Calculator.dateTimeToString(DateTime.now().add(Duration(days: rndDay)));
-    print(teslimTarihi);//TODO GERİ GELİNCEK
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,41 +64,35 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
   Container saticiKargoListTile() {
     return Container(
       decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 0.1))),
-      height: MediaQuery.of(context).size.height*0.12,
+      height: MediaQuery.of(context).size.height*0.09,
       width: double.infinity,
       child: ListTile(
-        title: sellerLink(),
-        subtitle: cargoPriceStatus(),
+        title: cargoPriceStatus(),
+        
       ),
     );
   }
 
   Row cargoPriceStatus() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Icon(Icons.local_shipping, color: Colors.purple),
-        Text(" Kargo Bedava",
-          style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold),
-        )
-      ],
-    );
-  }
-
-  GestureDetector sellerLink() {
-    return GestureDetector(
-        onTap: () {
-          print("Satıcıya yönlendirme butonu");
-        },
-        child: Row(
+        Row(
           children: [
-            Text("Satıcı: "),
-            Text("Doğan Burda",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Icon(Icons.arrow_right_rounded),
+            Icon(Icons.local_shipping, color: Colors.purple),
+            Text(" Kargo Bedava",
+              style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold),
+            )
           ],
         ),
-      );
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(onPrimary: Colors.white, primary: Colors.purple),
+          onPressed: () async {
+            await context.read<BasketProvider>().sepetiBosalt();
+            await context.read<BasketProvider>().getBasket();
+          }, child: Text("Sepeti Boşalt"))
+      ],
+    );
   }
 
   Widget alisverisTamamla(BuildContext context, List<Urun> listSepet) {
@@ -169,14 +154,14 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
         width: double.infinity,
         child: ListTile(
           leading: productImage(urun.urunResimleriUrl[0]),
-          title: productDetail(urun.isim, urun.fiyat, index, context),
+          title: productDetail(urun.isim, urun.fiyat, urun.satici, index, context),
           trailing: eklecikar(index,urun),
         ),
       ),
     );
   }
 
-  Column productDetail(String pName, int pPrice,int index, BuildContext context) {
+  Column productDetail(String pName, int pPrice, String saticiName, int index, BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -185,13 +170,21 @@ class _KullaniciSepetViewState extends State<KullaniciSepetView> {
           style: TextStyle(fontWeight:FontWeight.bold),
         ),
         SizedBox(height: 5),
-        Text("En geç ${teslimTarihi} tarihinde kargoya verilecek.",
+        Text(getTeslimTarihi(Calculator.dateTimeToString(DateTime.now().add(Duration(days: Random().nextInt(3))))),
           style:TextStyle(fontSize: 12)),
         SizedBox(height: 5),
-        Text("${pPrice*context.watch<BasketProvider>().amount[index]} Tl")
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Satıcı: $saticiName", style: TextStyle(fontSize: 11),),
+            Text("${pPrice*context.watch<BasketProvider>().amount[index]} TL"),
+          ], 
+        )
       ],
     );
   }
+
+
 
   Column productImage(String url) {
     return Column(
