@@ -9,6 +9,8 @@ SigninView yaptım ama hesap oluştur yok daha .
 
 //*Firebase kullanmak için en başta yüklemek zorunda olduğumuz, firebase'i initilize edebilmemize yarayan paket.
 
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 
 //*Flutter'ın en çok kullandığı standart material kütüphanesi. Flutterla otomatik yüklü geliyor. Sadece import ediyoruz.
@@ -34,8 +36,19 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'providers/favoriler_provider.dart';
 
+
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
 //*Firebase'in initialize edilmesi asenkron bir işlem olduğu için main fonksiyonunu async yapıyoruz. İnitialize yaparken de await ifadesi ile sistemi bekletiyoruz.
 void main() async {
+  HttpOverrides.global = new MyHttpOverrides();
 //*Buradaki komut daha program kurulmadan bir işlem yapılacaksa bunu bildirmek için yazılıyor. Eğer bu komutu yazmazsak program hata veriyor.
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
