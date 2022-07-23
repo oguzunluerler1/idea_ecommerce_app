@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:idea_ecommerce_app/app_constants/app_strings.dart';
 import 'package:idea_ecommerce_app/providers/adreslerim_provider.dart';
 import 'package:idea_ecommerce_app/providers/basket_provider.dart';
+import 'package:idea_ecommerce_app/providers/category_provider.dart';
 import 'package:idea_ecommerce_app/providers/urun_ozellikleri_provider.dart';
 import 'package:idea_ecommerce_app/providers/yeni_adres_olustur_provider.dart';
 import 'package:idea_ecommerce_app/screens/musteri/arama_view_model.dart';
@@ -41,6 +42,7 @@ void main() async {
 //*Widget ağacının en başına multiprovider ekledim bunun üzerinden istediğimiz şekilde state management ayarlamalarını yapabileceğiz.
   runApp(MultiProvider(
     providers: [
+      ChangeNotifierProvider(create: (context) => CategoryProvider()),
       ChangeNotifierProvider(create: (context) => FavorilerProvider()),
       ChangeNotifierProvider(create: (context) => BasketProvider()),
       Provider<Database>(create: (context) => Database()),

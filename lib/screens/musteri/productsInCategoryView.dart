@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:idea_ecommerce_app/models/urun.dart';
+import 'package:idea_ecommerce_app/services/database.dart';
 import 'package:idea_ecommerce_app/widgets/page_appbar_title.dart';
 
 class ProductsInCat extends StatefulWidget {
-  const ProductsInCat({Key? key, required this.title}) : super(key: key);
+  const ProductsInCat({Key? key, required this.title, required this.categoryId}) : super(key: key);
   final String title;
+  final String categoryId;
   @override
   State<ProductsInCat> createState() => _ProductsInCatState();
 }
@@ -19,11 +23,30 @@ class _ProductsInCatState extends State<ProductsInCat> {
     "https://assets.stickpng.com/images/580b57fcd9996e24bc43c548.png",
   ];
 
+  List<Urun> products = [];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getSelectedProducts();
+    });
+  }
+
+  void getSelectedProducts() async {
+  QuerySnapshot<Map<String, dynamic>> data =
+        await Database().tumUrunVerisiOkuma('Product');
+    //print(data);
+    List<Urun> docSnap = data.docs.map((e) => Urun.fromMap(e.data())).toList();
+    products = docSnap.where((element) => element.kategoriId == widget.categoryId).toList();
+    products.forEach((element) {print(element.isim);});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: SizedBox.shrink(),
+        foregroundColor: Colors.deepPurple,
         title: PageAppBarTitle(text: widget.title),
       ),
       body: bodyMethod(),
